@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Thomas Galaxy">
+    <title>前端架构：requirejs+angularjs实现懒加载angular模块 - Thomas Galaxy</title>
+    <meta name="author" content="Thomas Chan">
+    
+    
+    <meta name="description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
+<meta property="og:url" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/index.html">
+<meta property="og:site_name" content="Thomas Galaxy">
+<meta property="og:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
+<meta property="og:updated_time" content="2015-11-01T12:04:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
+<meta name="twitter:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
+<meta name="twitter:creator" content="@https://twitter.com/ThomasChan5818">
+    
+    
+    
+        <meta property="og:image" content="/assets/images/avator.jpg"/>
+    
+    
+        <meta property="og:image" content="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/post-2.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/post-2.jpg" />
+    
+    
+        <meta property="og:image" content="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Thomas Galaxy</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avator.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avator.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">Thomas Chan</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/ThomasChan" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:chenjunhao5818@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/user.qzone.qq.com/812839409"
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-qq"></i>
+                    <span class="sidebar-button-desc">qq</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    "
+             style="background-image:url('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png');"
+             data-behavior="3">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            前端架构：requirejs+angularjs实现懒加载angular模块
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sun Nov 01 2015 17:41:06 GMT+0800">
+	
+		    11月 01, 2015
+    	
+    </time>
+    
+</div>
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="3"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="require-js_+_angular-js_の一种前端架构">require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，<a id="more"></a>既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，<strong><a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1" target="_blank" rel="external">如果我对 jQuery 开发很熟如何理解 angular </a></strong>。</p>
+<p>requirejs 不用说都知道是用来前端懒加载 scripts 的，我在网上看到的使用 require + angular 的组合的案例模式都是一样的，无论你访问网站的哪个 url ，都会把 angular 的所有模块全部通过 require 加载下来，虽然 angular 与 backbone 这些框架貌似更适合做单页应用，但是我认为单页应用也没必要把所有的模块都加载下来，这样首屏加载就会很慢，用户体验很不好；于是我 google 了一通，终于找到了解决方法，通过 require 配合 angular route 的 resolve 方法，实现单模块加载，这样做的好处显而易见，坏处可以说没有，硬要说的话还是 angular 之前的缺点：seo 方面要单做。</p>
+<p>废话不多说，show you my code:</p>
+<p>首先项目目录结构是这样滴：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">app-|<span class="string"></span><br><span class="line">    </span>|<span class="string">-package.json</span><br><span class="line">    </span>|<span class="string">-index.html</span><br><span class="line">    </span>|<span class="string">-views</span><br><span class="line">    </span>|<span class="string">-src-+</span><br><span class="line">          </span>|<span class="string">-img</span><br><span class="line">          </span>|<span class="string">-css</span><br><span class="line">          </span>|<span class="string">-js-+</span><br><span class="line">          </span>|<span class="string">    </span>|<span class="string">-controllers-+...</span><br><span class="line">          </span>|<span class="string">    </span>|<span class="string">-services-+...</span><br><span class="line">          </span>|<span class="string">    +application.js</span><br><span class="line">          </span>|<span class="string">    +require-config.js</span><br><span class="line">          </span>|<span class="string">    +routeResolve.js</span><br><span class="line">          </span>|<span class="string">-lib-+</span><br><span class="line">                +angular.min.js</span><br><span class="line">                +angular-route.min.js</span><br><span class="line">                +angular-animate.min.js</span><br><span class="line">                +angular-resourse.min.js</span><br><span class="line">                +require.js</span></span><br></pre></td></tr></table></figure>
+<p>index.html 长这样：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"zh-cmn-Hans"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">head</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">title</span>&gt;</span>application<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/src/lib/require.js"</span> <span class="attribute">data-main</span>=<span class="value">"/src/js/require-config.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-view</span>&gt;</span><span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>require-config.js ：</p>
+<pre><code><span class="built_in">require</span>.config({    
+    baseUrl: <span class="string">'/src'</span>,
+    paths: {
+        <span class="string">'angular'</span>: <span class="string">'lib/angular.min'</span>,
+        <span class="string">'ngRoute'</span>: <span class="string">'lib/angular-route.min'</span>,
+        <span class="string">'ngAnimate'</span>: <span class="string">'lib/angular-animate.min'</span>,
+        <span class="string">'ngResource'</span>: <span class="string">'lib/angular-resource.min'</span>
+    },
+    shim: {
+        angular: {
+            exports : <span class="string">'angular'</span>
+        },
+        ngRoute: {
+            deps: [<span class="string">'angular'</span>],
+            exports: <span class="string">'ngRoute'</span>
+        },
+        ngAnimate: {
+            deps: [<span class="string">'angular'</span>],
+            exports: <span class="string">'ngAnimate'</span>
+        },
+        ngResource: {
+            deps: [<span class="string">'angular'</span>],
+            exports: <span class="string">'ngResource'</span>
+        }
+    }
+    ,urlArgs: <span class="string">'v='</span>+(+<span class="keyword">new</span> <span class="built_in">Date</span>())
+});
+<span class="built_in">require</span>([
+    <span class="string">'js/application'</span>
+], <span class="function"><span class="keyword">function</span>(<span class="params">application</span>)</span>{
+    angular.element(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        angular.bootstrap(<span class="built_in">document</span>, [<span class="string">'application'</span>]);
+    });
+})
+</code></pre><p>application.js ：</p>
+<pre><code>define([
+    <span class="string">'angular'</span>,
+    <span class="string">'ngRoute'</span>,
+    <span class="string">'ngAnimate'</span>,
+    <span class="string">'ngResource'</span>,
+    <span class="string">'js/routeResolve'</span>
+], <span class="keyword">function</span>( angular, ngRoute, ngAnimate, ngResource, routeResolver ) {
+    var application = angular.module(<span class="string">'application'</span>, [<span class="string">'ngRoute'</span>, <span class="string">'ngAnimate'</span>, <span class="string">'ngResource'</span>]);
+    window.application = application;
+    application
+        .config([<span class="string">'$routeProvider'</span>, <span class="string">'$controllerProvider'</span>, <span class="string">'$compileProvider'</span>, <span class="string">'$filterProvider'</span>, <span class="string">'$provide'</span>, 
+            function(<span class="variable">$routeProvider</span>, <span class="variable">$controllerProvider</span>, <span class="variable">$compileProvider</span>, <span class="variable">$filterProvider</span>, <span class="variable">$provide</span>) {
+                var route = routeResolver;
+                <span class="variable">$routeProvider</span>
+                    .when(<span class="string">'/'</span>, {
+                        reloadOnSearch: false,
+                        templateUrl:<span class="string">'views/index.html'</span>,
+                        resolve: route.resolve([
+                            <span class="string">'js/services/peopleService'</span>,
+                            <span class="string">'js/controllers/popup'</span>,
+                            <span class="string">'js/controllers/paginator'</span>,
+                            <span class="string">'js/controllers/index'</span>
+                        ])
+                    })
+                    .otherwise({
+                        redirectTo:<span class="string">'/'</span>
+                    });
+                window.application.components = {
+                    controller : <span class="variable">$controllerProvider</span>.register,
+                    directive  : <span class="variable">$compileProvider</span>.directive,
+                    filter     : <span class="variable">$filterProvider</span>.register,
+                    factory    : <span class="variable">$provide</span>.factory,
+                    service    : <span class="variable">$provide</span>.service
+                }
+        }]);
+    return application;
+})
+</code></pre><p>routeResolve.js ：</p>
+<pre><code>define(<span class="keyword">function</span> ( require ) {
+    return function () {
+        var resolve = function (deps, preFetchFuncs) {
+            var routeDef = {
+                load: [<span class="string">'$q'</span>, <span class="string">'$rootScope'</span>, function (<span class="variable">$q</span>, <span class="variable">$rootScope</span>) {
+                    var dependencies = deps;
+                    return resolveDependencies(<span class="variable">$q</span>, <span class="variable">$rootScope</span>, dependencies);
+                }]
+            };
+            if ( preFetchFuncs ) {
+                angular.merge( routeDef, preFetchFuncs );
+            }
+            return routeDef;
+        },
+        resolveDependencies = function (<span class="variable">$q</span>, <span class="variable">$rootScope</span>, dependencies) {
+            var defer = <span class="variable">$q</span>.defer();
+            require(dependencies, function () {
+                defer.resolve();
+                <span class="variable">$rootScope</span>.<span class="variable">$apply</span>()
+            });
+            return defer.promise;
+        };
+        return {
+            resolve: resolve
+        }
+    }();
+});
+</code></pre><p>其实这就是所有的内容了，当访问首页即 ‘/‘ 时，angular route 的 resolve 方法<strong>通过</strong>我们封装的<strong>routeResolve</strong>来懒加载模块代码，当然模块代码写的时候就不是 <code>define function</code> 里再写 <code>angular.controller</code> 了，直接写 <code>window.application.components.controller</code> ，好那么问题来了，为什么要暴露 angular 的那些方法给 window 呢，原因是<a href="https://docs.angularjs.org/guide/bootstrap" target="_blank" rel="external"> angular 的工作方式</a>，angular 在启动之后是不能动态添加 controller 啊 service 啊之类的，在 angular 程序启动后，要添加只能通过内部的 register 方法(controller 的 register)，所以你懂的。</p>
+<p>OK，采用这种架构之后，前端<strong>所有</strong>代码都可以扔到 cdn 上去了，接口全部 rest api。</p>
+<p>以上。</p>
+<p>（ps: 这种架构到底有哪些坑本人还不得而知，若有很明显的坑麻烦还请告知一下我(๑╹ڡ╹)╭）</p>
+<p>参考链接：</p>
+<p><a href="http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs" target="_blank" rel="external">http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs</a></p>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/10/28/重拾blog/" data-tooltip="重拾blog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 Thomas Chan. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/10/28/重拾blog/" data-tooltip="重拾blog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avator.jpg"/>
+        
+            <h4 id="about-card-name">Thomas Chan</h4>
+        
+            <h5 id="about-card-bio"><p>沉默的 95 后</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>伪•全栈工程师</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                北京-中国
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-278947.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+
+
+</html>
