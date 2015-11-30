@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>陈俊豪的简历</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=7">
   <meta name="format-detection" content="telephone=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -428,15 +427,15 @@
 
 
     .yue {
-        font: 400 18px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+        font: 400 14px/1.68 "PingFang SC","Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
         color: #333;
-        width:960px;
+        max-width:960px;
         margin:0 auto;
     }
 
     .windows .yue {
         font-size: 16px;
-        font-family: "Georgia", "SimSun", sans-serif;
+        font-family: "PingFang SC","Georgia", "SimSun", sans-serif;
     }
 
     .yue ::-moz-selection {
@@ -453,7 +452,7 @@
     .yue h4,
     .yue h5,
     .yue h6 {
-        font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+        font-family: "PingFang SC","Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
         color: #333;
     }
 
@@ -626,7 +625,7 @@
         padding: 1px 2px;
         border: 1px solid #dadada;
         border-radius: 3px;
-        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-family: "PingFang SC",Menlo, Monaco, Consolas, "Courier New", monospace;
     }
 
     .yue pre {
@@ -638,7 +637,7 @@
         overflow: auto;
         line-height: 1.5;
         font-size: 0.96em;
-        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-family: "PingFang SC",Menlo, Monaco, Consolas, "Courier New", monospace;
         color: #4c4c4c;
         background-color: #f9f9f7;
     }
@@ -724,84 +723,91 @@
             margin-top: 0;
         }
     }
+    ul li h1{display: inline;
+    font-size: inherit!important;
+    font-weight: normal;}
   </style>
 </head>
 <body class="yue" style="padding:20px;">
-  <h1>个人信息</h1>
+    <h1>个人信息</h1>
 
-  <ul>
-    <li>陈俊豪/男/1995</li>
-    <li>工作年限：两年</li>
-    <li>技术博客：http://chenjunhao.cn</li>
-    <li>Github: http://github.com/thomaschan</li>
-    <li>期望职位：前端工程师</li>
-    <li>期望薪资：16k</li>
-    <li>期望城市：北京</li>
-  </ul>
-
-
-  <hr>
-
-  <h1>联系方式</h1>
-
-  <ul>
-    <li>手机：186-1047-2034</li>
-    <li>Email：chenjunhao5818@gmail.com</li>
-    <li>QQ：812839409</li>
-  </ul>
+    <ul>
+        <li><h1>陈俊豪</h1>/男/1995</li>
+        <li>工作年限：两年</li>
+        <li>技术博客：<h1><a href="http://chenjunhao.cn">http://chenjunhao.cn</a></h1></li>
+        <li>Github: <h1><a href="http://github.com/thomaschan">http://github.com/thomaschan</a></h1></li>
+        <li>期望职位：<h1>前端工程师</h1></li>
+        <li>期望薪资：20k</li>
+        <li>期望城市：北京</li>
+    </ul>
 
 
-  <hr>
+    <hr>
 
-  <h1>工作经历</h1>
+    <h1>联系方式</h1>
 
-  <ul>
-    <li>
-      <h3>爱投资 | 安投融（北京）网络科技有限公司（2014年10月~现在）</h3>
+    <ul>
+        <li>手机：186-1047-2034</li>
+        <li>Email：chenjunhao5818@gmail.com</li>
+        <li>QQ：812839409</li>
+    </ul>
 
-      <p>我在公司主要负责新需求的功能实现，页面交互，页面展示，网站优化，bug 修复，用户相关注册投资流程的维护和代码重构等。</p>
 
-      <p>经历过的项目主要有：</p>
+    <hr>
 
-      <ul>
-        <li>
-          <h4>注册流程优化及代码重构</h4>
-          <p>我负责此项目的全部开发，从切图到 service 层，制定并规范相关 api 返回数据的 error code。代码重构后流程更加清晰不易出错，有助于推广用户注册转化，更方便以后的维护。</p>
-        </li>
-        <li>
-          <h4>超级六月活动项目</h4>
-          <p>我主要负责此活动的后端及脚本开发，此活动页面分三大部分，第1、3部分需要通过脚本跑数据，再将数据展示给用户，第2部分是抽奖，主要遇到的难点在于脚本跑大量数据的处理方式、抽奖次数的逻辑，脚本每 5 分钟跑一次，单次处理 1000 条，循环处理前 5 分钟的大量数据。活动上线后成功达到了预期的效果，用户投资额比前一个月增长了 2%。</p>
-        </li>
-        <li>
-          <h4>省心计划、零钱计划项目</h4>
-          <p>我主要负责项目的详情展示页、投资确认页，页面的 模本，UI，交互，php 的页面逻辑以及投资流程的梳理，通过此项目增加了我对 php 的学习。</p>
-        </li>
-        <li>
-          <h4>爱收藏项目</h4>
-          <p>我主要负责此项目业务模式页前端页面的交互、模板。通过此项目对公司业务及开发模式流程有了更深入的了解。</p>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h3>北京蜗购科技有限公司（2014年3月~2014年9月）</h3>
+    <h1>工作经历</h1>
 
-      <h4>沃路由项目</h4>
-
-      <p>此项目是面向中小企业的智能 AP 及云 AC，我主要负责前端页面和逻辑。</p>
-
-      <h4>沃呼（WowCall）网络电话项目</h4>
-
-      <p>我在此项目负责官方网站的前端页面以及前端业务逻辑的实现，对接支付宝在线即时付款 API。</p>
-
-      <h4>鸟巢浪琴表国际马术大师赛现场 WiFi 互动平台项目</h4>
-
-      <p>我在此项目负责前端页面展示及前端业务逻辑的实现，这个项目中，我遇到的问题是移动端页面性能。</p>
-
-      <h4>CDN Service 项目</h4>
-
-      <p>我在此项目负责前端页面展示，这个项目中，我遇到的问题是移动端适配及兼容性、js 跨域。</p>
-    </li>
-  </ul>
+    <dl>  
+        <dt><h3>爱投资 | 安投融（北京）网络科技有限公司（2014年10月~现在）</h3></dt>
+        <dd>
+            <p>我在公司主要负责新需求的功能实现，页面交互，页面展示，网站优化，bug 修复，用户相关注册投资流程的维护和代码重构，以及一些脚本实现等。</p>
+            <dl>
+                <dt><h4>业务脚本</h4></dt>
+                <dd><p>我负责实现部分来自产品与运营的脚本需求，例如批量发送优惠券、自动颁奖、定向定期发送召回短信等。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>防暴力防刷机制</h4></dt>
+                <dd><p>针对 user 层面做请求限制，针对不同接口使用不同规则，例如在一个时间单位内对速率、对次数等做限制，超出规则后封禁一个时间单位。请求记录在 memcache,有过期时间。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>注册流程优化及代码重构</h4></dt>
+                <dd><p>我负责此项目的全部开发，从切图到 service 层，制定并规范相关 api 返回数据的 error code。代码重构后流程更加清晰不易出错，有助于推广用户注册转化，更方便以后的维护。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>超级六月活动项目</h4></dt>
+                <dd><p>我主要负责此活动的后端及脚本开发，此活动页面分三大部分，第1、3部分需要通过脚本跑数据，再将数据展示给用户，第2部分是抽奖，主要遇到的难点在于脚本跑大量数据的处理方式、抽奖次数的逻辑，脚本每 5 分钟跑一次，单次处理 1000 条，循环处理前 5 分钟的大量数据。活动上线后成功达到了预期的效果，用户投资额比前一个月增长了 2%。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>省心计划、零钱计划项目</h4></dt>
+                <dd><p>我主要负责项目的详情展示页、投资确认页，页面的 模本，UI，交互，php 的页面逻辑以及投资流程的梳理，通过此项目增加了我对 php 的学习。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>爱收藏项目</h4></dt>
+                <dd><p>我主要负责此项目业务模式页前端页面的交互、模板。通过此项目对公司业务及开发模式流程有了更深入的了解。</p></dd>
+            </dl>
+        </dd>
+    </dl>
+    <dl>
+        <dt><h3>北京蜗购科技有限公司（2014年3月~2014年9月）</h3></dt>
+        <dd>
+            <dl>
+                <dt><h4>沃路由项目</h4></dt>
+                <dd><p>此项目是面向中小企业的智能 AP 及云 AC，我主要负责前端页面和逻辑。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>沃呼（WowCall）网络电话项目</h4></dt>
+                <dd><p>我在此项目负责官方网站的前端页面以及前端业务逻辑的实现，对接支付宝在线即时付款 API。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>鸟巢浪琴表国际马术大师赛现场 WiFi 互动平台项目</h4></dt>
+                <dd><p>我在此项目负责前端页面展示及前端业务逻辑的实现，这个项目中，我遇到的问题是移动端页面性能。</p></dd>
+            </dl>
+            <dl>
+                <dt><h4>CDN Service 项目</h4></dt>
+                <dd><p>我在此项目负责前端页面展示，这个项目中，我遇到的问题是移动端适配及兼容性、js 跨域。</p></dd>
+            </dl>
+        </dd>
+    </dl>
 
 
   <hr>
@@ -811,12 +817,13 @@
   <p>以下是我熟悉及掌握的技能</p>
 
   <ul>
-    <li>Web开发：HTML/CSS/JS/PHP</li>
-    <li>前端类库：jQuery/Underscore.js/ReactJs</li>
-    <li>前端框架：Bootstrap/AngularJs</li>
-    <li>前端工具：Grunt/Gulp</li>
-    <li>数据库相关：MySQL/MongoDB</li>
-    <li>版本管理、文档和自动化部署工具：Svn/Git/Tower</li>
+    <li>Web开发：html/css/javascript/php/node.js</li>
+    <li>前端类库：jQuery/<span style='text-decoration:line-through'>(underscore.js)</span>lodash.js/require.js/react.js</li>
+    <li>前端框架：bootstrap/angular.js</li>
+    <li>前端工具：grunt/gulp/webpack</li>
+    <li>缓存相关：memcache/redis</li>
+    <li>数据库相关：mongodb/mysql</li>
+    <li>版本管理、文档和自动化部署工具：svn/git</li>
   </ul>
 
 
