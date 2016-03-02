@@ -340,7 +340,6 @@ var Bodys = (function (_Component) {
                     td.style.maxWidth = '300px';
                     if (j > 2 && j < 6) {
                         td.onclick = function () {
-                            console.log(this.style.background);
                             if (this.style.background == '') {
                                 this.style.background = 'rgba(186, 218, 85, 0.6)';
                             } else if (this.style.background == 'rgba(186, 218, 85, 0.6)') {
