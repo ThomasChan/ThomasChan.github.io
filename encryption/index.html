@@ -10,35 +10,37 @@
 	<link rel="stylesheet" href="spectre.min.css">
 	<style>.card{margin: 50px auto;}</style>
 </head>
-<body class='columns'>
-	<div class="card col-3">
-	    <div class="card-image">
-	        <img src="http://chenjunhao.cn/assets/images/wallhaven-183371.png" class="img-responsive" />
-	    </div>
-	    <div class="card-header">
-	        <h4 class="card-title">Generate Pass</h4>
-	    </div>
-	    <div class="card-body">
-	        <div class="form-group">
-		        <label class="form-label" for="site">site</label>
-		        <input class="form-input" type="text" id="site" placeholder="site" />
+<body class='container grid-960'>
+	<div class="columns">
+		<div class="card col-3">
+		    <div class="card-image">
+		        <img src="http://chenjunhao.cn/assets/images/wallhaven-183371.png" class="img-responsive" />
 		    </div>
-			<div class="form-group">
-		        <label class="form-label" for="action">action</label>
-		        <input class="form-input" type="text" id="action" placeholder="action" />
+		    <div class="card-header">
+		        <h4 class="card-title">Generate Pass</h4>
 		    </div>
-			<div class="form-group">
-		        <label class="form-label" for="salt">salt</label>
-		        <input class="form-input" type="text" id="salt" placeholder="salt" />
+		    <div class="card-body">
+		        <div class="form-group">
+			        <label class="form-label" for="site">site</label>
+			        <input class="form-input" type="text" id="site" placeholder="site" />
+			    </div>
+				<div class="form-group">
+			        <label class="form-label" for="action">action</label>
+			        <input class="form-input" type="text" id="action" placeholder="action" />
+			    </div>
+				<div class="form-group">
+			        <label class="form-label" for="salt">salt</label>
+			        <input class="form-input" type="text" id="salt" placeholder="salt" />
+			    </div>
+			    <div class="form-group">
+			        <label class="form-label">crypted</label>
+			        <div class="label label-primary" id="crypted">crypted</div>
+			    </div>
 		    </div>
-		    <div class="form-group">
-		        <label class="form-label">crypted</label>
-		        <div class="label label-primary" id="crypted">crypted</div>
+		    <div class="card-footer">
+		        <button id="execute" class="btn btn-primary">execute</button>
 		    </div>
-	    </div>
-	    <div class="card-footer">
-	        <button id="execute" class="btn btn-primary">execute</button>
-	    </div>
+		</div>
 	</div>
 	<script src="jquery.js"></script>
 	<script src="jsencrypt.min.js"></script>
