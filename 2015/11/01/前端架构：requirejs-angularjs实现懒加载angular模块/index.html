@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/index.html">
 <meta property="og:site_name" content="Thomas Galaxy">
 <meta property="og:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
-<meta property="og:updated_time" content="2015-11-01T12:45:52.000Z">
+<meta property="og:updated_time" content="2016-08-02T03:50:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
 <meta name="twitter:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
@@ -24,15 +24,12 @@
     
     
     
-        <meta property="og:image" content="/assets/images/avator.jpg"/>
+        <meta property="og:image" content="/assets/images/myavator.jpg"/>
     
     
         <meta property="og:image" content="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http:/chenjunhao.cn/assets/images/post-2.jpg"/>
         <meta class="swiftype" name="image" data-type="enum" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http://chenjunhao.cn/assets/images/post-2.jpg" />
     
-    
-        <meta property="og:image" content="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http:/wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png" />
     
     
     <!--STYLES-->
@@ -63,7 +60,7 @@
                 href="#about">
         
         
-            <img class="header-picture" src="/assets/images/avator.jpg"/>
+            <img class="header-picture" src="/assets/images/myavator.jpg"/>
         
         </a>
     
@@ -80,7 +77,7 @@
     
         <div class="sidebar-profile">
             <a href="/#about">
-                    <img class="sidebar-profile-picture" src="/assets/images/avator.jpg"/>
+                    <img class="sidebar-profile-picture" src="/assets/images/myavator.jpg"/>
             </a>
             <span class="sidebar-profile-name">Thomas Chan</span>
         </div>
@@ -175,13 +172,15 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    "
-             style="background-image:url('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-279547.png');"
-             data-behavior="3">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
             前端架构：requirejs+angularjs实现懒加载angular模块
@@ -196,16 +195,6 @@
     
 </div>
 </div>
-            
-        </div>
-
-            <div id="main" data-behavior="3"
-                 class="hasCover
-                        hasCoverMetaIn
-                        ">
-                
-<article class="post" itemscope itemType="http://schema.org/BlogPosting">
-    
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
@@ -500,7 +489,7 @@ require([
             <i class="fa fa-remove"></i>
         </div>
         
-            <img id="about-card-picture" src="/assets/images/avator.jpg"/>
+            <img id="about-card-picture" src="/assets/images/myavator.jpg"/>
         
             <h4 id="about-card-name">Thomas Chan</h4>
         
@@ -526,7 +515,7 @@ require([
 </div>
 
         
-<div id="cover" style="background-image:url('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-278947.jpg');"></div>
+<div id="cover" style="background-image:url('http://chenjunhao.cn/assets/images/wallhaven-362339.jpg');"></div>
     </body>
     <!--SCRIPTS-->
 <script src="/assets/js/script.min.js"></script>
