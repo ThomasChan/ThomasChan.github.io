@@ -1,208 +1,51 @@
-
 <!DOCTYPE html>
-<html lang="zh-cn">
-    
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Thomas Galaxy">
-    <title>前端架构：requirejs+angularjs实现懒加载angular模块 - Thomas Galaxy</title>
-    <meta name="author" content="Thomas Chan">
-    
-    
-    <meta name="description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
-<meta property="og:url" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/index.html">
-<meta property="og:site_name" content="Thomas Galaxy">
-<meta property="og:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
-<meta property="og:updated_time" content="2016-08-02T03:50:17.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
-<meta name="twitter:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，">
-<meta name="twitter:creator" content="@https://twitter.com/ThomasChan5818">
-    
-    
-    
-        <meta property="og:image" content="/assets/images/myavator.jpg"/>
-    
-    
-        <meta property="og:image" content="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http:/chenjunhao.cn/assets/images/post-2.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/http://chenjunhao.cn/assets/images/post-2.jpg" />
-    
-    
-    
-    <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style.min.css">
-    <!--STYLES END-->
-    
+  <meta charset="utf-8">
+  <title>前端架构：requirejs+angularjs实现懒加载angular模块 | Thomas Chan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://chenjunhao.cn/assets/images/avator.jpg">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
 </head>
 
-    <body>
-        <div id="blog">
-            <!-- Define author's picture -->
-
-
+<body>
+  <nav class="app-nav">
+  
     
-        
-            
-        
+      <a href="/.">home</a>
     
-
-<header id="header" data-behavior="3">
-    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
-    <h1 class="header-title">
-        <a class="header-title-link" href="/ ">Thomas Galaxy</a>
-    </h1>
+  
     
-        
-            <a  class="header-right-picture "
-                href="#about">
-        
-        
-            <img class="header-picture" src="/assets/images/myavator.jpg"/>
-        
-        </a>
+      <a href="/archives">archive</a>
     
-</header>
-
-            <!-- Define author's picture -->
-
-
-
-        
+  
     
-
-<nav id="sidebar" data-behavior="3">
+      <a href="/about">about</a>
     
-        <div class="sidebar-profile">
-            <a href="/#about">
-                    <img class="sidebar-profile-picture" src="/assets/images/myavator.jpg"/>
-            </a>
-            <span class="sidebar-profile-name">Thomas Chan</span>
-        </div>
+  
     
+      <a href="/resume">resume</a>
     
-        <ul class="sidebar-buttons">
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link "
-                         href="/ "
-                        
-                    >
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
-                    <span class="sidebar-button-desc">首页</span>
-                </a>
-        </li>
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link "
-                         href="/all-archives"
-                        
-                    >
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
-                    <span class="sidebar-button-desc">归档</span>
-                </a>
-        </li>
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link "
-                         href="#about"
-                        
-                    >
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
-                    <span class="sidebar-button-desc">关于</span>
-                </a>
-        </li>
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link "
-                         href="http://chenjunhao.cn/resume-two"
-                    >
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-file-code-o"></i>
-                    <span class="sidebar-button-desc">简历</span>
-                </a>
-        </li>
-        
-    </ul>
-    
-        <ul class="sidebar-buttons">
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link " href="https://github.com/ThomasChan" target="_blank">
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
-                    <span class="sidebar-button-desc">github</span>
-                </a>
-        </li>
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link " href="mailto:chenjunhao5818@gmail.com" target="_blank">
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
-                    <span class="sidebar-button-desc">邮箱</span>
-                </a>
-        </li>
-        
-            <li class="sidebar-button">
-                
-                    <a  class="sidebar-button-link " href="http://user.qzone.qq.com/812839409" target="_blank">
-                
-                    <i class="sidebar-button-icon fa fa-lg fa-qq"></i>
-                    <span class="sidebar-button-desc">qq</span>
-                </a>
-        </li>
-        
-    </ul>
-    
-        <ul class="sidebar-buttons">
-        
-    </ul>
-    
+  
 </nav>
 
-            
-            <div id="main" data-behavior="3"
-                 class="
-                        hasCoverMetaIn
-                        ">
-                
-<article class="post" itemscope itemType="http://schema.org/BlogPosting">
-    
-    
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title" itemprop="headline">
-            前端架构：requirejs+angularjs实现懒加载angular模块
-        </h1>
-    
-    <div class="post-meta">
-    <time itemprop="datePublished" content="Sun Nov 01 2015 17:41:06 GMT+0800">
-	
-		    11月 01, 2015
-    	
-    </time>
-    
-</div>
-</div>
-    
-    <div class="post-content markdown" itemprop="articleBody">
-        <div class="main-content-wrap">
-            <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，<a id="more"></a>既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，<strong><a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1" target="_blank" rel="external">如果我对 jQuery 开发很熟如何理解 angular </a></strong>。</p>
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">前端架构：requirejs+angularjs实现懒加载angular模块</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">十一月 01 2015</p>
+  </section>
+
+  <section class="article-entry">
+    <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，<a id="more"></a>既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，<strong><a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1" target="_blank" rel="external">如果我对 jQuery 开发很熟如何理解 angular </a></strong>。</p>
 <p>requirejs 不用说都知道是用来前端懒加载 scripts 的，我在网上看到的使用 require + angular 的组合的案例模式都是一样的，无论你访问网站的哪个 url ，都会把 angular 的所有模块全部通过 require 加载下来，虽然 angular 与 backbone 这些框架貌似更适合做单页应用，但是我认为单页应用也没必要把所有的模块都加载下来，这样首屏加载就会很慢，用户体验很不好；于是我 google 了一通，终于找到了解决方法，通过 require 配合 angular route 的 resolve 方法，实现单模块加载，这样做的好处显而易见，坏处可以说没有，硬要说的话还是 angular 之前的缺点：seo 方面要单做。</p>
 <p>废话不多说，show you my code:</p>
 <p>首先项目目录结构是这样滴：</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">app-|<span class="string"></span><br><span class="line">    </span>|<span class="string">-package.json</span><br><span class="line">    </span>|<span class="string">-index.html</span><br><span class="line">    </span>|<span class="string">-views</span><br><span class="line">    </span>|<span class="string">-src-+</span><br><span class="line">          </span>|<span class="string">-img</span><br><span class="line">          </span>|<span class="string">-css</span><br><span class="line">          </span>|<span class="string">-js-+</span><br><span class="line">          </span>|<span class="string">    </span>|<span class="string">-controllers-+...</span><br><span class="line">          </span>|<span class="string">    </span>|<span class="string">-services-+...</span><br><span class="line">          </span>|<span class="string">    +application.js</span><br><span class="line">          </span>|<span class="string">    +require-config.js</span><br><span class="line">          </span>|<span class="string">    +routeResolve.js</span><br><span class="line">          </span>|<span class="string">-lib-+</span><br><span class="line">                +angular.min.js</span><br><span class="line">                +angular-route.min.js</span><br><span class="line">                +angular-animate.min.js</span><br><span class="line">                +angular-resourse.min.js</span><br><span class="line">                +require.js</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">app-|<span class="string"></span></div><div class="line">    |<span class="string">-package.json</span></div><div class="line">    |<span class="string">-index.html</span></div><div class="line">    |<span class="string">-views</span></div><div class="line">    |<span class="string">-src-+</span></div><div class="line">          |<span class="string">-img</span></div><div class="line">          |<span class="string">-css</span></div><div class="line">          |<span class="string">-js-+</span></div><div class="line">          |<span class="string">    </span>|<span class="string">-controllers-+...</span></div><div class="line">          |<span class="string">    </span>|<span class="string">-services-+...</span></div><div class="line">          |<span class="string">    +application.js</span></div><div class="line">          |<span class="string">    +require-config.js</span></div><div class="line">          |<span class="string">    +routeResolve.js</span></div><div class="line">          |<span class="string">-lib-+</span></div><div class="line">                +angular.min.js</div><div class="line">                +angular-route.min.js</div><div class="line">                +angular-animate.min.js</div><div class="line">                +angular-resourse.min.js</div><div class="line">                +require.js</div></pre></td></tr></table></figure>
 <p>index.html 长这样：</p>
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;zh-cmn-Hans&quot;&gt;
@@ -321,64 +164,55 @@ require([
 <p>参考链接：</p>
 <p><a href="http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs" target="_blank" rel="external">http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs</a></p>
 
-            
-                
+  </section>
+</article>
 
-            
-        </div>
-    </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
-        
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">标签</span><br/>
-                
-    <a class="tag tag--primary tag--small t-link" href="/tags/javascript/">javascript</a>
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://chenjunhao.cn/assets/images/myavator.jpg" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Thomas Chan </p>
+      <p class="subtitle"> 年轻就是暴躁，年轻就是不安分，年轻就是发脾气 </p>
+    <div>
+  </section>
 
-            </div>
-        
-        <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/11/01/那一段过往的日记/"  data-tooltip="那一段过往的日记">
-                
-                    <i class="fa fa-angle-left"></i>
-                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-                
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/10/28/重拾blog/" data-tooltip="重拾blog">
-                
-                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-google-plus"></i>
-            </a>
-        </li>
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-facebook-official"></i>
-            </a>
-        </li>
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-twitter"></i>
-            </a>
-        </li>
-    </ul>
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text= id="require-js-angu"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
 </div>
 
 
-        
-            <section id="comments">
+  
+    <section id="comments">
   <!-- 多说评论框 start -->
   <div class="ds-thread" data-thread-key="blog-前端架构：requirejs-angularjs实现懒加载angular模块" data-title="前端架构：requirejs+angularjs实现懒加载angular模块" data-url="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/"></div>
   <!-- 多说评论框 end -->
@@ -397,130 +231,8 @@ require([
   <!-- 多说公共JS代码 end -->
 </section>
 
-        
-    </div>
-</article>
+  
+</main>
 
-
-
-                <footer id="footer" class="main-content-wrap">
-    <span class="copyrights">
-        Copyrights &copy; 2016 Thomas Chan. All Rights Reserved.
-    </span>
-</footer>
-
-            </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/11/01/那一段过往的日记/"  data-tooltip="那一段过往的日记">
-                
-                    <i class="fa fa-angle-left"></i>
-                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-                
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/10/28/重拾blog/" data-tooltip="重拾blog">
-                
-                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-google-plus"></i>
-            </a>
-        </li>
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-facebook-official"></i>
-            </a>
-        </li>
-        <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-twitter"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-
-
-                </div>
-                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
-    <ul class="share-options">
-        <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
-            </a>
-        </li>
-        <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
-            </a>
-        </li>
-        <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/">
-                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
-            </a>
-        </li>
-    </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
-            
-        </div>
-        <!-- Define author's picture -->
-
-
-    
-        
-    
-
-<div id="about">
-    <div id="about-card">
-        <div id="about-btn-close">
-            <i class="fa fa-remove"></i>
-        </div>
-        
-            <img id="about-card-picture" src="/assets/images/myavator.jpg"/>
-        
-            <h4 id="about-card-name">Thomas Chan</h4>
-        
-            <h5 id="about-card-bio"><p>沉默的 95 后</p>
-</h5>
-        
-        
-            <h5 id="about-card-job">
-                <i class="fa fa-briefcase"></i>
-                <br/>
-                <p>伪•全栈工程师</p>
-
-            </h5>
-        
-        
-            <h5 id="about-card-location">
-                <i class="fa fa-map-marker"></i>
-                <br/>
-                北京-中国
-            </h5>
-        
-    </div>
-</div>
-
-        
-<div id="cover" style="background-image:url('http://chenjunhao.cn/assets/images/wallhaven-362339.jpg');"></div>
-    </body>
-    <!--SCRIPTS-->
-<script src="/assets/js/script.min.js"></script>
-<!--SCRIPTS END-->
-
-
-
+</body>
 </html>
