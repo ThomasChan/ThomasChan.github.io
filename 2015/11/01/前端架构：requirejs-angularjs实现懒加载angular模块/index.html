@@ -41,7 +41,7 @@
   </section>
 
   <section class="article-entry">
-    <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，<a id="more"></a>既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，<strong><a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1" target="_blank" rel="external">如果我对 jQuery 开发很熟如何理解 angular </a></strong>。</p>
+    <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，<strong><a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1" target="_blank" rel="external">如果我对 jQuery 开发很熟如何理解 angular </a></strong>。</p>
 <p>requirejs 不用说都知道是用来前端懒加载 scripts 的，我在网上看到的使用 require + angular 的组合的案例模式都是一样的，无论你访问网站的哪个 url ，都会把 angular 的所有模块全部通过 require 加载下来，虽然 angular 与 backbone 这些框架貌似更适合做单页应用，但是我认为单页应用也没必要把所有的模块都加载下来，这样首屏加载就会很慢，用户体验很不好；于是我 google 了一通，终于找到了解决方法，通过 require 配合 angular route 的 resolve 方法，实现单模块加载，这样做的好处显而易见，坏处可以说没有，硬要说的话还是 angular 之前的缺点：seo 方面要单做。</p>
 <p>废话不多说，show you my code:</p>
 <p>首先项目目录结构是这样滴：</p>
