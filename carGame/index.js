@@ -109,9 +109,9 @@
 	var frameFunc;
 
 	function init() {
-		var _random = Math.ceil(randomWithRange(-1, enemySrc.length))
+		var _random = Math.ceil(randomWithRange(-1, enemySrc.length + 1))
 		var _img = enemySrc[((_random+0) >= 0 ? _random : 1)]
-		var _index = Math.floor(randomWithRange(0, enemys.length))
+		var _index = Math.floor(randomWithRange(0, enemys.length + 1))
 		enemys = [{
 			img: _img,
 			index: _index,
@@ -249,9 +249,9 @@
 	}
 
 	function geneEnemy() {
-		var _img = enemySrc[Math.ceil(randomWithRange(-1, enemySrc.length))]
+		var _img = enemySrc[Math.ceil(randomWithRange(-1, enemySrc.length + 1))]
 		if (Math.random() * 10 > 5 && _img && enemys.length < 3) {
-			var _index = Math.floor(randomWithRange(0, enemys.length))
+			var _index = Math.floor(randomWithRange(0, enemys.length + 1))
 			if (!enemys[enemys.length - 1] || _index != enemys[enemys.length - 1].index) {
 				enemys.push({
 					img: _img,
