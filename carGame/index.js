@@ -54,21 +54,17 @@
 	}
 	carImg.src = car.img
 	var carCorner = 6
-	var enemySrc = [
-		{
-			width: 0,
-			height: 0,
-			img: 'enemy1.png'
-		}, {
-			width: 0,
-			height: 0,
-			img: 'enemy2.png'
-		}, {
-			width: 0,
-			height: 0,
-			img: 'enemy3.png'
+	var enemySrc = (function() {
+		var r = []
+		for (var i = 1; i <= 12; i++) {
+			r.push({
+				width: 0,
+				height: 0,
+				img: 'enemy'+i+'.png'
+			})
 		}
-	]
+		return r
+	}())
 	var enemys = []
 	for (var i = enemySrc.length - 1; i >= 0; i--) {
 		enemySrc[i].imgObj = new Image()
@@ -90,6 +86,8 @@
 		img: new Image(),
 		direction: 1,
 		path: [],
+		meadowI: 0,
+		meadows: [],
 		zebraCrossing: [],
 		zebraCrossingI: 0,
 		meters: 0,
@@ -97,6 +95,13 @@
 	}
 	road.img.src = 'roads.png'
 	road.img.onload = function() {
+		var x = Math.ceil(contextWidth / this.width)
+		var y = Math.ceil(contextHeight / this.height)
+		for (var i = -1; i < y; i++) {
+			for (var j = 0; j < x; j++) {
+				road.meadows.push([j*this.width, i*this.height, this.width, this.height])
+			}
+		}
 		init()
 		listener()
 	}
@@ -104,9 +109,9 @@
 	var frameFunc;
 
 	function init() {
-		var _random = Math.ceil(randomWithRange(-1, 2))
+		var _random = Math.ceil(randomWithRange(-1, enemySrc.length))
 		var _img = enemySrc[((_random+0) >= 0 ? _random : 1)]
-		var _index = Math.floor(randomWithRange(0, 3))
+		var _index = Math.floor(randomWithRange(0, enemys.length))
 		enemys = [{
 			img: _img,
 			index: _index,
@@ -192,35 +197,30 @@
 	}
 
 	function drawBackground() {
-		if (road.img.width) {
-			var x = Math.ceil(contextWidth / road.img.width)
-			var y = Math.ceil(contextHeight / road.img.height)
-			for (var i = 0; i < y; i++) {
-				for (var j = 0; j < x; j++) {
-					context.drawImage(road.img, j*road.img.width, i*road.img.height, road.img.width, road.img.height)
-				}
-			}
+		var x = Math.ceil(contextWidth / road.img.width)
+		var y = Math.ceil(contextHeight / road.img.height)
+		road.meadowI++
+		if (road.meadowI > 10) {
+			road.meadowI = 0
+		}
+		if (road.meadows.length) {
+			road.meadows.forEach(function(i) {
+				context.drawImage(road.img, i[0], i[1] + road.meadowI * 6, i[2], i[3])
+			})
 		}
 	}
 
 	function drawRoad() {
 		context.fillStyle = '#888'
 		context.fillRect(road.x, 0, road.width, contextHeight)
+		context.fillStyle = '#fff'
 		context.fillRect(road.x - 3, 0, 3, contextHeight)
 		context.fillRect(road.x + road.width, 0, 3, contextHeight)
-		context.fillStyle = '#fff'
 		road.zebraCrossingI++
 		if (road.zebraCrossingI > 30) {
 			road.zebraCrossingI = 0
 		}
 		if (road.zebraCrossing.length) {
-			if (road.zebraCrossing[0][1] > 40) {
-				road.zebraCrossing = road.zebraCrossing.slice(road.zebraCrossing.length - 3)
-				var f41 = road.width / 4
-				for (var i = 1; i <= 3; i++) {
-					[road.x + f41 * i, -10, 2, 40].concat(road.zebraCrossing)
-				}
-			}
 			road.zebraCrossing.forEach(function(i) {
 				context.fillRect(i[0], i[1] + road.zebraCrossingI * 6, i[2], i[3])
 			})
@@ -249,9 +249,9 @@
 	}
 
 	function geneEnemy() {
-		var _img = enemySrc[Math.ceil(randomWithRange(-1, 2))]
+		var _img = enemySrc[Math.ceil(randomWithRange(-1, enemySrc.length))]
 		if (Math.random() * 10 > 5 && _img && enemys.length < 3) {
-			var _index = Math.floor(randomWithRange(0, 3))
+			var _index = Math.floor(randomWithRange(0, enemys.length))
 			if (!enemys[enemys.length - 1] || _index != enemys[enemys.length - 1].index) {
 				enemys.push({
 					img: _img,
