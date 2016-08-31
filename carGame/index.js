@@ -298,11 +298,11 @@
 
 	function listener() {
 		document.onkeydown = function(e) {
-			move.inc += 2;
+			// move.inc += 2;
 			keys[e.keyCode] = true
 		};
 		document.onkeyup = function(e) {
-			move.inc = 0;
+			// move.inc = 0;
 			keys[e.keyCode] = false
 		}
 	}
