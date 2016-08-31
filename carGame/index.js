@@ -34,8 +34,10 @@
 	}
 	var move = {
 		inc: 0,
-		x: 14,
-		y: 14
+		x: 0,
+		y: 0,
+	    speed: 1.5,
+	    friction: 0.95
 	}
 	var carImg = new Image()
 	carImg.onload = function() {
@@ -264,30 +266,44 @@
 		}
 	}
 
-	function drawCar() {
+	var keys = [];
+	function drawCar(e) {
+		if (keys[38]) {
+	        if (move.y > -move.speed) {
+	            move.y--;
+	        }
+	    }
+	    if (keys[40]) {
+	        if (move.y < move.speed) {
+	            move.y++;
+	        }
+	    }
+	    if (keys[39]) {
+	        if (move.x < move.speed) {
+	            move.x++;
+	        }
+	    }
+	    if (keys[37]) {
+	        if (move.x > -move.speed) {
+	            move.x--;
+	        }
+	    }
+	    move.y *= move.friction;
+	    car.y += move.y;
+	    move.x *= move.friction;
+	    car.x += move.x;
+
 		context.drawImage(carImg, 0, 0, car.width, car.height, car.x, car.y, car.width, car.height)
 	}
 
 	function listener() {
 		document.onkeydown = function(e) {
 			move.inc += 2;
-			switch (e.keyCode) {
-				case 39: // right
-					((car.x + (move.x + move.inc) + car.width) <= contextWidth) && (car.x += (move.x + move.inc));
-					break;
-				case 37: // left
-					((car.x - (move.x + move.inc)) >= 0) && (car.x -= (move.x + move.inc));
-					break;
-				case 38: // top
-					((car.y - (move.y + move.inc)) >= 0) && (car.y -= (move.y + move.inc));
-					break;
-				case 40: // bottom
-					((car.y + (move.y + move.inc) + car.height) <= contextHeight) && (car.y += (move.y + move.inc));
-					break;
-			}
-		}
+			keys[e.keyCode] = true
+		};
 		document.onkeyup = function(e) {
 			move.inc = 0;
+			keys[e.keyCode] = false
 		}
 	}
 
