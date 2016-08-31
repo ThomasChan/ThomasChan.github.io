@@ -36,8 +36,8 @@
 		inc: 0,
 		x: 0,
 		y: 0,
-	    speed: 1.5,
-	    friction: 0.95
+	    speed: 2,
+	    friction: 0.9
 	}
 	var carImg = new Image()
 	carImg.onload = function() {
