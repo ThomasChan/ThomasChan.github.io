@@ -1,6 +1,6 @@
 'use strict';
 
-// (function() {
+(function() {
 	var vendors = ['webkit', 'moz'];
 	for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
 		var vp = vendors[i];
@@ -97,7 +97,8 @@
 	}
 	road.img.src = 'roads.png'
 	road.img.onload = function() {
-		drawBackground()
+		init()
+		listener()
 	}
 
 	var frameFunc;
@@ -111,7 +112,7 @@
 			index: _index,
 			x: Math.floor(road.width / 4 * _index + road.x),
 			y: 0,
-			inc: Math.ceil(randomWithRange(2, 6))
+			inc: Math.ceil(randomWithRange(2, 5))
 		}]
 		drawStart()
 	}
@@ -257,7 +258,7 @@
 					index: _index,
 					x: Math.floor(road.width / 4 * _index + road.x),
 					y: 0,
-					inc: Math.ceil(randomWithRange(2, 6))
+					inc: Math.ceil(randomWithRange(2, 5))
 				})
 			}
 		}
@@ -362,6 +363,4 @@
 				car.bottomRight.y <= enemy.bottomRight.y)
 	}
 
-	init()
-	listener()
-// }());
+}());
