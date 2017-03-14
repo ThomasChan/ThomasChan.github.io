@@ -951,61 +951,43 @@
 <span class="hljs-keyword">import</span> { Stack } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
+<span class="hljs-keyword">import</span> makaluFilter <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/util/makaluFilter'</span>;
 
-<span class="hljs-keyword">const</span> TransSourceToStack = (collection, gk, sgk, groupAxis, subgroupAxis, yAxis, yAggregate) =&gt; {
-  <span class="hljs-keyword">const</span> middleTransObject = {};
-  gk.map(k =&gt; {
-    <span class="hljs-keyword">if</span> (!middleTransObject[k]) {
-      middleTransObject[k] = {
-        [groupAxis]: k,
-        positive_total: <span class="hljs-number">0</span>,
-        negative_total: <span class="hljs-number">0</span>,
-      };
+<span class="hljs-keyword">const</span> TransSourceToStack = (series, x, y, z) =&gt; {
+  <span class="hljs-keyword">const</span> seriesLength = series.length;
+  <span class="hljs-keyword">const</span> xValues = [];
+  <span class="hljs-keyword">let</span> xLength = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">const</span> yValues = [];
+  <span class="hljs-keyword">let</span> yLength = <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">const</span> zValues = {};
+  <span class="hljs-keyword">const</span> result = [];
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; seriesLength; i++) {
+    <span class="hljs-keyword">if</span> (xValues.indexOf(series[i][x]) === <span class="hljs-number">-1</span>) {
+      xValues.push(series[i][x]);
+      xLength += <span class="hljs-number">1</span>;
     }
-    sgk.map(sk =&gt; {
-      <span class="hljs-keyword">if</span> (!middleTransObject[k][sk]) {
-        middleTransObject[k][sk] = [];
+    <span class="hljs-keyword">if</span> (yValues.indexOf(series[i][y]) === <span class="hljs-number">-1</span>) {
+      yValues.push(series[i][y]);
+      yLength += <span class="hljs-number">1</span>;
+    }
+    zValues[<span class="hljs-string">`<span class="hljs-subst">${series[i][x]}</span>*<span class="hljs-subst">${series[i][y]}</span>`</span>] = series[i][z];
+  }
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; xLength; j++) {
+    <span class="hljs-keyword">const</span> object = {
+      [x]: xValues[j],
+      positive_total: <span class="hljs-number">0</span>,
+      negative_total: <span class="hljs-number">0</span>,
+    };
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> m = <span class="hljs-number">0</span>; m &lt; yLength; m++) {
+      object[yValues[m]] = zValues[<span class="hljs-string">`<span class="hljs-subst">${xValues[j]}</span>*<span class="hljs-subst">${yValues[m]}</span>`</span>];
+      <span class="hljs-keyword">if</span> (zValues[<span class="hljs-string">`<span class="hljs-subst">${xValues[j]}</span>*<span class="hljs-subst">${yValues[m]}</span>`</span>] &gt; <span class="hljs-number">0</span>) {
+        object.positive_total += zValues[<span class="hljs-string">`<span class="hljs-subst">${xValues[j]}</span>*<span class="hljs-subst">${yValues[m]}</span>`</span>];
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (zValues[<span class="hljs-string">`<span class="hljs-subst">${xValues[j]}</span>*<span class="hljs-subst">${yValues[m]}</span>`</span>] &lt; <span class="hljs-number">0</span>) {
+        object.negative_total += zValues[<span class="hljs-string">`<span class="hljs-subst">${xValues[j]}</span>*<span class="hljs-subst">${yValues[m]}</span>`</span>];
       }
-    });
-  });
-  collection.map(row =&gt; {
-    <span class="hljs-keyword">const</span> _gk = row[groupAxis];
-    <span class="hljs-keyword">const</span> _sgk = row[subgroupAxis];
-    middleTransObject[_gk][_sgk].push(row[yAxis]);
-    <span class="hljs-keyword">if</span> (row[yAxis] &gt;= <span class="hljs-number">0</span>) {
-      middleTransObject[_gk].positive_total += <span class="hljs-built_in">Number</span>(row[yAxis]);
-    } <span class="hljs-keyword">else</span> {
-      middleTransObject[_gk].negative_total += <span class="hljs-built_in">Number</span>(row[yAxis]);
     }
-  });
-  <span class="hljs-keyword">const</span> result = _.values(middleTransObject);
-  result.forEach((stack, i) =&gt; {
-    <span class="hljs-keyword">if</span> (yAggregate === <span class="hljs-string">'sum'</span>) {
-      sgk.map(k =&gt; {
-        result[i][k] = _.reduce(stack[k], (t, n) =&gt; t + n, <span class="hljs-number">0</span>);
-      });
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (yAggregate === <span class="hljs-string">'max'</span>) {
-      sgk.map(k =&gt; {
-        result[i][k] = <span class="hljs-built_in">Math</span>.max(...stack[k]);
-      });
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (yAggregate === <span class="hljs-string">'min'</span>) {
-      sgk.map(k =&gt; {
-        result[i][k] = <span class="hljs-built_in">Math</span>.min(...stack[k]);
-      });
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (yAggregate === <span class="hljs-string">'avg'</span>) {
-      sgk.map(k =&gt; {
-        stack[k] /= stack[k].length;
-      });
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (yAggregate === <span class="hljs-string">'last'</span>) {
-      sgk.map(k =&gt; {
-        result[i][k] = stack[k].pop();
-      });
-    } <span class="hljs-keyword">else</span> {
-      sgk.map(k =&gt; {
-        result[i][k] = stack[k].shift();
-      });
-    }
-  });
+    result.push(object);
+  }
   <span class="hljs-keyword">return</span> result;
 };
 
@@ -1036,7 +1018,16 @@
     <span class="hljs-keyword">if</span> (timeFilter) {
       _source = _source.filter(v =&gt; v.time &gt;= timeFilter[<span class="hljs-number">0</span>] &amp;&amp; v.time &lt;= timeFilter[<span class="hljs-number">1</span>]);
     }
-    <span class="hljs-keyword">const</span> StackSource = TransSourceToStack(_source, metrics, dimensions, <span class="hljs-string">'metric'</span>, <span class="hljs-string">'city'</span>, <span class="hljs-string">'value'</span>, <span class="hljs-string">'sum'</span>);
+    <span class="hljs-keyword">const</span> StackSource = TransSourceToStack(
+      makaluFilter(_source,
+        [{ name: <span class="hljs-string">'metric'</span> }, { name: <span class="hljs-string">'city'</span> }],
+        [<span class="hljs-string">'value'</span>],
+        [<span class="hljs-string">'sum'</span>],
+      ),
+      <span class="hljs-string">'metric'</span>,
+      <span class="hljs-string">'city'</span>,
+      <span class="hljs-string">'value'</span>,
+    );
 
     <span class="hljs-keyword">return</span> &lt;Stack
       title={this.state.title}

@@ -950,13 +950,19 @@
 <span class="hljs-keyword">import</span> { Area } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
-<span class="hljs-keyword">import</span> filterGroupBy <span class="hljs-keyword">from</span> <span class="hljs-string">'./aggregationMethods/filterGroupBy'</span>;
+<span class="hljs-keyword">import</span> makaluFilter <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/util/makaluFilter'</span>;
 
-<span class="hljs-keyword">const</span> AreaSource = filterGroupBy(source, <span class="hljs-string">'time'</span>, <span class="hljs-string">'YYYY'</span>, {
-  <span class="hljs-string">'value'</span>: <span class="hljs-string">'sum'</span>,
-  <span class="hljs-string">'avalue'</span>: <span class="hljs-string">'sum'</span>,
-  <span class="hljs-string">'bvalue'</span>: <span class="hljs-string">'sum'</span>,
-}).data;
+<span class="hljs-keyword">const</span> AreaSource = makaluFilter(
+  source,
+  [
+    {
+      name: <span class="hljs-string">'time'</span>,
+      format: d =&gt; moment(d).format(<span class="hljs-string">'YYYY'</span>),
+    },
+  ],
+  [<span class="hljs-string">'value'</span>, <span class="hljs-string">'avalue'</span>, <span class="hljs-string">'bvalue'</span>],
+  [<span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>],
+);
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
 
@@ -992,13 +998,16 @@
       (timeFilter ? timeFilter[<span class="hljs-number">0</span>] : <span class="hljs-built_in">Math</span>.min(...dates)),
       (timeFilter ? timeFilter[<span class="hljs-number">1</span>] : <span class="hljs-built_in">Math</span>.min(...dates)),
     ];
+    <span class="hljs-keyword">let</span> tempXAxisDomain = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>];
     _source.map(v =&gt; {
       AreaYs.push(v.value);
       AreaY1s.push(v.avalue);
       AreaY2s.push(v.bvalue);
-      xAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(xAxisDomain[<span class="hljs-number">0</span>], v.time);
-      xAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(xAxisDomain[<span class="hljs-number">1</span>], v.time);
+      tempXAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(tempXAxisDomain[<span class="hljs-number">0</span>], v.time);
+      tempXAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(tempXAxisDomain[<span class="hljs-number">1</span>], v.time);
     });
+    xAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.max(tempXAxisDomain[<span class="hljs-number">0</span>], xAxisDomain[<span class="hljs-number">0</span>]);
+    xAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.min(tempXAxisDomain[<span class="hljs-number">1</span>], xAxisDomain[<span class="hljs-number">1</span>]);
 
     <span class="hljs-keyword">return</span> &lt;Area
       title={this.state.title}
@@ -1016,7 +1025,7 @@
         [Math.min(...AreaY1s), Math.max(...AreaY1s)],
         [Math.min(...AreaY2s), Math.max(...AreaY2s)],
       ]}
-      timebarMinimumStepSize={4}
+      timebarMinimumStepSize={6}
       timebarShow={true}
       timebarDomain={dates}
       timebarTickFormat={v =&gt; moment(v).format('YYYY')}

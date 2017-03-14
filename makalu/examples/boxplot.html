@@ -950,7 +950,7 @@
 <span class="hljs-keyword">import</span> { Boxplot } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
-<span class="hljs-keyword">import</span> GroupBy <span class="hljs-keyword">from</span> <span class="hljs-string">'./aggregationMethods/GroupBy'</span>;
+<span class="hljs-keyword">import</span> makaluFilter <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/util/makaluFilter'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
 
@@ -982,7 +982,9 @@
 
     <span class="hljs-keyword">let</span> BoxplotmaxValue = <span class="hljs-number">0</span>;
     <span class="hljs-keyword">let</span> BoxplotminValue = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">let</span> BoxplotSource = GroupBy(_source, [<span class="hljs-string">'metric'</span>], [<span class="hljs-string">'value'</span>], [<span class="hljs-string">'array'</span>]);
+    <span class="hljs-keyword">let</span> BoxplotSource = makaluFilter(_source, [{
+        name: <span class="hljs-string">'metric'</span>
+      }], [<span class="hljs-string">'value'</span>], [<span class="hljs-string">'array'</span>]);
     <span class="hljs-keyword">const</span> TransSourceToBoxplot = () =&gt; {
       <span class="hljs-comment">// from http://informationandvisualization.de/blog/box-plot</span>
       <span class="hljs-keyword">return</span> BoxplotSource.map(box =&gt; {
