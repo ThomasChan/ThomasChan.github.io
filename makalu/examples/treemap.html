@@ -947,10 +947,9 @@
     <pre><code language=jsx><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> moment <span class="hljs-keyword">from</span> <span class="hljs-string">'moment'</span>;
-<span class="hljs-keyword">import</span> { Treemap } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
+<span class="hljs-keyword">import</span> { Treemap, transSourceToMap, makaluFilter } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
-<span class="hljs-keyword">import</span> filterGroup <span class="hljs-keyword">from</span> <span class="hljs-string">'./aggregationMethods/filterGroup'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
 
@@ -979,24 +978,16 @@
     <span class="hljs-keyword">if</span> (timeFilter) {
       _source = _source.filter(v =&gt; v.time &gt;= timeFilter[<span class="hljs-number">0</span>] &amp;&amp; v.time &lt;= timeFilter[<span class="hljs-number">1</span>]);
     }
-    <span class="hljs-keyword">let</span> TreemapSource = filterGroup(_source, <span class="hljs-string">'metric'</span>, {
-      <span class="hljs-string">'value'</span>: <span class="hljs-string">'sum'</span>,
-      <span class="hljs-string">'metric'</span>: <span class="hljs-string">'group by'</span>,
-    });
-    <span class="hljs-keyword">let</span> TreemapminSize = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">let</span> TreemapmaxSize = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">const</span> TransSourceToMap = () =&gt; {
-      <span class="hljs-keyword">return</span> TreemapSource.data.map((row, i) =&gt; {
-        TreemapminSize = <span class="hljs-built_in">Math</span>.min(row.value, TreemapminSize);
-        TreemapmaxSize = <span class="hljs-built_in">Math</span>.max(row.value, TreemapmaxSize);
-        <span class="hljs-keyword">return</span> {
-          id: i,
-          name: row.metric,
-          size: row.value,
-        };
-      });
-    };
-    TreemapSource = TransSourceToMap();
+    <span class="hljs-keyword">const</span> TreemapSource = transSourceToMap(
+      makaluFilter(
+        _source,
+        [{ name: <span class="hljs-string">'metric'</span> }],
+        [<span class="hljs-string">'value'</span>],
+        [<span class="hljs-string">'sum'</span>],
+      ),
+      <span class="hljs-string">'metric'</span>,
+      <span class="hljs-string">'value'</span>,
+    );
 
     <span class="hljs-keyword">return</span> &lt;Treemap
       title={this.state.title}
@@ -1004,11 +995,11 @@
       width={window.innerWidth * .5}
       height={window.innerHeight * .6}
       margin={[20, 20, 20, 20]}
-      source={TreemapSource}
+      source={TreemapSource.result}
       groupAxis={`metric`}
       groupAxisDomain={metrics}
       sizeAxis={`value`}
-      colorDomain={[TreemapminSize, TreemapmaxSize]}
+      colorDomain={TreemapSource.colorDomain}
       timebarShow={true}
       timebarDomain={dates}
       timebarTickFormat={v =&gt; moment(v).format('YYYY')}

@@ -947,10 +947,10 @@
     <pre><code language=jsx><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> moment <span class="hljs-keyword">from</span> <span class="hljs-string">'moment'</span>;
-<span class="hljs-keyword">import</span> { Area } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
+<span class="hljs-keyword">import</span> { Area, makaluFilter } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
-<span class="hljs-keyword">import</span> makaluFilter <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/util/makaluFilter'</span>;
+
 
 <span class="hljs-keyword">const</span> AreaSource = makaluFilter(
   source,
