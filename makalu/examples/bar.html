@@ -900,11 +900,17 @@
         
           <a href="line.html" class="menu-item">line</a>
         
+          <a href="map-cluster.html" class="menu-item">map-cluster</a>
+        
+          <a href="map.html" class="menu-item">map</a>
+        
           <a href="pie.html" class="menu-item">pie</a>
         
           <a href="point.html" class="menu-item">point</a>
         
           <a href="polar.html" class="menu-item">polar</a>
+        
+          <a href="relatedChart.html" class="menu-item">relatedChart</a>
         
           <a href="stack.html" class="menu-item">stack</a>
         
@@ -947,9 +953,7 @@
     <pre><code language=jsx><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> moment <span class="hljs-keyword">from</span> <span class="hljs-string">'moment'</span>;
-<span class="hljs-keyword">import</span> crossfilter <span class="hljs-keyword">from</span> <span class="hljs-string">'crossfilter'</span>;
-<span class="hljs-keyword">import</span> universe <span class="hljs-keyword">from</span> <span class="hljs-string">'universe'</span>;
-<span class="hljs-keyword">import</span> { Bar, makaluFilter } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
+<span class="hljs-keyword">import</span> { Bar, makaluFilter, Timebar } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
 
@@ -982,14 +986,36 @@
       _source = _source.filter(v =&gt; v.time &gt;= timeFilter[<span class="hljs-number">0</span>] &amp;&amp; v.time &lt;= timeFilter[<span class="hljs-number">1</span>]);
     }
     <span class="hljs-keyword">const</span> BarSource = makaluFilter(_source,
-      [{ name: <span class="hljs-string">'metric'</span> }],
-      [<span class="hljs-string">'value'</span>, <span class="hljs-string">'avalue'</span>, <span class="hljs-string">'bvalue'</span>],
-      [<span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>],
+      [{
+        prefix: <span class="hljs-string">'group.'</span>,
+        name: <span class="hljs-string">'metric'</span>,
+      }],
+      [{
+        prefix: <span class="hljs-string">'y.'</span>,
+        name: <span class="hljs-string">'value'</span>,
+      }, {
+        prefix: <span class="hljs-string">'color.'</span>,
+        name: <span class="hljs-string">'avalue'</span>,
+      }, {
+        prefix: <span class="hljs-string">'time.'</span>,
+        name: <span class="hljs-string">'time'</span>,
+      }],
+      [<span class="hljs-string">'sum'</span>, <span class="hljs-string">'avg'</span>],
     );
+    <span class="hljs-keyword">let</span> min = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">let</span> minColor = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">let</span> max = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">let</span> maxColor = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">let</span> l = BarSource.length;
+    <span class="hljs-keyword">while</span> (l--) {
+      min = <span class="hljs-built_in">Math</span>.min(min, BarSource[l][<span class="hljs-string">'y.value'</span>]);
+      max = <span class="hljs-built_in">Math</span>.max(max, BarSource[l][<span class="hljs-string">'y.value'</span>]);
+      minColor = <span class="hljs-built_in">Math</span>.min(minColor, BarSource[l][<span class="hljs-string">'color.avalue'</span>]);
+      maxColor = <span class="hljs-built_in">Math</span>.max(maxColor, BarSource[l][<span class="hljs-string">'color.avalue'</span>]);
+    }
 
-    <span class="hljs-keyword">return</span> &lt;Bar
+    <span class="hljs-keyword">return</span> &lt;div&gt;&lt;Bar
       title={this.state.title}
-      animation={false}
       description={this.state.description}
       width={window.innerWidth * .5}
       height={window.innerHeight * .6}
@@ -997,14 +1023,22 @@
       source={BarSource}
       groupAxis={`metric`}
       groupAxisDomain={metrics}
-      yAxis={[`value`, `avalue`, `bvalue`]}
-      timebarShow={true}
-      timebarDomain={dates}
-      timebarTickFormat={v =&gt; moment(v).format('YYYY')}
+      yAxis={[`value`]}
+      yAxisDomain={[[min, max]]}
+      colorAxis={`avalue`}
+      colorAxisDomain={[minColor, maxColor]}
+      gridlineXShow
+      gridlineYShow
+      legendPosition={'bottom-center'}
       onTitleChange={e =&gt; this.onTitleChange(e)}
-      onDescriptionChange={e =&gt; this.onDescriptionChange(e)}
-      onTimebarChange={e =&gt; this.onTimebarChange(e)}
-      onTimebarChange={e =&gt; this.onTimebarChange(e)} /&gt;
+      onDescriptionChange={e =&gt; this.onDescriptionChange(e)} /&gt;
+      &lt;Timebar
+        width={window.innerWidth * .5}
+        height={40}
+        domain={dates}
+        tickFormat={v =&gt; moment(v).format('YYYY')}
+        onChange={e =&gt; this.onTimebarChange(e)} /&gt;
+    &lt;/div&gt;
   }
 
 }

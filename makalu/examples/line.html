@@ -900,11 +900,17 @@
         
           <a href="" class="menu-item selected">line</a>
         
+          <a href="map-cluster.html" class="menu-item">map-cluster</a>
+        
+          <a href="map.html" class="menu-item">map</a>
+        
           <a href="pie.html" class="menu-item">pie</a>
         
           <a href="point.html" class="menu-item">point</a>
         
           <a href="polar.html" class="menu-item">polar</a>
+        
+          <a href="relatedChart.html" class="menu-item">relatedChart</a>
         
           <a href="stack.html" class="menu-item">stack</a>
         
@@ -947,7 +953,7 @@
     <pre><code language=jsx><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> moment <span class="hljs-keyword">from</span> <span class="hljs-string">'moment'</span>;
-<span class="hljs-keyword">import</span> { Line, makaluFilter } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
+<span class="hljs-keyword">import</span> { Line, makaluFilter, Timebar } <span class="hljs-keyword">from</span> <span class="hljs-string">'../src'</span>;
 
 <span class="hljs-keyword">import</span> { source, dimensions, metrics, dates } <span class="hljs-keyword">from</span> <span class="hljs-string">'./data'</span>;
 
@@ -956,11 +962,21 @@
   source,
   [
     {
+      prefix: <span class="hljs-string">'x.'</span>,
       name: <span class="hljs-string">'time'</span>,
       format: d =&gt; moment(d).format(<span class="hljs-string">'YYYY'</span>),
     },
   ],
-  [<span class="hljs-string">'value'</span>, <span class="hljs-string">'avalue'</span>, <span class="hljs-string">'bvalue'</span>],
+  [{
+    prefix: <span class="hljs-string">'y.'</span>,
+    name: <span class="hljs-string">'value'</span>,
+  }, {
+    prefix: <span class="hljs-string">'y.'</span>,
+    name: <span class="hljs-string">'avalue'</span>,
+  }, {
+    prefix: <span class="hljs-string">'y.'</span>,
+    name: <span class="hljs-string">'bvalue'</span>,
+  }],
   [<span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>, <span class="hljs-string">'sum'</span>],
 );
 
@@ -989,28 +1005,30 @@
     <span class="hljs-keyword">let</span> _source = LineSource;
     <span class="hljs-keyword">const</span> { timeFilter } = <span class="hljs-keyword">this</span>.state;
     <span class="hljs-keyword">if</span> (timeFilter) {
-      _source = _source.filter(v =&gt; v.time &gt;= timeFilter[<span class="hljs-number">0</span>] &amp;&amp; v.time &lt;= timeFilter[<span class="hljs-number">1</span>]);
+      _source = _source.filter(v =&gt; v[<span class="hljs-string">'x.time'</span>] &gt;= timeFilter[<span class="hljs-number">0</span>] &amp;&amp; v[<span class="hljs-string">'x.time'</span>] &lt;= timeFilter[<span class="hljs-number">1</span>]);
     }
-    <span class="hljs-keyword">const</span> LineYs = [];
-    <span class="hljs-keyword">const</span> LineY1s = [];
-    <span class="hljs-keyword">const</span> LineY2s = [];
+    <span class="hljs-keyword">const</span> yAxisDomain = [
+      [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+      [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+      [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    ];
     <span class="hljs-keyword">const</span> xAxisDomain = [
       (timeFilter ? timeFilter[<span class="hljs-number">0</span>] : <span class="hljs-built_in">Math</span>.min(...dates)),
       (timeFilter ? timeFilter[<span class="hljs-number">1</span>] : <span class="hljs-built_in">Math</span>.min(...dates)),
     ];
-    <span class="hljs-keyword">let</span> tempXAxisDomain = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>];
     _source.map(v =&gt; {
-      LineYs.push(v.value);
-      LineY1s.push(v.avalue);
-      LineY2s.push(v.bvalue);
-      tempXAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(tempXAxisDomain[<span class="hljs-number">0</span>], v.time);
-      tempXAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(tempXAxisDomain[<span class="hljs-number">1</span>], v.time);
-    });
-    xAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.max(tempXAxisDomain[<span class="hljs-number">0</span>], xAxisDomain[<span class="hljs-number">0</span>]);
-    xAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.min(tempXAxisDomain[<span class="hljs-number">1</span>], xAxisDomain[<span class="hljs-number">1</span>]);
-    <span class="hljs-built_in">console</span>.log(_source)
+      yAxisDomain[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(yAxisDomain[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>], v[<span class="hljs-string">'y.value'</span>]);
+      yAxisDomain[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(yAxisDomain[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>], v[<span class="hljs-string">'y.value'</span>]);
+      yAxisDomain[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(yAxisDomain[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>], v[<span class="hljs-string">'y.avalue'</span>]);
+      yAxisDomain[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(yAxisDomain[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>], v[<span class="hljs-string">'y.avalue'</span>]);
+      yAxisDomain[<span class="hljs-number">2</span>][<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(yAxisDomain[<span class="hljs-number">2</span>][<span class="hljs-number">0</span>], v[<span class="hljs-string">'y.bvalue'</span>]);
+      yAxisDomain[<span class="hljs-number">2</span>][<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(yAxisDomain[<span class="hljs-number">2</span>][<span class="hljs-number">1</span>], v[<span class="hljs-string">'y.bvalue'</span>]);
 
-    <span class="hljs-keyword">return</span> &lt;Line
+      xAxisDomain[<span class="hljs-number">0</span>] = <span class="hljs-built_in">Math</span>.min(xAxisDomain[<span class="hljs-number">0</span>], v[<span class="hljs-string">'x.time'</span>]);
+      xAxisDomain[<span class="hljs-number">1</span>] = <span class="hljs-built_in">Math</span>.max(xAxisDomain[<span class="hljs-number">1</span>], v[<span class="hljs-string">'x.time'</span>]);
+    });
+
+    <span class="hljs-keyword">return</span> &lt;div&gt;&lt;Line
       title={this.state.title}
       description={this.state.description}
       width={window.innerWidth * .5}
@@ -1021,18 +1039,17 @@
       xAxisDomain={xAxisDomain}
       xAxisFormat={v =&gt; moment(v).format('YYYY')}
       yAxis={[`value`, 'avalue', 'bvalue']}
-      yAxisDomain={[
-        [Math.min(...LineYs), Math.max(...LineYs)],
-        [Math.min(...LineY1s), Math.max(...LineY1s)],
-        [Math.min(...LineY2s), Math.max(...LineY2s)],
-      ]}
-      timebarMinimumStepSize={6}
-      timebarShow={true}
-      timebarDomain={dates}
-      timebarTickFormat={v =&gt; moment(v).format('YYYY')}
+      yAxisDomain={yAxisDomain}
       onTitleChange={e =&gt; this.onTitleChange(e)}
-      onDescriptionChange={e =&gt; this.onDescriptionChange(e)}
-      onTimebarChange={e =&gt; this.onTimebarChange(e)} /&gt;
+      onDescriptionChange={e =&gt; this.onDescriptionChange(e)} /&gt;
+      &lt;Timebar
+        width={window.innerWidth * .5}
+        height={40}
+        domain={dates}
+        minimumStepSize={6}
+        tickFormat={v =&gt; moment(v).format('YYYY')}
+        onChange={e =&gt; this.onTimebarChange(e)} /&gt;
+    &lt;/div&gt;
   }
 
 }
