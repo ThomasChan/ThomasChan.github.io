@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=11">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <style>
+  #root {
+    padding: 100px 200px;
+  }
+  li {
+    list-style-type: decimal-leading-zero;
+    border-bottom: 2px solid #aaa;
+    padding: 20px 0;
+  }
+  h2 {
+    display: inline-block;
+    font-size: 16px;
+  }
+  img {
+    display: inline-block;
+    max-width: 100px;
+    max-height: 100px;
+    vertical-align: top;
+    margin: 10px;
+    -webkit-transition: transform .2s ease;
+    -moz-transition: transform .2s ease;
+    transition: transform .2s ease;
+  }
+  img:hover {
+    -webkit-transform: scale(5);
+    -moz-transform: scale(5);
+    transform: scale(5);
+  }
+  </style>
+</head>
+<body>
+  <div id='root'>
+    <ul>
+    </ul>
+  </div>
+  <script>
+var all = [
+    {"type":"directory","name":"姗姗","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"朵儿","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"朝阳-lisa","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"劲松-文婷","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"双井-熙熙","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (10).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb (6).jpeg"},
+      {"type":"file","name":"psb (7).jpeg"},
+      {"type":"file","name":"psb (8).jpeg"},
+      {"type":"file","name":"psb (9).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"常营-玖玥","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"望京-可爱","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"望京-呼呼","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"望京-瑶瑶","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"朝阳-娅妹","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"朝阳-柠檬","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"鲁谷-雅雅","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"双井-墨菲儿","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"广外-依若萱","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"西局-小野猫","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb (6).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"沈依梦","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (10).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb (6).jpeg"},
+      {"type":"file","name":"psb (7).jpeg"},
+      {"type":"file","name":"psb (8).jpeg"},
+      {"type":"file","name":"psb (9).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"莫小星","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb.jpeg"}
+    ]},
+    {"type":"directory","name":"广渠门-baby","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb (6).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"外经贸-菲儿","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"太阳宫-小京","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"宋家庄-叶玲","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"甘露园-紫苏","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (2).jpeg"}
+    ]},
+    {"type":"directory","name":"知春路-莞莞","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"酒仙桥-米亚","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb (6).jpeg"},
+      {"type":"file","name":"psb (7).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"广渠门-粉豆豆","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"建国门-白玫瑰","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"百子湾-颜如玉","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"}
+    ]},
+    {"type":"directory","name":"公益西桥-晶晶","contents":[
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"后现代城-程程","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"小悦中心-恩妮","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb (5).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"小悦中心-月儿","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"立水桥南-果汁","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]},
+    {"type":"directory","name":"小悦中心-慧冰恩妮","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb (4).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"通州北苑-夏天未离","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe (1).jpeg"}
+    ]},
+    {"type":"directory","name":"石景山可乐家-伊伊","contents":[
+      {"type":"file","name":"psb (1).jpeg"},
+      {"type":"file","name":"psb (2).jpeg"},
+      {"type":"file","name":"psb (3).jpeg"},
+      {"type":"file","name":"psb.jpeg"},
+      {"type":"file","name":"psbe.jpeg"}
+    ]}
+  ];
+window.onload = function() {
+  var htmls = [];
+  var h = ['<li><h2>'];
+  all.forEach(function(item, key) {
+    h.push(item.name);
+    h.push('</h2><div>');
+    item.contents.forEach(function(pic, key) {
+      h.push('<img src="./' + item.name + '/' + pic.name + '" />');
+    });
+    h.push('</div></li>');
+    htmls.push(h.join(''));
+    h.length = 1;
+  });
+  document.getElementById('root').innerHTML = htmls.join('');
+  delete htmls;
+  delete h;
+}
+  </script>
+</body>
+</html>
