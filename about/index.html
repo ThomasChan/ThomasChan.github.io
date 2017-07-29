@@ -55,15 +55,16 @@ function randomWithRange(min, max) {
 changeAnother();
 
 (function initComments() {
-  const gitalk = new Gitalk({
+  var gitalk = new Gitalk({
     clientID: '1e2ae003530b581cd762',
     clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
     repo: 'ThomasChan.github.io',
     owner: 'thomaschan',
     admin: ['thomaschan'],
     // facebook-like distraction free mode
-    distractionFreeMode: false
-  })
+    distractionFreeMode: false,
+    id: 'Blog',
+  });
 
   gitalk.render('comments');
 })();
