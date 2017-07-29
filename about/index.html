@@ -38,44 +38,38 @@
 <p><del>没有喜欢到不能的东东</del></p>
 <p><del>我是托马斯，一个中二骚年</del></p>
 <p><img id="hehe" style="cursor:pointer" title="哈哈哈"></p>
+<p><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"></p>
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="comments"></div>
 <script>
 var IMG = document.getElementById('hehe')
 function changeAnother() {
     IMG.src = '/assets/images/emotions/' + randomWithRange(1, 11) + '.jpg'
 }
-IMG.onclick = changeAnother
+IMG.onclick = changeAnother;
 function randomWithRange(min, max) {
     var range = Math.abs(max - min) + 1;
     var r = (Math.random() * range) + (min <= max ? min : max);
     return Math.floor(r ? r : randomWithRange(min, max))
 }
-changeAnother()
+changeAnother();
+
+(function initComments() {
+  const gitalk = new Gitalk({
+    clientID: '1e2ae003530b581cd762',
+    clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+    repo: 'ThomasChan.github.io',
+    owner: 'thomaschan',
+    admin: ['thomaschan'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false
+  })
+
+  gitalk.render('comments');
+})();
 </script>
 
   </div>
-  
-	  
-	    <section id="comments">
-  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="page-undefined" data-title="about" data-url="http://chenjunhao.cn/about/index.html"></div>
-  <!-- 多说评论框 end -->
-  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:'thomaschan'};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0] 
-       || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-    </script>
-  <!-- 多说公共JS代码 end -->
-</section>
-
-	  
-  
 </main>
 
 </body>
