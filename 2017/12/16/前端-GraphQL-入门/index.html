@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>前端 GraphQL 入门 | Thomas Chan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://chenjunhao.cn/assets/images/avator.jpg">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+</head>
+
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+    
+      <a href="/about">about</a>
+    
+  
+    
+      <a href="/resume">resume</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2017/12/16/前端-GraphQL-入门/">前端 GraphQL 入门</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">十二月 16 2017</p>
+  </section>
+
+  <section class="article-entry">
+    <blockquote>
+<p>本文翻译自 <a href="https://css-tricks.com/front-end-developers-guide-graphql/，" target="_blank" rel="noopener">https://css-tricks.com/front-end-developers-guide-graphql/，</a> 作者 <a href="https://css-tricks.com/author/peggyrayzis/" target="_blank" rel="noopener">PEGGY RAYZIS</a></p>
+</blockquote>
+<p>不管项目的大小，你肯定会向服务器请求数据的。这么多年来，REST API 的现状通常是前端需要发出请求，解析返回结果，然后更新界面。<br>不过去年诞生了一个新的 API 技术 <code>GraphQL</code>，因为更优异的开发者体验以及用陈述性的方式获取数据而倍受欢迎。</p>
+<p>接下来我们动手写几个示例，了解 <code>GraphQL</code> 将如何解决你的项目中对获取数据的痛。如果你刚知道 <code>GraphQL</code>，别慌！我在文中加了链接，可以帮助你学习 <code>GraphQL</code>。</p>
+<h2 id="GraphQL-101"><a href="#GraphQL-101" class="headerlink" title="GraphQL 101"></a><code>GraphQL</code> 101</h2><p>当我们在说 <code>GraphQL</code> 时，要么是说语言本身，要么是说围绕的生态系统。<code>GraphQL</code> 核心是 Facebook 开发的一种查询语言，允许你用陈述性语句描述你想要的数据。返回结果的数据结构就是你所描述的数据结构：看下面的例子，我们希望服务器返回一个 Object，有一个 currency 属性，一个 rates 属性，rates 是一个包含 currency 和 rate 组成的 object 的数组。<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  rates(<span class="name">currency:</span> <span class="string">"USD"</span>) &#123;</span><br><span class="line">    currency</span><br><span class="line">    rates &#123;</span><br><span class="line">      currency</span><br><span class="line">      rate</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>广义上的 <code>GraphQL</code> 是说所围绕的生态系统、工具链。后端用 <a href="https://www.apollographql.com/docs/apollo-server/" target="_blank" rel="noopener">Apollo Server</a>  创建一个 GraphQL 服务，接收、解析并返回数据。用 <a href="https://www.apollographql.com/docs/graphql-tools/" target="_blank" rel="noopener">GraphQL Tools</a> 建 schema、映射数据结构。</p>
+<p>这些看起来都还挺复杂的，其实很简单 — 使用 Apollo Launchpad 以及不到 60 行代码就可以创建一个可玩的 GraphQL 服务！我们接下来会使用我 <a href="https://launchpad.graphql.com/v7mnw3m03" target="_blank" rel="noopener">事先创建好的 Launchpad</a>（包含了 Coinbase 的 API）。</p>
+<h2 id="上手-GraphQL"><a href="#上手-GraphQL" class="headerlink" title="上手 GraphQL"></a>上手 GraphQL</h2><p>现在你知道 GraphQL 是啥了，我们开始动手练习几个小示例，了解如何使用 Apollo 进行前端开发。</p>
+<h3 id="1-不再怕产品经理改需求"><a href="#1-不再怕产品经理改需求" class="headerlink" title="1. 不再怕产品经理改需求"></a>1. 不再怕产品经理改需求</h3><p>我们之前都有过这样的经历：你花了好几个小时写好了页面，突然产品需求改了，你想了想要实现新的需求，现有的 API 流程都得改，甚至还得加新的 API。然后你告诉后端要新加一个只为一个组件用的 API。</p>
+<p>使用 GraphQL 的话这些问题都不存在，因为你要的数据都不再由相应的 API 组合后给你，你将会只请求一个地址。GraphQL 服务通过 schema 列出所有可用资源，你就可以自由组织想要的查询结果数据结构。来用 <a href="https://launchpad.graphql.com/v7mnw3m03" target="_blank" rel="noopener">我们的 Launchpad</a> 演示一下：</p>
+<p>在 schema 里的第 22-26 行我们定义了一个 ExchangeRate 类型，这些字段列出了所有我们可以查询的资源。<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="type">ExchangeRate</span> &#123;</span><br><span class="line">  currency: <span class="type">String</span></span><br><span class="line">  rate: <span class="type">String</span></span><br><span class="line">  name: <span class="type">String</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>用 REST API 其实限制了对资源的获取，比如你有一个 API是 <code>/exchange-rates</code>，但是返回结果里没有包含 <code>name</code>，此时你要么修改接口要么新增一个 API <code>/currency</code>。</p>
+<p>而用 GraphQL，通过 schema 我们知道 name 是可以一起查询的，所以可以在原有查询的基础上直接加上 <code>name</code>，在我们的 Launchpad 里试试运行下面的例子！<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  rates(<span class="name">currency:</span> <span class="string">"USD"</span>) &#123;</span><br><span class="line">    currency</span><br><span class="line">    rates &#123;</span><br><span class="line">      currency</span><br><span class="line">      rate</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你把 <code>name</code> 参数去掉，再请求一次，看看返回的结果有什么不同？</p>
+<p><img src="https://res.cloudinary.com/css-tricks/image/upload/c_scale,w_1000,f_auto,q_auto/v1512229173/shape-data_wmplya.jpg" alt="result diff"></p>
+<p>GraphQL 相比 REST API 有一个明显的区别，GraphQL 只会返回给你你所请求的数据及数据格式，不像 REST API 的返回结果，你总是需要对结果进过过滤、转换等操作以符合界面所需要的格式。这不仅节省了前后端制定、联调 API 的时间，还缩减了网络请求包的大小，CPU 的占用率（接收、解析网络请求）。</p>
+<h3 id="2-减少你对数据的状态管理"><a href="#2-减少你对数据的状态管理" class="headerlink" title="2. 减少你对数据的状态管理"></a>2. 减少你对数据的状态管理</h3><p>请求数据总是意味着要更新界面。典型场景是你的代码至少有三个判断：请求中、请求成功、请求错误。请求成功后你要把数据转成界面需要的格式，可能会需要做缓存，然后更新界面。这个流程在项目里会重复多次，会有很多重复性的类似代码、模板。</p>
+<p>我们来通过这个<a href="https://codesandbox.io/s/jvlrl98xw3" target="_blank" rel="noopener"> CodeSandbox 的 React 例子</a>(链接里点击<code>list.js</code>，滚动到最下边)看一下 Apollo 客户端是如何优化这个重复性的流程的。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span><span class="built_in"> default </span>graphql(ExchangeRateQuery, &#123;</span><br><span class="line">  props: (&#123; data &#125;) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (data.loading) &#123;</span><br><span class="line">      return &#123; loading: data.loading &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (data.error) &#123;</span><br><span class="line">      return &#123; error: data.<span class="builtin-name">error</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      rates: data.rates.rates</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(ExchangeRateList)</span><br></pre></td></tr></table></figure>
+<p>这个例子是 Apollo 客户端的 React 版本，将 exchange rate 请求绑定到了 ExchangeRateList 组件上，当 Apollo 客户端发起请求自动判断请求状态并且把状态赋值给 <code>data</code> 参数。当 Apollo 客户端接收到数据就会把数据更新到 <code>data</code> 参数上，React ExchangeRateList 组件就会更新了。</p>
+<p>背后的 Apollo 客户端帮你解析并缓存了数据。你可以试试在右边栏点击货币看看数据的刷新，快速的一秒点击一个，注意看数据是不是立即更新的？那就是 Apollo 客户端的缓存了！你可以直接使用 Apollo 客户端，无需额外配置，可以看看 index.js 里是如何初始化 Apollo 客户端的。</p>
+<h3 id="3-Apollo-DevTools-amp-GraphiQL"><a href="#3-Apollo-DevTools-amp-GraphiQL" class="headerlink" title="3. Apollo DevTools &amp; GraphiQL"></a>3. Apollo DevTools &amp; GraphiQL</h3><p>Apollo 客户端帮你做了很多事！不如我们深入看看到底干了啥？Apollo DevTools 不仅能查看整个 store 及每次查询的数据、状态，还能是 debug 更容易！你可以在 Chrome 和 Firefox 的应用商店里找到 Apollo DevTools，React Native 的很快就会有。</p>
+<p>如果你想试试，你可以把 <a href="https://github.com/apollographql/apollo-client-devtools" target="_blank" rel="noopener">Apollo DevTools</a> 装在你常用的浏览器上。你可以尝试本地运行一下，访问上文那个 <a href="https://codesandbox.io/s/jvlrl98xw3" target="_blank" rel="noopener">CodeSandbox 的例子</a>，点击导航栏里的 Download，解压文件，运行 <code>npm install</code>，然后 <code>npm start</code>，打开浏览器的开发者工具，在 tab 栏里你会看到 Apollo。</p>
+<p>首先我们看下 store 查看器，这个 tab 映射了当前 Apollo 客户端的数据，在这里你可以确认数据是不是正确。<img src="https://res.cloudinary.com/css-tricks/image/upload/c_scale,w_1000,f_auto,q_auto/v1512143849/1_WjEM653oIZUw4wQyjCqPkA_v9aknv.png" alt="store"></p>
+<p>GraphiQL 是一个交互式查询编辑器，还提供了文档浏览功能。Apollo DevTools 还可以配合 GraphiQL 一起测试数据查询，其实在上文的第一个例子里你已经用过了。GraphiQL 会根据你的查询自动生成 GraphQL 格式的文档，对开发者来说非常有用。</p>
+<p><img src="https://res.cloudinary.com/css-tricks/image/upload/c_scale,w_1000,f_auto,q_auto/v1512143882/1_s9Bl8jejFH2TAlZk2knFBQ_ucuxbm.png" alt="GraphQL query result"></p>
+<p>你可以在 <a href="https://launchpad.graphql.com/v7mnw3m03" target="_blank" rel="noopener">我们的 Launchpad</a> 的右边栏里执行 GraphiQL 的查询，在编辑器里把鼠标放在字段上就可以查看文档。</p>
+<h2 id="深入-GraphQL"><a href="#深入-GraphQL" class="headerlink" title="深入 GraphQL"></a>深入 GraphQL</h2><p>看到这里你可以为自己鼓鼓掌了！希望上边的练手例子能帮助到你了解在前端如何使用 GraphQL 。</p>
+<p>想了解更多？把学习 GraphQL 加入到你的 2018 年学习计划吧！不出我所料的话明年 GraphQL 会更火，下边的链接是你可以尝试玩玩的例子，知识点我们今天都了解了。</p>
+<ul>
+<li>React: <a href="https://codesandbox.io/s/jvlrl98xw3" target="_blank" rel="noopener">https://codesandbox.io/s/jvlrl98xw3</a></li>
+<li>Angular(lonic): <a href="https://github.com/aaronksaunders/ionicLaunchpadApp" target="_blank" rel="noopener">https://github.com/aaronksaunders/ionicLaunchpadApp</a></li>
+<li>Vue: <a href="https://codesandbox.io/s/3vm8vq6kwq" target="_blank" rel="noopener">https://codesandbox.io/s/3vm8vq6kwq</a></li>
+</ul>
+<p>开始使用 GraphQL 吧（别忘了在 Twitter 上 follow 我们呀 <a href="https://twitter.com/apollographql" target="_blank" rel="noopener">@apollographql</a>）！</p>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://chenjunhao.cn/assets/images/myavator.jpg" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Thomas Chan </p>
+      <p class="subtitle"> 年轻就是暴躁，年轻就是不安分，年轻就是发脾气 </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <style>@font-face{font-family:"socialshare";src:url("/assets/fonts/iconfont.eot");src:url("/assets/fonts/iconfont.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/iconfont.woff") format("woff"),url("/assets/fonts/iconfont.ttf") format("truetype"),url("/assets/fonts/iconfont.svg#iconfont") format("svg")}.social-share{font-family:"socialshare" !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}.social-share *{font-family:"socialshare" !important}.social-share .icon-tencent:before{content:"\f07a"}.social-share .icon-qq:before{content:"\f11a"}.social-share .icon-weibo:before{content:"\f12a"}.social-share .icon-wechat:before{content:"\f09a"}.social-share .icon-douban:before{content:"\f10a"}.social-share .icon-heart:before{content:"\f20a"}.social-share .icon-like:before{content:"\f00a"}.social-share .icon-qzone:before{content:"\f08a"}.social-share .icon-linkedin:before{content:"\f01a"}.social-share .icon-diandian:before{content:"\f05a"}.social-share .icon-facebook:before{content:"\f03a"}.social-share .icon-google:before{content:"\f04a"}.social-share .icon-twitter:before{content:"\f06a"}.social-share a{position:relative;text-decoration:none;margin:4px;display:inline-block;outline:none}.social-share .social-share-icon{position:relative;display:inline-block;width:32px;height:32px;font-size:20px;border-radius:50%;line-height:32px;border:1px solid #666;color:#666;text-align:center;vertical-align:middle;transition:background 0.6s ease-out 0s}.social-share .social-share-icon:hover{background:#666;color:#fff}.social-share .icon-weibo{color:#ff763b;border-color:#ff763b}.social-share .icon-weibo:hover{background:#ff763b}.social-share .icon-tencent{color:#56b6e7;border-color:#56b6e7}.social-share .icon-tencent:hover{background:#56b6e7}.social-share .icon-qq{color:#56b6e7;border-color:#56b6e7}.social-share .icon-qq:hover{background:#56b6e7}.social-share .icon-qzone{color:#FDBE3D;border-color:#FDBE3D}.social-share .icon-qzone:hover{background:#FDBE3D}.social-share .icon-douban{color:#33b045;border-color:#33b045}.social-share .icon-douban:hover{background:#33b045}.social-share .icon-linkedin{color:#0077B5;border-color:#0077B5}.social-share .icon-linkedin:hover{background:#0077B5}.social-share .icon-facebook{color:#44619D;border-color:#44619D}.social-share .icon-facebook:hover{background:#44619D}.social-share .icon-google{color:#db4437;border-color:#db4437}.social-share .icon-google:hover{background:#db4437}.social-share .icon-twitter{color:#55acee;border-color:#55acee}.social-share .icon-twitter:hover{background:#55acee}.social-share .icon-diandian{color:#307DCA;border-color:#307DCA}.social-share .icon-diandian:hover{background:#307DCA}.social-share .icon-wechat{position:relative;color:#7bc549;border-color:#7bc549}.social-share .icon-wechat:hover{background:#7bc549}.social-share .icon-wechat .wechat-qrcode{display:none;border:1px solid #eee;position:absolute;z-index:9;top:-205px;left:-84px;width:200px;height:192px;color:#666;font-size:12px;text-align:center;background-color:#fff;box-shadow:0 2px 10px #aaa;transition:all 200ms;-webkit-tansition:all 350ms;-moz-transition:all 350ms}.social-share .icon-wechat .wechat-qrcode.bottom{top:40px;left:-84px}.social-share .icon-wechat .wechat-qrcode.bottom:after{display:none}.social-share .icon-wechat .wechat-qrcode h4{font-weight:normal;height:26px;line-height:26px;font-size:12px;background-color:#f3f3f3;margin:0;padding:0;color:#777}.social-share .icon-wechat .wechat-qrcode .qrcode{width:105px;margin:10px auto}.social-share .icon-wechat .wechat-qrcode .qrcode table{margin:0 !important}.social-share .icon-wechat .wechat-qrcode .help p{font-weight:normal;line-height:16px;padding:0;margin:0}.social-share .icon-wechat .wechat-qrcode:after{content:'';position:absolute;left:50%;margin-left:-6px;bottom:-13px;width:0;height:0;border-width:8px 6px 6px 6px;border-style:solid;border-color:#fff transparent transparent transparent}.social-share .icon-wechat:hover .wechat-qrcode{display:block}</style>
+    <div class="share-bar"></div>
+    <script src="/js/social.share.min.js"></script>
+    <script>socialShare('.share-bar', { sites: ['weibo', 'qq', 'wechat', 'qzone', 'twitter', 'google'] });</script>
+  </section>
+</div>
+
+
+  
+    <section id="comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="post-前端-GraphQL-入门" data-title="前端 GraphQL 入门" data-url="http://chenjunhao.cn/2017/12/16/前端-GraphQL-入门/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:'thomaschan'};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+</section>
+
+  
+</main>
+
+</body>
+</html>
