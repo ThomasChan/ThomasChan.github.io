@@ -50,7 +50,7 @@
 <ul>
 <li>Async/await 是一种新的写异步程序的语法糖，之前一直用的是回调函数和 Promise。</li>
 <li>Async/await 其实建立在 Promise 之上，不能跟回调函数一起用。</li>
-<li>Async/await 跟 Promise 一样</li>
+<li>Async/await 跟 Promise 一样是无阻塞的</li>
 <li>Async/await 的代码写起来更像是同步的，这正是厉害之处。</li>
 </ul>
 <h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>假设我们有一个 <code>getJSON</code> 函数返回一个 promise，promise resolve 一个 JSON 对象。我们只想调用一下这个函数并打印出 JSON 对象，然后返回 <code>&quot;done&quot;</code>。</p>
