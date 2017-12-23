@@ -57,7 +57,7 @@
     &lt;body ng-view&gt;&lt;/body&gt;
 &lt;/html&gt;
 </code></pre><p>require-config.js ：</p>
-<pre><code>require.config({    
+<pre><code>require.config({
     baseUrl: &apos;/src&apos;,
     paths: {
         &apos;angular&apos;: &apos;lib/angular.min&apos;,
@@ -102,7 +102,7 @@ require([
     var application = angular.module(&apos;application&apos;, [&apos;ngRoute&apos;, &apos;ngAnimate&apos;, &apos;ngResource&apos;]);
     window.application = application;
     application
-        .config([&apos;$routeProvider&apos;, &apos;$controllerProvider&apos;, &apos;$compileProvider&apos;, &apos;$filterProvider&apos;, &apos;$provide&apos;, 
+        .config([&apos;$routeProvider&apos;, &apos;$controllerProvider&apos;, &apos;$compileProvider&apos;, &apos;$filterProvider&apos;, &apos;$provide&apos;,
             function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
                 var route = routeResolver;
                 $routeProvider
@@ -186,24 +186,25 @@ require([
 
 
   
-    <section id="comments">
-  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="blog-前端架构：requirejs-angularjs实现懒加载angular模块" data-title="前端架构：requirejs+angularjs实现懒加载angular模块" data-url="http://chenjunhao.cn/2015/11/01/前端架构：requirejs-angularjs实现懒加载angular模块/"></div>
-  <!-- 多说评论框 end -->
-  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:'thomaschan'};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0] 
-       || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-    </script>
-  <!-- 多说公共JS代码 end -->
-</section>
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+(function initComments() {
+  var gitalk = new Gitalk({
+    clientID: '1e2ae003530b581cd762',
+    clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+    repo: 'ThomasChan.github.io',
+    owner: 'thomaschan',
+    admin: ['thomaschan'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false,
+    id: '2015110101',
+  });
+
+  gitalk.render('comments');
+})();
+</script>
 
   
 </main>
