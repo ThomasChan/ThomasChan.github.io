@@ -22,6 +22,12 @@ a {
   text-decoration: none;
   color: inherit; }
 
+.thankyou {
+  display: block;
+  width: 400px;
+  margin: 40px auto 0;
+}
+
 .grid {
   display: flex;
   align-items: center; }
