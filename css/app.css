@@ -24,7 +24,8 @@ a {
 
 .thankyou {
   display: block;
-  width: 400px;
+  width: 60%;
+  max-width: 400px;
   margin: 40px auto 0;
 }
 
