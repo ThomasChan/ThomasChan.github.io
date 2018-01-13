@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JavaScript 框架们的残酷“框”生 | Thomas Chan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://chenjunhao.cn/assets/images/avator.jpg">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+</head>
+
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+    
+      <a href="/about">about</a>
+    
+  
+    
+      <a href="/resume">resume</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2018/01/13/JavaScript-框架们的残酷“框”生/">JavaScript 框架们的残酷“框”生</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">一月 13 2018</p>
+  </section>
+
+  <section class="article-entry">
+    <blockquote>
+<p>本文翻译自 <a href="https://stackoverflow.blog/2018/01/11/brutal-lifecycle-javascript-frameworks/" target="_blank" rel="noopener">https://stackoverflow.blog/2018/01/11/brutal-lifecycle-javascript-frameworks/</a> , 作者 <a href="https://stackoverflow.blog/authors/iallen/" target="_blank" rel="noopener">Lan Allen</a>，翻译：<a href="http://chenjunhao.cn">Thomas Chan</a></p>
+</blockquote>
+<p>JavaScript 的框架和库一直都在轮回之中，每半年（或时间再长点）都有新的出现，并宣称使开发模式发生了革命性变化，然后大把的开发者在他们的项目里使用、相关的文章发布、Stack Overflow 上继而出现很多相关问题和答案，再然后又出现了新的（更具革命性的）框架争得新宠。</p>
+<p>让我们来通过<a href="https://insights.stackoverflow.com/trends?utm_source=so-owned&amp;utm_medium=blog&amp;utm_campaign=gen-blog&amp;utm_content=blog-link&amp;utm_term=javascript-frameworks" target="_blank" rel="noopener">Stack Overflow 趋势</a> 看看那些主流的框架：Angular, React, Vue, Backbone, Knockout, Ember。</p>
+<h1 id="框架生命周期"><a href="#框架生命周期" class="headerlink" title="框架生命周期"></a>框架生命周期</h1><p>我们可以在 Stack Overflow 趋势上查看每个框架在历史上的搜索热度，先来看几个比较大的框架。</p>
+<p><img src="/images/trends-major.png" alt="trends-major"></p>
+<p>可以看出在很长一段时间里 Stack Overflow 的 JavaScript 领域 jQuery 都位居榜首，几乎占据新提出问题的 8%。直到 AngularJS 和后来的 React 出现急剧减少了社区中 jQuery 的份量。然后在 2016 年左右开始，开发者开始从 AngularJS 升级到了更受欢迎的下一代 Angular，也就是随后的 Angular 2+。</p>
+<p>这些比较大的框架只是一部分，还有一些比较小的框架参与争夺。下面这张图可以看出其生命周期是多么的残酷。</p>
+<p><img src="/images/trends-minor.png" alt="trends-minor"></p>
+<p>JavaScript 框架通常会经历两个阶段，起初呈快速上升趋势，受到很多开发者的青睐而倍受欢迎，而后由于新生的技术渐渐的呈稳定下降趋势。这都是近几年的情况。从 2011 年开始，主流框架有：Backbone、Knockout 和 Ember。这些框架的相关提问从 2013 年开始便呈稳定下降趋势，同年 AngularJS 呈上升趋势。后起之秀 Vue.js 上升非常迅速，在 Stack Overflow 里是提问数量增长最快的之一，只有时间知道会持续到什么时候。</p>
+<h1 id="从语言或技术层面看"><a href="#从语言或技术层面看" class="headerlink" title="从语言或技术层面看"></a>从语言或技术层面看</h1><p>有很多因素会影响开发者选择这个或那个框架，不过开发者主要使用的语言或技术会使其更倾向于选择某个特定的框架。比如我们基本可以确定 Node.js 开发者选择的框架肯定跟 Ruby on Rails 开发者选的不一样。</p>
+<p>把开发者按他们最常访问的标签分组，每组列出这些框架的占比，让我们来感受一下语言或技术对框架的影响。</p>
+<p><img src="/images/trends-by-language.png" alt="trends-by-language"></p>
+<p>我们可以看到 typescript 和 css 的开发者相对更常使用框架，毕竟是前端开发使用的技术（译者注：看图还有 node.js 啊）。Angular 的占比在 TypeScript 中尤其大，因为 Angular（不是 AngularJS）是用 TypeScript 写的。</p>
+<p>图里还包括了 C 和 C++，从占比看起来 C 和 C++ 开发者不太喜欢使用 JavaScript 框架。</p>
+<p>从图中还可以看出来，不管什么语言，Angular 和 React 是目前为止最受欢迎的框架。这俩作为领先者不无道理，毕竟属于两家在技术上最牛逼和最有影响的公司。Angular 主要流行于 C#、Java 甚至 PHP 开发者中，而 React 则在 Rails、Node.js 和 Python 开发者中更受欢迎。</p>
+<p>在流行度较低的框架里有几个有意思的点，Ember.js 和 Ruby on Rails 相比其他语言有着不一般的相关性，这可能是由于两者之间比较相似，Ember 是 Yehuda Katz 开发的，而 Yehuda Katz 是 Ruby on Rails 的核心开发之一。因此，Ember 和 Ruby on Rails 都是<a href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">按约定编程</a>的拥护者，使得开发者可以不需要关心繁琐的配置（除非必要）就能快速的出活儿而收获好评。</p>
+<p>Knockout.js 则不意外的与 C# 开发者有更强的相关性，毕竟 Knockout 也是微软出的。PHP 也很有意思，PHP 主要就是用来开发网站的，从整体比例来看 Angular 或 React 的相关提问相比 Vue.js 而言并不是 PHP 开发者看的最多的。</p>
+<h1 id="从行业层面看"><a href="#从行业层面看" class="headerlink" title="从行业层面看"></a>从行业层面看</h1><p>行业之间选择的 JavaScript 框也有很大不同，我们<a href="https://www.maxmind.com/en/geoip2-isp-database" target="_blank" rel="noopener">将访问者 IP 地址匹配到具体公司</a>来看看。React 和 Angular 是最受欢迎的框架，我们对比了每个行业中主流企业与两者的相关性。</p>
+<p>哪些行业更倾向于使用框架呢？</p>
+<p><img src="/images/React-vs-Angular-by-industry.png" alt="React-vs-Angular-by-industry"></p>
+<p>我们可以看出来文化传媒和零售业相比其他行业更倾向于使用框架，这些行业的公司更容易被新技术带来的富客户端所吸引，富客户端能给他们的用户更好的体验和更好的网上购物体验。而高校、政府、医疗行业则不太需要这些框架，可能是因为这些行业更关心数据管理和数据分析，而不是前端用户体验。</p>
+<p>最让人奇怪的是保险行业，相比其他行业里，保险公司们似乎对 Angular 的使用率非常高，而不用 React。我们依然很好奇为什么会这样，如果有保险行业的开发者正在阅读此文，不妨在评论里留下你的观点。</p>
+<h1 id="React-和-Angular-在美国的使用情况"><a href="#React-和-Angular-在美国的使用情况" class="headerlink" title="React 和 Angular 在美国的使用情况"></a>React 和 Angular 在美国的使用情况</h1><p>在<a href="https://stackoverflow.blog/2016/11/30/how-do-developers-in-new-york-san-francisco-london-and-bangalore-differ/?utm_source=so-owned&amp;utm_medium=blog&amp;utm_campaign=gen-blog&amp;utm_content=blog-link&amp;utm_term=javascript-frameworks" target="_blank" rel="noopener">上一篇文章</a>里，我们讨论了地区和编程技术的相关性。</p>
+<p>所以让我们再来看看 React 和 Angular 在美国哪个城市里更常使用？</p>
+<p><img src="/images/React-vs-Angular-by-cities.png" alt="React-vs-Angular-by-cities"></p>
+<p>有趣的是，这俩框架在这些城市中分布很均匀，达拉斯(Dallas) 和 丹佛(Denver) 更倾向于 Angular，布鲁克林(Brooklyn) 和 旧金山(San Francisco) 更倾向于 React。我觉得旧金山(San Francisco) 和 布鲁克林(Brooklyn) 是美国最时髦的城市之二，这些城市里的开发者可能也是这么认为他们所选的框架的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这么说吧，尽管我是来自布鲁克林(Brooklyn) 的而且也有点喜欢 React，我并不是特别的支持某个框架。就像每个技术的选择，并不是因为热度有多高，而是因为各种权衡和手头能找到的工具。不过说实话，开发者社区的大小很重要，有助于蓬勃发展的开源环境，并且更容易在 Stack Overflow 上找到帮助。</p>
+<p>不管你用哪个 JavaScript 框架，如果你是正在找工作的 web 开发者，Stack Overflow Jobs 上<a href="https://stackoverflow.com/jobs/front-end-developer-jobs?utm_source=so-owned&amp;utm_medium=blog&amp;utm_campaign=gen-blog&amp;utm_content=blog-link&amp;utm_term=javascript-frameworks" target="_blank" rel="noopener">有一些正在招人的公司</a>。</p>
+
+  </section>
+</article>
+
+  
+    <img title="打开微信扫一扫" class="thankyou" src="http://chenjunhao.cn/assets/images/thankyou.JPG"></img>
+
+  
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://chenjunhao.cn/assets/images/myavator.jpg" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Thomas Chan </p>
+      <p class="subtitle"> 年轻就是暴躁，年轻就是不安分，年轻就是发脾气 </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <style>@font-face{font-family:"socialshare";src:url("/assets/fonts/iconfont.eot");src:url("/assets/fonts/iconfont.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/iconfont.woff") format("woff"),url("/assets/fonts/iconfont.ttf") format("truetype"),url("/assets/fonts/iconfont.svg#iconfont") format("svg")}.social-share{font-family:"socialshare" !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}.social-share *{font-family:"socialshare" !important}.social-share .icon-tencent:before{content:"\f07a"}.social-share .icon-qq:before{content:"\f11a"}.social-share .icon-weibo:before{content:"\f12a"}.social-share .icon-wechat:before{content:"\f09a"}.social-share .icon-douban:before{content:"\f10a"}.social-share .icon-heart:before{content:"\f20a"}.social-share .icon-like:before{content:"\f00a"}.social-share .icon-qzone:before{content:"\f08a"}.social-share .icon-linkedin:before{content:"\f01a"}.social-share .icon-diandian:before{content:"\f05a"}.social-share .icon-facebook:before{content:"\f03a"}.social-share .icon-google:before{content:"\f04a"}.social-share .icon-twitter:before{content:"\f06a"}.social-share a{position:relative;text-decoration:none;margin:4px;display:inline-block;outline:none}.social-share .social-share-icon{position:relative;display:inline-block;width:32px;height:32px;font-size:20px;border-radius:50%;line-height:32px;border:1px solid #666;color:#666;text-align:center;vertical-align:middle;transition:background 0.6s ease-out 0s}.social-share .social-share-icon:hover{background:#666;color:#fff}.social-share .icon-weibo{color:#ff763b;border-color:#ff763b}.social-share .icon-weibo:hover{background:#ff763b}.social-share .icon-tencent{color:#56b6e7;border-color:#56b6e7}.social-share .icon-tencent:hover{background:#56b6e7}.social-share .icon-qq{color:#56b6e7;border-color:#56b6e7}.social-share .icon-qq:hover{background:#56b6e7}.social-share .icon-qzone{color:#FDBE3D;border-color:#FDBE3D}.social-share .icon-qzone:hover{background:#FDBE3D}.social-share .icon-douban{color:#33b045;border-color:#33b045}.social-share .icon-douban:hover{background:#33b045}.social-share .icon-linkedin{color:#0077B5;border-color:#0077B5}.social-share .icon-linkedin:hover{background:#0077B5}.social-share .icon-facebook{color:#44619D;border-color:#44619D}.social-share .icon-facebook:hover{background:#44619D}.social-share .icon-google{color:#db4437;border-color:#db4437}.social-share .icon-google:hover{background:#db4437}.social-share .icon-twitter{color:#55acee;border-color:#55acee}.social-share .icon-twitter:hover{background:#55acee}.social-share .icon-diandian{color:#307DCA;border-color:#307DCA}.social-share .icon-diandian:hover{background:#307DCA}.social-share .icon-wechat{position:relative;color:#7bc549;border-color:#7bc549}.social-share .icon-wechat:hover{background:#7bc549}.social-share .icon-wechat .wechat-qrcode{display:none;border:1px solid #eee;position:absolute;z-index:9;top:-205px;left:-84px;width:200px;height:192px;color:#666;font-size:12px;text-align:center;background-color:#fff;box-shadow:0 2px 10px #aaa;transition:all 200ms;-webkit-tansition:all 350ms;-moz-transition:all 350ms}.social-share .icon-wechat .wechat-qrcode.bottom{top:40px;left:-84px}.social-share .icon-wechat .wechat-qrcode.bottom:after{display:none}.social-share .icon-wechat .wechat-qrcode h4{font-weight:normal;height:26px;line-height:26px;font-size:12px;background-color:#f3f3f3;margin:0;padding:0;color:#777}.social-share .icon-wechat .wechat-qrcode .qrcode{width:105px;margin:10px auto}.social-share .icon-wechat .wechat-qrcode .qrcode table{margin:0 !important}.social-share .icon-wechat .wechat-qrcode .help p{font-weight:normal;line-height:16px;padding:0;margin:0}.social-share .icon-wechat .wechat-qrcode:after{content:'';position:absolute;left:50%;margin-left:-6px;bottom:-13px;width:0;height:0;border-width:8px 6px 6px 6px;border-style:solid;border-color:#fff transparent transparent transparent}.social-share .icon-wechat:hover .wechat-qrcode{display:block}</style>
+    <div class="share-bar"></div>
+    <script src="/js/social.share.min.js"></script>
+    <script>socialShare('.share-bar', { sites: ['weibo', 'qq', 'wechat', 'qzone', 'twitter', 'google'] });</script>
+  </section>
+</div>
+
+
+  
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+(function initComments() {
+  var gitalk = new Gitalk({
+    clientID: '1e2ae003530b581cd762',
+    clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+    repo: 'ThomasChan.github.io',
+    owner: 'thomaschan',
+    admin: ['thomaschan'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false,
+    id: '2018011301',
+    title: '2018011301',
+  });
+
+  gitalk.render('comments');
+})();
+</script>
+
+  
+</main>
+
+</body>
+</html>
