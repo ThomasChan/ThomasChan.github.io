@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Null vs Undefined | Thomas Chan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://chenjunhao.cn/assets/images/avator.jpg">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+</head>
+
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+    
+      <a href="/about">about</a>
+    
+  
+    
+      <a href="/resume">resume</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2018/01/22/Null-vs-Undefined/">Null vs Undefined</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">一月 22 2018</p>
+  </section>
+
+  <section class="article-entry">
+    <blockquote>
+<p>本文翻译自 <a href="https://codeburst.io/javascript-null-vs-undefined-20f955215a2" target="_blank" rel="noopener">https://codeburst.io/javascript-null-vs-undefined-20f955215a2</a> , 作者 <a href="https://codeburst.io/@bmorelli25" target="_blank" rel="noopener">Brandon Morelli</a>，翻译：<a href="http://chenjunhao.cn">Thomas Chan</a></p>
+</blockquote>
+<p>刚接触 js 的话，可能会认为 <code>null</code> 与 <code>undefined</code> 很相似，其实不然，本文将列述 <code>null</code> 与 <code>undefined</code> 之间的不同点与相同点。</p>
+<h1 id="null-是什么？"><a href="#null-是什么？" class="headerlink" title="null 是什么？"></a>null 是什么？</h1><p><code>null</code> 有两个你必须知道的特征：</p>
+<ul>
+<li><code>null</code> 是空或者不存在的值</li>
+<li><code>null</code> 一定是被赋值的<br>像这样，我们给变量 <code>a</code> 赋值 <code>null</code>:<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="built_in">null</span>;</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(a);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="undefined-是什么？"><a href="#undefined-是什么？" class="headerlink" title="undefined 是什么？"></a>undefined 是什么？</h1><p><code>undefined</code> 通常是一个变量已经被声明，但是没有赋值，例如：<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以给变量直接赋值为 <code>undefined</code>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(c);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>还有一种情况是从一个 <code>object</code> 里读取一个不存在的属性就返回 <code>undefined</code>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(d.fake);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="null-与-undefined-的相同点"><a href="#null-与-undefined-的相同点" class="headerlink" title="null 与 undefined 的相同点"></a>null 与 undefined 的相同点</h1><p>在 JavaScript 里只有 <strong>6 个否定值</strong>：</p>
+<ul>
+<li>false</li>
+<li>0(zero)</li>
+<li>“”(empty string)</li>
+<li>null</li>
+<li>undefined</li>
+<li>NaN(Not A Number)</li>
+</ul>
+<p><code>null</code> 和 <code>undefined</code> 是其中两个。其他所有的值都是真值。</p>
+<blockquote>
+<p>如果你还不太熟悉 js 里的真/假值，可以看下我之前的文章： <a href="https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a" target="_blank" rel="noopener">== vs ===</a></p>
+</blockquote>
+<p>另外 JavaScript 里有 6 个原始值：</p>
+<ul>
+<li>Boolean</li>
+<li>Null</li>
+<li>Undefined</li>
+<li>Number</li>
+<li>String</li>
+<li>Symbol</li>
+</ul>
+<p><code>null</code> 和 <code>undefined</code> 亦是其中两个。其他所有的值都是对象(objects, functions, arrays等等)。</p>
+<p>有趣的是，用 <code>typeof</code> 测试 <code>null</code>，会返回 <code>object</code>(译者注：这可是个大坑):<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a);</span><br><span class="line"><span class="comment">// object</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>这个特征是 JavaScript 诞生时就有的，基本上被当做最早的 JavaScript 实现的一个错误。</p>
+<blockquote>
+<p>如果你还太熟悉 js 里的数据类型，可以看下我之前的文章: <a href="https://codeburst.io/javascript-data-types-explained-347555cd2d4d" target="_blank" rel="noopener">JavaScript 数据类型解析</a></p>
+</blockquote>
+<h1 id="null-undefined"><a href="#null-undefined" class="headerlink" title="null !== undefined"></a>null !== undefined</h1><p>综上所述， <code>null</code> 与 <code>undefined</code> 是不同的，不过有一些共同点，所以 <code>null</code> 是严格不等于 <code>undefined</code> 的。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> !== <span class="literal">undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>但是，用不严格比较符的时候 <code>null</code> 是等于 <code>undefined</code> 的。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>在 JavaScript 里，双等号判断相等时会进行隐式类型转换，所以是不严格的。</p>
+<h1 id="实际运用中的不同"><a href="#实际运用中的不同" class="headerlink" title="实际运用中的不同"></a>实际运用中的不同</h1><p>上述所说都很好理解，那么 <code>null</code> 与 <code>undefined</code> 之间到底有啥具体不同？</p>
+<p>我们来看下面的代码：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let logHi = <span class="function"><span class="params">(str = <span class="string">'hi'</span>)</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们创建了一个函数叫 <code>logHi</code>，有一个参数，且设置默认值为 <code>hi</code>，调用是这样：<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">logHi<span class="comment">()</span>;</span><br><span class="line"><span class="comment">// hi</span></span><br></pre></td></tr></table></figure></p>
+<p>我们也可以传个参数覆盖默认值：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">logHi</span>(<span class="string">'bye'</span>);</span><br><span class="line"><span class="comment">// bye</span></span><br></pre></td></tr></table></figure></p>
+<p>但是！<code>undefined</code> 是不会覆盖默认值的，而 <code>null</code> 则会。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logHi(<span class="literal">undefined</span>);</span><br><span class="line"><span class="comment">// hi</span></span><br><span class="line"></span><br><span class="line">logHi(<span class="literal">null</span>);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><code>null</code> 是被赋值的，表示啥都没有</li>
+<li><code>undefined</code> 通常是一个变量已经被声明，但是没有赋值</li>
+<li><code>null</code> 和 <code>undefined</code> 都是否定值</li>
+<li><code>null</code> 和 <code>undefined</code> 都是原始值，不过奇葩的是 <code>typeof null = object</code></li>
+<li><code>null !== undefined</code> 但是 <code>null == undefined</code></li>
+</ul>
+<blockquote>
+<p>译者注：按我的经验，实际项目中，函数对参数进行处理时，按业务逻辑区分，基本都是需要对参数判断 NaN, null 与 undefined 的。若你的参数是 object，就更需要判断，尤其是后端返回给你的数据</p>
+</blockquote>
+
+  </section>
+</article>
+
+  
+    <img title="打开微信扫一扫" class="thankyou" src="http://chenjunhao.cn/assets/images/thankyou.JPG"></img>
+
+  
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://chenjunhao.cn/assets/images/myavator.jpg" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Thomas Chan </p>
+      <p class="subtitle"> 年轻就是暴躁，年轻就是不安分，年轻就是发脾气 </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <style>@font-face{font-family:"socialshare";src:url("/assets/fonts/iconfont.eot");src:url("/assets/fonts/iconfont.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/iconfont.woff") format("woff"),url("/assets/fonts/iconfont.ttf") format("truetype"),url("/assets/fonts/iconfont.svg#iconfont") format("svg")}.social-share{font-family:"socialshare" !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}.social-share *{font-family:"socialshare" !important}.social-share .icon-tencent:before{content:"\f07a"}.social-share .icon-qq:before{content:"\f11a"}.social-share .icon-weibo:before{content:"\f12a"}.social-share .icon-wechat:before{content:"\f09a"}.social-share .icon-douban:before{content:"\f10a"}.social-share .icon-heart:before{content:"\f20a"}.social-share .icon-like:before{content:"\f00a"}.social-share .icon-qzone:before{content:"\f08a"}.social-share .icon-linkedin:before{content:"\f01a"}.social-share .icon-diandian:before{content:"\f05a"}.social-share .icon-facebook:before{content:"\f03a"}.social-share .icon-google:before{content:"\f04a"}.social-share .icon-twitter:before{content:"\f06a"}.social-share a{position:relative;text-decoration:none;margin:4px;display:inline-block;outline:none}.social-share .social-share-icon{position:relative;display:inline-block;width:32px;height:32px;font-size:20px;border-radius:50%;line-height:32px;border:1px solid #666;color:#666;text-align:center;vertical-align:middle;transition:background 0.6s ease-out 0s}.social-share .social-share-icon:hover{background:#666;color:#fff}.social-share .icon-weibo{color:#ff763b;border-color:#ff763b}.social-share .icon-weibo:hover{background:#ff763b}.social-share .icon-tencent{color:#56b6e7;border-color:#56b6e7}.social-share .icon-tencent:hover{background:#56b6e7}.social-share .icon-qq{color:#56b6e7;border-color:#56b6e7}.social-share .icon-qq:hover{background:#56b6e7}.social-share .icon-qzone{color:#FDBE3D;border-color:#FDBE3D}.social-share .icon-qzone:hover{background:#FDBE3D}.social-share .icon-douban{color:#33b045;border-color:#33b045}.social-share .icon-douban:hover{background:#33b045}.social-share .icon-linkedin{color:#0077B5;border-color:#0077B5}.social-share .icon-linkedin:hover{background:#0077B5}.social-share .icon-facebook{color:#44619D;border-color:#44619D}.social-share .icon-facebook:hover{background:#44619D}.social-share .icon-google{color:#db4437;border-color:#db4437}.social-share .icon-google:hover{background:#db4437}.social-share .icon-twitter{color:#55acee;border-color:#55acee}.social-share .icon-twitter:hover{background:#55acee}.social-share .icon-diandian{color:#307DCA;border-color:#307DCA}.social-share .icon-diandian:hover{background:#307DCA}.social-share .icon-wechat{position:relative;color:#7bc549;border-color:#7bc549}.social-share .icon-wechat:hover{background:#7bc549}.social-share .icon-wechat .wechat-qrcode{display:none;border:1px solid #eee;position:absolute;z-index:9;top:-205px;left:-84px;width:200px;height:192px;color:#666;font-size:12px;text-align:center;background-color:#fff;box-shadow:0 2px 10px #aaa;transition:all 200ms;-webkit-tansition:all 350ms;-moz-transition:all 350ms}.social-share .icon-wechat .wechat-qrcode.bottom{top:40px;left:-84px}.social-share .icon-wechat .wechat-qrcode.bottom:after{display:none}.social-share .icon-wechat .wechat-qrcode h4{font-weight:normal;height:26px;line-height:26px;font-size:12px;background-color:#f3f3f3;margin:0;padding:0;color:#777}.social-share .icon-wechat .wechat-qrcode .qrcode{width:105px;margin:10px auto}.social-share .icon-wechat .wechat-qrcode .qrcode table{margin:0 !important}.social-share .icon-wechat .wechat-qrcode .help p{font-weight:normal;line-height:16px;padding:0;margin:0}.social-share .icon-wechat .wechat-qrcode:after{content:'';position:absolute;left:50%;margin-left:-6px;bottom:-13px;width:0;height:0;border-width:8px 6px 6px 6px;border-style:solid;border-color:#fff transparent transparent transparent}.social-share .icon-wechat:hover .wechat-qrcode{display:block}</style>
+    <div class="share-bar"></div>
+    <script src="/js/social.share.min.js"></script>
+    <script>socialShare('.share-bar', { sites: ['weibo', 'qq', 'wechat', 'qzone', 'twitter', 'google'] });</script>
+  </section>
+</div>
+
+
+  
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+(function initComments() {
+  var gitalk = new Gitalk({
+    clientID: '1e2ae003530b581cd762',
+    clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+    repo: 'ThomasChan.github.io',
+    owner: 'thomaschan',
+    admin: ['thomaschan'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false,
+    id: '2018012201',
+    title: '2018012201',
+  });
+
+  gitalk.render('comments');
+})();
+</script>
+
+  
+</main>
+
+</body>
+</html>
