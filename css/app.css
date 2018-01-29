@@ -167,6 +167,9 @@ main.post {
     margin-top: 75px; }
     main.post .article-entry a {
       color: #5badf0; }
+    main.post .article-entry img {
+      display: block;
+      max-width: 100%; }
   main.post .article-title {
     margin: 0;
     text-align: center;
