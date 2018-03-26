@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>d3.js 与 react.js | Thomas Chan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://chenjunhao.cn/assets/images/avator.jpg">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+</head>
+
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+    
+      <a href="/about">about</a>
+    
+  
+    
+      <a href="/resume">resume</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2018/03/26/d3-js-与-react-js/">d3.js 与 react.js</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">三月 26 2018</p>
+  </section>
+
+  <section class="article-entry">
+    <p>本文简单总结一下 d3(v4) 在 react 中如何使用，如果你还不知道 d3.js 是什么，请移步 <a href="http://d3js.org" target="_blank" rel="noopener">d3.js</a>。<br>d3.js 官方样例中的用法都是类似<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d3.select(<span class="string">"body"</span>)</span><br><span class="line">  .selectAll(<span class="string">"p"</span>)</span><br><span class="line">  .data([<span class="number">4</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">23</span>, <span class="number">42</span>])</span><br><span class="line">  .enter().append(<span class="string">"p"</span>)</span><br><span class="line">    .text(function(d) &#123; return <span class="string">"I’m number "</span> + d + <span class="string">"!"</span>; &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>确实很简明，但是在 react 中却没法下手，所以在 react 中，只需将 d3.js 视为提供图形算法的库即可，不需要掌握如何使用 d3.js 操作 dom。</p>
+<h2 id="使用-svg-画一个-bar-图"><a href="#使用-svg-画一个-bar-图" class="headerlink" title="使用 svg 画一个 bar 图"></a>使用 svg 画一个 bar 图</h2><p>我们先使用 svg 来画一个最简单的没有坐标轴的 bar 图，理解一下 d3 与 react 的分工。</p>
+<p>首先假设我们的 bar 图大小为 1280(px) * 800(px)，数据是<br>| city | amount |<br>|: —:|:——:|<br>| 北京 | 1000 |<br>| 上海 | 803 |<br>| 广州 | 440 |<br>| 深圳 | 780 |</p>
+<p>然后我们需要理解 bar 图是如何构成（画）的，bar 图有两个坐标轴：</p>
+<ul>
+<li>横轴为分组，对应 city ，决定每根柱子的 x 位置</li>
+<li>竖轴为数值，对应 amount，决定每根柱子的高度即 y 的位置</li>
+</ul>
+<p>d3 处理图形的算法和坐标计算很方便，使用 d3.scaleBand 将 city 与图的宽度(1280px) 做出映射关系：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xAxis = d3.scaleBand()</span><br><span class="line">  .<span class="keyword">range</span>([<span class="number">0</span>, <span class="number">1280</span>])</span><br><span class="line">  .domain([<span class="string">'北京'</span>, <span class="string">'上海'</span>, <span class="string">'广州'</span>, <span class="string">'深圳'</span>])</span><br></pre></td></tr></table></figure></p>
+<p>就可以用 <code>xAxis(&#39;上海&#39;)</code> 得到<code>上海</code>这根柱子的 x 位置。每根柱子的宽度使用 <code>xAxis.bandwidth()</code> 获得。</p>
+<p>使用 d3.scaleLinear 将 amount 与图的高度(800px) 做出映射关系：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const yAxis = d3.scaleLinear()</span><br><span class="line">  .range([<span class="number">800</span>, <span class="number">0</span>])</span><br><span class="line">  .domain([<span class="number">0</span>, <span class="number">1000</span>])</span><br></pre></td></tr></table></figure></p>
+<p>就可以用 <code>yAxis(803)</code> 得到<code>上海</code>这根柱子的高度 y 位置。<strong>请注意 <code>range([800, 0])</code>，之所以是反向的，是因为 svg 的纵坐标系是反向的，而且 canvas 的纵坐标系也是反向的。</strong></p>
+<p>接下来创建我们的组件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> d3 <span class="keyword">from</span> <span class="string">'d3'</span>;</span><br><span class="line"><span class="keyword">import</span> React, &#123; PureComponent &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> width = <span class="number">1280</span>;</span><br><span class="line"><span class="keyword">const</span> height = <span class="number">800</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> data = [</span><br><span class="line">  &#123; <span class="attr">city</span>: <span class="string">'北京'</span>, <span class="attr">amount</span>: <span class="number">1000</span>, &#125;,</span><br><span class="line">  &#123; <span class="attr">city</span>: <span class="string">'上海'</span>, <span class="attr">amount</span>: <span class="number">803</span>, &#125;,</span><br><span class="line">  &#123; <span class="attr">city</span>: <span class="string">'广州'</span>, <span class="attr">amount</span>: <span class="number">440</span>, &#125;,</span><br><span class="line">  &#123; <span class="attr">city</span>: <span class="string">'深圳'</span>, <span class="attr">amount</span>: <span class="number">780</span>, &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> xAxis = d3.scaleBand()</span><br><span class="line">  .range([<span class="number">0</span>, <span class="number">1280</span>])</span><br><span class="line">  .domain([<span class="string">'北京'</span>, <span class="string">'上海'</span>, <span class="string">'广州'</span>, <span class="string">'深圳'</span>]);</span><br><span class="line"><span class="keyword">const</span> yAxis = d3.scaleLinear()</span><br><span class="line">  .range([<span class="number">800</span>, <span class="number">0</span>])</span><br><span class="line">  .domain([<span class="number">0</span>, <span class="number">1000</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> barWidth = xAxis.bandwidth();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">PureComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&#123;width&#125;</span> <span class="attr">height</span>=<span class="string">&#123;height&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      &#123;data.map((&#123; city, amount &#125;, index) =&gt; &#123;</span></span><br><span class="line"><span class="xml">        const x = xAxis(city);</span></span><br><span class="line"><span class="xml">        const y = yAxis(amount);</span></span><br><span class="line"><span class="xml">        const barHeight = height - y;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line">        return &lt;rect</span><br><span class="line">          key=&#123;index&#125;</span><br><span class="line">          x=&#123;x&#125;</span><br><span class="line">          y=&#123;y&#125;</span><br><span class="line">          width=&#123;barWidth&#125;</span><br><span class="line">          height=&#123;barHeight&#125;</span><br><span class="line">          fill=&#123;'#bada55'&#125; /&gt;;</span><br><span class="line">      &#125;)&#125;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">svg</span>&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就完成了一个最简单的(正数) bar 图，需要注意的是其中计算 barHeight 的时候并没有判断 amount 为负数的情况，且没有处理各种边界错误。</p>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p>上边的例子中我们是直接 <code>map</code> 数据，创建了 n 个 <code>rect</code> 元素，当数据量上千后，性能会下降，不如改为 <code>canvas</code> 画法，使用 <code>canvas</code> 画的逻辑也是一样的，d3.js 只负责图形算法和坐标计算。</p>
+<p>不同的是 <code>canvas</code> 无法像 <code>svg</code> 一样直接在 <code>render</code> 函数中画，需要在 componentDidMount 之后执行画图的逻辑。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">PureComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;canvas</span><br><span class="line">      width=&#123;width&#125;</span><br><span class="line">      height=&#123;height&#125;</span><br><span class="line">      ref=&#123;r =&gt; <span class="keyword">this</span>.canvas = r&#125; /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    const ctx = <span class="keyword">this</span>.canvas.getContext(<span class="symbol">'2</span>d');</span><br><span class="line">    ctx.fillStyle = '#bada55';</span><br><span class="line"></span><br><span class="line">    data.map((&#123; city, amount &#125;, index) =&gt; &#123;</span><br><span class="line">      const x = xAxis(city);</span><br><span class="line">      const y = yAxis(amount);</span><br><span class="line">      const barHeight = height - y;</span><br><span class="line"></span><br><span class="line">      ctx.beginPath();</span><br><span class="line">      ctx.fillRect(x, y, barWidth, barHeight);</span><br><span class="line">      ctx.closePath();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上边两个例子，相信你已经可以使用 <code>svg</code> 或 <code>canvas</code> 通过 <code>d3.js</code> 在 <code>react</code> 中画出常用的基本可视化图形了。</p>
+<p>在项目中，无论是你是要用 d3 自己画图，还是用 echarts/g2/highcharts，重要的是理解图形是如何组成的，如何画出来的，方法有很多。</p>
+
+  </section>
+</article>
+
+  
+    <img title="打开微信扫一扫" class="thankyou" src="http://chenjunhao.cn/assets/images/thankyou.JPG"></img>
+
+  
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://chenjunhao.cn/assets/images/myavator.jpg" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Thomas Chan </p>
+      <p class="subtitle"> 年轻就是暴躁，年轻就是不安分，年轻就是发脾气 </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <style>@font-face{font-family:"socialshare";src:url("/assets/fonts/iconfont.eot");src:url("/assets/fonts/iconfont.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/iconfont.woff") format("woff"),url("/assets/fonts/iconfont.ttf") format("truetype"),url("/assets/fonts/iconfont.svg#iconfont") format("svg")}.social-share{font-family:"socialshare" !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}.social-share *{font-family:"socialshare" !important}.social-share .icon-tencent:before{content:"\f07a"}.social-share .icon-qq:before{content:"\f11a"}.social-share .icon-weibo:before{content:"\f12a"}.social-share .icon-wechat:before{content:"\f09a"}.social-share .icon-douban:before{content:"\f10a"}.social-share .icon-heart:before{content:"\f20a"}.social-share .icon-like:before{content:"\f00a"}.social-share .icon-qzone:before{content:"\f08a"}.social-share .icon-linkedin:before{content:"\f01a"}.social-share .icon-diandian:before{content:"\f05a"}.social-share .icon-facebook:before{content:"\f03a"}.social-share .icon-google:before{content:"\f04a"}.social-share .icon-twitter:before{content:"\f06a"}.social-share a{position:relative;text-decoration:none;margin:4px;display:inline-block;outline:none}.social-share .social-share-icon{position:relative;display:inline-block;width:32px;height:32px;font-size:20px;border-radius:50%;line-height:32px;border:1px solid #666;color:#666;text-align:center;vertical-align:middle;transition:background 0.6s ease-out 0s}.social-share .social-share-icon:hover{background:#666;color:#fff}.social-share .icon-weibo{color:#ff763b;border-color:#ff763b}.social-share .icon-weibo:hover{background:#ff763b}.social-share .icon-tencent{color:#56b6e7;border-color:#56b6e7}.social-share .icon-tencent:hover{background:#56b6e7}.social-share .icon-qq{color:#56b6e7;border-color:#56b6e7}.social-share .icon-qq:hover{background:#56b6e7}.social-share .icon-qzone{color:#FDBE3D;border-color:#FDBE3D}.social-share .icon-qzone:hover{background:#FDBE3D}.social-share .icon-douban{color:#33b045;border-color:#33b045}.social-share .icon-douban:hover{background:#33b045}.social-share .icon-linkedin{color:#0077B5;border-color:#0077B5}.social-share .icon-linkedin:hover{background:#0077B5}.social-share .icon-facebook{color:#44619D;border-color:#44619D}.social-share .icon-facebook:hover{background:#44619D}.social-share .icon-google{color:#db4437;border-color:#db4437}.social-share .icon-google:hover{background:#db4437}.social-share .icon-twitter{color:#55acee;border-color:#55acee}.social-share .icon-twitter:hover{background:#55acee}.social-share .icon-diandian{color:#307DCA;border-color:#307DCA}.social-share .icon-diandian:hover{background:#307DCA}.social-share .icon-wechat{position:relative;color:#7bc549;border-color:#7bc549}.social-share .icon-wechat:hover{background:#7bc549}.social-share .icon-wechat .wechat-qrcode{display:none;border:1px solid #eee;position:absolute;z-index:9;top:-205px;left:-84px;width:200px;height:192px;color:#666;font-size:12px;text-align:center;background-color:#fff;box-shadow:0 2px 10px #aaa;transition:all 200ms;-webkit-tansition:all 350ms;-moz-transition:all 350ms}.social-share .icon-wechat .wechat-qrcode.bottom{top:40px;left:-84px}.social-share .icon-wechat .wechat-qrcode.bottom:after{display:none}.social-share .icon-wechat .wechat-qrcode h4{font-weight:normal;height:26px;line-height:26px;font-size:12px;background-color:#f3f3f3;margin:0;padding:0;color:#777}.social-share .icon-wechat .wechat-qrcode .qrcode{width:105px;margin:10px auto}.social-share .icon-wechat .wechat-qrcode .qrcode table{margin:0 !important}.social-share .icon-wechat .wechat-qrcode .help p{font-weight:normal;line-height:16px;padding:0;margin:0}.social-share .icon-wechat .wechat-qrcode:after{content:'';position:absolute;left:50%;margin-left:-6px;bottom:-13px;width:0;height:0;border-width:8px 6px 6px 6px;border-style:solid;border-color:#fff transparent transparent transparent}.social-share .icon-wechat:hover .wechat-qrcode{display:block}</style>
+    <div class="share-bar"></div>
+    <script src="/js/social.share.min.js"></script>
+    <script>socialShare('.share-bar', { sites: ['weibo', 'qq'] });</script>
+  </section>
+</div>
+
+
+  
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+(function initComments() {
+  var gitalk = new Gitalk({
+    clientID: '1e2ae003530b581cd762',
+    clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+    repo: 'ThomasChan.github.io',
+    owner: 'thomaschan',
+    admin: ['thomaschan'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false,
+    id: '2018032601',
+    title: '2018032601',
+  });
+
+  gitalk.render('comments');
+})();
+</script>
+
+  
+</main>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</body>
+</html>
