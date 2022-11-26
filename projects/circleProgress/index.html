@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<meta charset="UTF-8">
+	<title>Circle Progress Demo</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<style>
+		body {
+			text-align: center
+		}
+		.grid {
+			display: inline-block;
+			width: 200px;
+			height: 200px;
+			margin: 50px;
+		}
+		#b {
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="grid">
+		<canvas id="a" width='200' height='200'></canvas>
+		<input id="a_slide" type="range" min='0' max='100'>
+		<button id="a_restart">restart</button>
+	</div>
+	<div class="grid">
+		<div id="b"></div>
+		<input id="b_slide" type="range" min='0' max='100'>
+		<button id="b_restart">restart</button>
+	</div>
+	<script>
+		/**
+		 * HiDPI Canvas Polyfill (1.0.9)
+		 *
+		 * Author: Jonathan D. Johnson (http://jondavidjohn.com)
+		 * Homepage: https://github.com/jondavidjohn/hidpi-canvas-polyfill
+		 * Issue Tracker: https://github.com/jondavidjohn/hidpi-canvas-polyfill/issues
+		 * License: Apache 2.0
+		*/
+		!function(a){var b=function(a){var b=a.backingStorePixelRatio||a.webkitBackingStorePixelRatio||a.mozBackingStorePixelRatio||a.msBackingStorePixelRatio||a.oBackingStorePixelRatio||a.backingStorePixelRatio||1;return(window.devicePixelRatio||1)/b}(a),c=function(a,b){for(var c in a)a.hasOwnProperty(c)&&b(a[c],c)},d={fillRect:"all",clearRect:"all",strokeRect:"all",moveTo:"all",lineTo:"all",arc:[0,1,2],arcTo:"all",bezierCurveTo:"all",isPointinPath:"all",isPointinStroke:"all",quadraticCurveTo:"all",rect:"all",translate:"all",createRadialGradient:"all",createLinearGradient:"all"};1!==b&&(c(d,function(c,d){a[d]=function(a){return function(){var d,e,f=Array.prototype.slice.call(arguments);if("all"===c)f=f.map(function(a){return a*b});else if(Array.isArray(c))for(d=0,e=c.length;e>d;d++)f[c[d]]*=b;return a.apply(this,f)}}(a[d])}),a.stroke=function(a){return function(){this.lineWidth*=b,a.apply(this,arguments),this.lineWidth/=b}}(a.stroke),a.fillText=function(a){return function(){var c=Array.prototype.slice.call(arguments);c[1]*=b,c[2]*=b,this.font=this.font.replace(/(\d+)(px|em|rem|pt)/g,function(a,c,d){return c*b+d}),a.apply(this,c),this.font=this.font.replace(/(\d+)(px|em|rem|pt)/g,function(a,c,d){return c/b+d})}}(a.fillText),a.strokeText=function(a){return function(){var c=Array.prototype.slice.call(arguments);c[1]*=b,c[2]*=b,this.font=this.font.replace(/(\d+)(px|em|rem|pt)/g,function(a,c,d){return c*b+d}),a.apply(this,c),this.font=this.font.replace(/(\d+)(px|em|rem|pt)/g,function(a,c,d){return c/b+d})}}(a.strokeText))}(CanvasRenderingContext2D.prototype),function(a){a.getContext=function(a){return function(b){var c,d,e=a.call(this,b);return"2d"===b&&(c=e.backingStorePixelRatio||e.webkitBackingStorePixelRatio||e.mozBackingStorePixelRatio||e.msBackingStorePixelRatio||e.oBackingStorePixelRatio||e.backingStorePixelRatio||1,d=(window.devicePixelRatio||1)/c,d>1&&(this.style.height=this.height+"px",this.style.width=this.width+"px",this.width*=d,this.height*=d)),e}}(a.getContext)}(HTMLCanvasElement.prototype);
+	</script>
+	<script>!function(){var t=2,i=6,e=16,r=52,h=24,s=function(s){if(!s.element)throw new Error("Error: CircleProgress must have dom element");if("CANVAS"!==s.element.tagName){var n=document.createElement("canvas");n.id="_ele_cirle_progress_"+Math.ceil(1e3*Math.random()),n.width=s.element.clientWidth,n.height=s.element.clientHeight,s.element.appendChild(n),this.ctx=n.getContext("2d")}else this.ctx=s.element.getContext("2d");return this.width=s.width||s.element.clientWidth,this.height=s.height||s.element.clientHeight,this.centerCoordinate=this.width>=this.height?this.width/2:this.height/2,this.backgroundLineWidth=s.backgroundLineWidth||t,this.circleLineWidth=s.circleLineWidth||i,this.radius=s.radius||this.centerCoordinate-this.backgroundLineWidth-e,this.startAngle=s.startAngle||Math.PI/2,this.endAngle=s.endAngle||360,this.current=s.current>1?1:s.current||0,this.progressEndRadius=s.progressEndRadius||e,this.progressEndWidth=s.progressEndWidth||r,this.progressEndHeight=s.progressEndHeight||h,this.backgroundColor=s.backgroundColor||"#e5f1fd",this.circleColor=s.circleColor||"#77ccf4",this.textColor=s.textColor||"#fff",this.textEnd=s.textEnd||"已投满",this.font=s.font||"12px Helvetica Neue",this._shadow_current=0,this.draw(),this};if(s.prototype.drawId=void 0,s.prototype.draw=function(t){Number(t)>=0&&(this.current=t>1?1:t),this._shadow_current<Math.floor(1e3*this.current/10)&&(window.cancelAnimationFrame(this.drawId),this.drawId=void 0);var i=this,e=function(){return 0===i.current?(i._shadow_current=0,i.ctx.clearRect(0,0,i.width,i.height),i.drawBackground().drawCircle().drawText(),window.cancelAnimationFrame(i.drawId),i.drawId=void 0,!1):i._shadow_current==Math.floor(1e3*i.current/10)?(window.cancelAnimationFrame(i.drawId),i.drawId=void 0,!1):(i._shadow_current>Math.floor(1e3*i.current/10)?i._shadow_current-=1:i._shadow_current<Math.floor(1e3*i.current/10)&&(i._shadow_current+=1),i.ctx.clearRect(0,0,i.width,i.height),i.drawBackground().drawCircle().drawText(),void(i.drawId=window.requestAnimationFrame(e)))};e()},s.prototype.restart=function(){this._shadow_current=0,this.draw()},s.prototype.drawBackground=function(){return this.ctx.beginPath(),this.ctx.strokeStyle=this.backgroundColor,this.ctx.lineWidth=this.backgroundLineWidth,this.ctx.arc(this.centerCoordinate,this.centerCoordinate,this.radius,-this.startAngle,this.endAngle,!1),this.ctx.stroke(),this.ctx.closePath(),this},s.prototype.drawCircle=function(){return this.ctx.beginPath(),this.ctx.strokeStyle=this.circleColor,this.ctx.lineWidth=this.circleLineWidth,this.ctx.arc(this.centerCoordinate,this.centerCoordinate,this.radius-2,-this.startAngle,2*Math.PI*(this._shadow_current/100)-this.startAngle,!1),this.ctx.stroke(),this.ctx.closePath(),this},s.prototype.drawText=function(){var t=this.centerCoordinate+this.radius*Math.cos(this._shadow_current/100*360*Math.PI/180-this.startAngle),i=this.centerCoordinate+this.radius*Math.sin(this._shadow_current/100*360*Math.PI/180-this.startAngle);return this._shadow_current<100?(this.ctx.beginPath(),this.ctx.fillStyle=this.circleColor,this.ctx.arc(t,i,this.progressEndRadius,0,360,!1),this.ctx.fill(),this.ctx.closePath()):this._shadow_current>=100&&this.roundRect(t-this.progressEndWidth/2,i-this.progressEndHeight/4,this.progressEndWidth,this.progressEndHeight,4,this.circleColor,!1),this.ctx.fillStyle=this.textColor,this.ctx.lineWidth=this.textLineWidth,this.ctx.textAlign="center",this.ctx.font=this.font,this._shadow_current<100?this.ctx.fillText(this._shadow_current+"%",t,i+5):this._shadow_current>=100&&this.ctx.fillText(this.textEnd,t,i+10),this},s.prototype.roundRect=function(t,i,e,r,h,s,n){var h=h||5;this.ctx.beginPath(),this.ctx.moveTo(t+h,i),this.ctx.lineTo(t+e-h,i),this.ctx.quadraticCurveTo(t+e,i,t+e,i+h),this.ctx.lineTo(t+e,i+r-h),this.ctx.quadraticCurveTo(t+e,i+r,t+e-h,i+r),this.ctx.lineTo(t+h,i+r),this.ctx.quadraticCurveTo(t,i+r,t,i+r-h),this.ctx.lineTo(t,i+h),this.ctx.quadraticCurveTo(t,i,t+h,i),n&&(this.ctx.strokeStyle=n,this.ctx.stroke()),s&&(this.ctx.fillStyle=s,this.ctx.fill()),this.ctx.closePath()},!window.requestAnimationFrame||!window.cancelAnimationFrame){var n=0;window.requestAnimationFrame=function(t){var i=(new Date).getTime(),e=Math.max(n+16,i);return setTimeout(function(){t(n=e)},e-i)},window.cancelAnimationFrame=clearTimeout}window.CircleProgress=s}();</script>
+	<script>
+		var a = new CircleProgress({
+			element: document.getElementById('a'),
+			current: 0.23
+		})
+		document.getElementById('a_slide').addEventListener('input', function(e) {
+			a.draw(e.target.value / 100)
+		})
+		document.getElementById('a_restart').addEventListener('click', function(e) {
+			a.restart()
+		})
+		var b = new CircleProgress({
+			element: document.getElementById('b'),
+			current: 0.89
+		})
+		document.getElementById('b_slide').addEventListener('input', function(e) {
+			b.draw(e.target.value / 100)
+		})
+		document.getElementById('b_restart').addEventListener('click', function(e) {
+			b.restart()
+		})
+	</script>
+</body>
+</html>
+	

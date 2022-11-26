@@ -1,0 +1,174 @@
+.sidebar-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  height: 100%;
+  overflow: hidden;
+  background-image: url("/assets/bg.jpeg");
+  background-position: top center;
+  background-size: cover;
+  text-align: right;
+}
+.sidebar-bg .sidebar {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(7px) brightness(0.8);
+}
+.sidebar-bg .sidebar * {
+  color: #fff;
+  font-weight: normal;
+}
+.sidebar-bg .header {
+  padding-right: 30px;
+}
+.sidebar-bg .title {
+  margin-bottom: 0px;
+}
+.sidebar-bg .title a:hover {
+  color: color-link-sidebar;
+}
+.sidebar-bg .subtitle {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.sidebar-bg .info {
+  display: table;
+  width: 100%;
+  margin-top: 20px;
+}
+.sidebar-bg .info > * {
+  display: table-cell;
+  vertical-align: bottom;
+}
+.sidebar-bg .info .content {
+  padding-left: 10px;
+}
+.sidebar-bg .author {
+  margin-top: 0.5em;
+}
+.sidebar-bg .description {
+  font-size: 14px;
+}
+.sidebar-bg .avatar {
+  width: 140px;
+}
+.sidebar-bg .avatar img {
+  width: 120px;
+  height: 120px;
+  border: 5px solid color-border;
+  border-radius: 999px;
+}
+.sidebar-bg .nav {
+  padding-left: 0;
+}
+.sidebar-bg .nav > li {
+  list-style: square;
+  margin-left: 0;
+}
+.sidebar-bg .nav > li > a {
+  display: block;
+  padding: 5px 25px;
+  border-right: 5px solid transparent;
+}
+.sidebar-bg .nav > li > a:hover {
+  color: color-link;
+  border-right: 5px solid color-link;
+}
+.sidebar-bg .category-list,
+.sidebar-bg .tag-list,
+.sidebar-bg .archive-list {
+  padding-right: 30px;
+  padding-left: 0;
+}
+.sidebar-bg .category-list .category-list-item,
+.sidebar-bg .tag-list .category-list-item,
+.sidebar-bg .archive-list .category-list-item,
+.sidebar-bg .category-list .tag-list-item,
+.sidebar-bg .tag-list .tag-list-item,
+.sidebar-bg .archive-list .tag-list-item,
+.sidebar-bg .category-list .archive-list-item,
+.sidebar-bg .tag-list .archive-list-item,
+.sidebar-bg .archive-list .archive-list-item {
+  vertical-align: top;
+  font-size: 12px;
+}
+.sidebar-bg .category-list .category-list-item a,
+.sidebar-bg .tag-list .category-list-item a,
+.sidebar-bg .archive-list .category-list-item a,
+.sidebar-bg .category-list .tag-list-item a,
+.sidebar-bg .tag-list .tag-list-item a,
+.sidebar-bg .archive-list .tag-list-item a,
+.sidebar-bg .category-list .archive-list-item a,
+.sidebar-bg .tag-list .archive-list-item a,
+.sidebar-bg .archive-list .archive-list-item a {
+  width: 80%;
+  display: inline-block;
+}
+.sidebar-bg .category-list .category-list-item a:hover,
+.sidebar-bg .tag-list .category-list-item a:hover,
+.sidebar-bg .archive-list .category-list-item a:hover,
+.sidebar-bg .category-list .tag-list-item a:hover,
+.sidebar-bg .tag-list .tag-list-item a:hover,
+.sidebar-bg .archive-list .tag-list-item a:hover,
+.sidebar-bg .category-list .archive-list-item a:hover,
+.sidebar-bg .tag-list .archive-list-item a:hover,
+.sidebar-bg .archive-list .archive-list-item a:hover {
+  color: color-link;
+}
+.sidebar-bg .category-list .category-list-item .tag-list-count,
+.sidebar-bg .tag-list .category-list-item .tag-list-count,
+.sidebar-bg .archive-list .category-list-item .tag-list-count,
+.sidebar-bg .category-list .tag-list-item .tag-list-count,
+.sidebar-bg .tag-list .tag-list-item .tag-list-count,
+.sidebar-bg .archive-list .tag-list-item .tag-list-count,
+.sidebar-bg .category-list .archive-list-item .tag-list-count,
+.sidebar-bg .tag-list .archive-list-item .tag-list-count,
+.sidebar-bg .archive-list .archive-list-item .tag-list-count,
+.sidebar-bg .category-list .category-list-item .category-list-count,
+.sidebar-bg .tag-list .category-list-item .category-list-count,
+.sidebar-bg .archive-list .category-list-item .category-list-count,
+.sidebar-bg .category-list .tag-list-item .category-list-count,
+.sidebar-bg .tag-list .tag-list-item .category-list-count,
+.sidebar-bg .archive-list .tag-list-item .category-list-count,
+.sidebar-bg .category-list .archive-list-item .category-list-count,
+.sidebar-bg .tag-list .archive-list-item .category-list-count,
+.sidebar-bg .archive-list .archive-list-item .category-list-count,
+.sidebar-bg .category-list .category-list-item .archive-list-count,
+.sidebar-bg .tag-list .category-list-item .archive-list-count,
+.sidebar-bg .archive-list .category-list-item .archive-list-count,
+.sidebar-bg .category-list .tag-list-item .archive-list-count,
+.sidebar-bg .tag-list .tag-list-item .archive-list-count,
+.sidebar-bg .archive-list .tag-list-item .archive-list-count,
+.sidebar-bg .category-list .archive-list-item .archive-list-count,
+.sidebar-bg .tag-list .archive-list-item .archive-list-count,
+.sidebar-bg .archive-list .archive-list-item .archive-list-count {
+  display: inline-block;
+  width: 20%;
+  font-size: 12px;
+  color: color-link;
+  vertical-align: top;
+}
+@media mq-mobile {
+  .sidebar {
+    left: -400px;
+    width: 300px;
+    max-width: 100%;
+    z-index: 9999999;
+    transition-duration: 0.3s;
+  }
+  .sidebar.in {
+    left: 0;
+  }
+  .sidebar .header {
+    padding-right: 15px;
+  }
+  .sidebar .title {
+    display: none;
+  }
+  .sidebar .nav > li > a {
+    padding: 5px 10px;
+  }
+}

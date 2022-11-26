@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    前端架构：requirejs+angularjs实现懒加载angular模块
+  
+</title>
+
+<meta name="description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
+<meta property="og:url" content="http://chenjunhao.cn/2015/11/01/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-11-01T09:41:06.000Z">
+<meta property="article:modified_time" content="2022-11-26T07:01:04.237Z">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?03cc3ea91248258c246f0d0fe28ec53f";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/archives" title="ByYear" external="false">ByYear</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">9</span></li></ul>
+                </li>
+              
+            
+              
+                <li class="archive-list-container">
+                  <a href="javascript:;" target="_self">归档</a>
+                  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a><span class="archive-list-count">2</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="blog-dynamically-loading-controllers-and-views-with-angularjs-and-requirejs" class="article article-type-blog">
+  
+    <h1 class="article-header">
+      前端架构：requirejs+angularjs实现懒加载angular模块
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2015-11-01
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，__<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1">如果我对 jQuery 开发很熟如何理解 angular </a>__。</p>
+<p>requirejs 不用说都知道是用来前端懒加载 scripts 的，我在网上看到的使用 require + angular 的组合的案例模式都是一样的，无论你访问网站的哪个 url ，都会把 angular 的所有模块全部通过 require 加载下来，虽然 angular 与 backbone 这些框架貌似更适合做单页应用，但是我认为单页应用也没必要把所有的模块都加载下来，这样首屏加载就会很慢，用户体验很不好；于是我 google 了一通，终于找到了解决方法，通过 require 配合 angular route 的 resolve 方法，实现单模块加载，这样做的好处显而易见，坏处可以说没有，硬要说的话还是 angular 之前的缺点：seo 方面要单做。</p>
+<p>废话不多说，show you my code:</p>
+<p>首先项目目录结构是这样滴：</p>
+<pre class="line-numbers language-none"><code class="language-none">app-|
+    |-package.json
+    |-index.html
+    |-views
+    |-src-+
+          |-img
+          |-css
+          |-js-+
+          |    |-controllers-+...
+          |    |-services-+...
+          |    +application.js
+          |    +require-config.js
+          |    +routeResolve.js
+          |-lib-+
+                +angular.min.js
+                +angular-route.min.js
+                +angular-animate.min.js
+                +angular-resourse.min.js
+                +require.js<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>index.html 长这样：</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>zh-cmn-Hans<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>application<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/src/lib/require.js<span class="token punctuation">"</span></span> <span class="token attr-name">data-main</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/src/js/require-config.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span> <span class="token attr-name">ng-view</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>require-config.js ：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">require<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">'/src'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">paths</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string-property property">'angular'</span><span class="token operator">:</span> <span class="token string">'lib/angular.min'</span><span class="token punctuation">,</span>
+        <span class="token string-property property">'ngRoute'</span><span class="token operator">:</span> <span class="token string">'lib/angular-route.min'</span><span class="token punctuation">,</span>
+        <span class="token string-property property">'ngAnimate'</span><span class="token operator">:</span> <span class="token string">'lib/angular-animate.min'</span><span class="token punctuation">,</span>
+        <span class="token string-property property">'ngResource'</span><span class="token operator">:</span> <span class="token string">'lib/angular-resource.min'</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">shim</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">angular</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">exports</span> <span class="token operator">:</span> <span class="token string">'angular'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">ngRoute</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">deps</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'angular'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token string">'ngRoute'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">ngAnimate</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">deps</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'angular'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token string">'ngAnimate'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">ngResource</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">deps</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'angular'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">exports</span><span class="token operator">:</span> <span class="token string">'ngResource'</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">,</span><span class="token literal-property property">urlArgs</span><span class="token operator">:</span> <span class="token string">'v='</span><span class="token operator">+</span><span class="token punctuation">(</span><span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">require</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token string">'js/application'</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">application</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    angular<span class="token punctuation">.</span><span class="token function">element</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ready</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        angular<span class="token punctuation">.</span><span class="token function">bootstrap</span><span class="token punctuation">(</span>document<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'application'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>application.js ：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token string">'angular'</span><span class="token punctuation">,</span>
+    <span class="token string">'ngRoute'</span><span class="token punctuation">,</span>
+    <span class="token string">'ngAnimate'</span><span class="token punctuation">,</span>
+    <span class="token string">'ngResource'</span><span class="token punctuation">,</span>
+    <span class="token string">'js/routeResolve'</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span> <span class="token parameter">angular<span class="token punctuation">,</span> ngRoute<span class="token punctuation">,</span> ngAnimate<span class="token punctuation">,</span> ngResource<span class="token punctuation">,</span> routeResolver</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> application <span class="token operator">=</span> angular<span class="token punctuation">.</span><span class="token function">module</span><span class="token punctuation">(</span><span class="token string">'application'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'ngRoute'</span><span class="token punctuation">,</span> <span class="token string">'ngAnimate'</span><span class="token punctuation">,</span> <span class="token string">'ngResource'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    window<span class="token punctuation">.</span>application <span class="token operator">=</span> application<span class="token punctuation">;</span>
+    application
+        <span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'$routeProvider'</span><span class="token punctuation">,</span> <span class="token string">'$controllerProvider'</span><span class="token punctuation">,</span> <span class="token string">'$compileProvider'</span><span class="token punctuation">,</span> <span class="token string">'$filterProvider'</span><span class="token punctuation">,</span> <span class="token string">'$provide'</span><span class="token punctuation">,</span>
+            <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$routeProvider<span class="token punctuation">,</span> $controllerProvider<span class="token punctuation">,</span> $compileProvider<span class="token punctuation">,</span> $filterProvider<span class="token punctuation">,</span> $provide</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">var</span> route <span class="token operator">=</span> routeResolver<span class="token punctuation">;</span>
+                $routeProvider
+                    <span class="token punctuation">.</span><span class="token function">when</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+                        <span class="token literal-property property">reloadOnSearch</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+                        <span class="token literal-property property">templateUrl</span><span class="token operator">:</span><span class="token string">'views/index.html'</span><span class="token punctuation">,</span>
+                        <span class="token literal-property property">resolve</span><span class="token operator">:</span> route<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+                            <span class="token string">'js/services/peopleService'</span><span class="token punctuation">,</span>
+                            <span class="token string">'js/controllers/popup'</span><span class="token punctuation">,</span>
+                            <span class="token string">'js/controllers/paginator'</span><span class="token punctuation">,</span>
+                            <span class="token string">'js/controllers/index'</span>
+                        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">otherwise</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+                        <span class="token literal-property property">redirectTo</span><span class="token operator">:</span><span class="token string">'/'</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                window<span class="token punctuation">.</span>application<span class="token punctuation">.</span>components <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+                    <span class="token literal-property property">controller</span> <span class="token operator">:</span> $controllerProvider<span class="token punctuation">.</span>register<span class="token punctuation">,</span>
+                    <span class="token literal-property property">directive</span>  <span class="token operator">:</span> $compileProvider<span class="token punctuation">.</span>directive<span class="token punctuation">,</span>
+                    <span class="token literal-property property">filter</span>     <span class="token operator">:</span> $filterProvider<span class="token punctuation">.</span>register<span class="token punctuation">,</span>
+                    <span class="token literal-property property">factory</span>    <span class="token operator">:</span> $provide<span class="token punctuation">.</span>factory<span class="token punctuation">,</span>
+                    <span class="token literal-property property">service</span>    <span class="token operator">:</span> $provide<span class="token punctuation">.</span>service
+                <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> application<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>routeResolve.js ：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">define</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span> <span class="token parameter">require</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">var</span> <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">deps<span class="token punctuation">,</span> preFetchFuncs</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">var</span> routeDef <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">load</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'$q'</span><span class="token punctuation">,</span> <span class="token string">'$rootScope'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">$q<span class="token punctuation">,</span> $rootScope</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">var</span> dependencies <span class="token operator">=</span> deps<span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> <span class="token function">resolveDependencies</span><span class="token punctuation">(</span>$q<span class="token punctuation">,</span> $rootScope<span class="token punctuation">,</span> dependencies<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span> preFetchFuncs <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                angular<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span> routeDef<span class="token punctuation">,</span> preFetchFuncs <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> routeDef<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token function-variable function">resolveDependencies</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">$q<span class="token punctuation">,</span> $rootScope<span class="token punctuation">,</span> dependencies</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">var</span> defer <span class="token operator">=</span> $q<span class="token punctuation">.</span><span class="token function">defer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">require</span><span class="token punctuation">(</span>dependencies<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                defer<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                $rootScope<span class="token punctuation">.</span><span class="token function">$apply</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> defer<span class="token punctuation">.</span>promise<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">resolve</span><span class="token operator">:</span> resolve
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实这就是所有的内容了，当访问首页即 ‘/‘ 时，angular route 的 resolve 方法__通过__我们封装的__routeResolve__来懒加载模块代码，当然模块代码写的时候就不是 <code>define function</code> 里再写 <code>angular.controller</code> 了，直接写 <code>window.application.components.controller</code> ，好那么问题来了，为什么要暴露 angular 的那些方法给 window 呢，原因是<a target="_blank" rel="noopener" href="https://docs.angularjs.org/guide/bootstrap"> angular 的工作方式</a>，angular 在启动之后是不能动态添加 controller 啊 service 啊之类的，在 angular 程序启动后，要添加只能通过内部的 register 方法(controller 的 register)，所以你懂的。</p>
+<p>OK，采用这种架构之后，前端__所有__代码都可以扔到 cdn 上去了，接口全部 rest api。</p>
+<p>以上。</p>
+<p>（ps: 这种架构到底有哪些坑本人还不得而知，若有很明显的坑麻烦还请告知一下我(๑╹ڡ╹)╭）</p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs">http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2015110101',
+        title: '2015110101',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+          <div class="main-footer">
+  
+    © 2022 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

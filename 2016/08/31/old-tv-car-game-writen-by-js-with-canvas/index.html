@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    用canvas写一个“火箭车”小游戏
+  
+</title>
+
+<meta name="description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用canvas写一个“火箭车”小游戏">
+<meta property="og:url" content="http://chenjunhao.cn/2016/08/31/old-tv-car-game-writen-by-js-with-canvas/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-08-31T12:10:08.000Z">
+<meta property="article:modified_time" content="2022-11-26T07:54:52.507Z">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?03cc3ea91248258c246f0d0fe28ec53f";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/archives" title="ByYear" external="false">ByYear</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">9</span></li></ul>
+                </li>
+              
+            
+              
+                <li class="archive-list-container">
+                  <a href="javascript:;" target="_self">归档</a>
+                  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a><span class="archive-list-count">2</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="blog-old-tv-car-game-writen-by-js-with-canvas" class="article article-type-blog">
+  
+    <h1 class="article-header">
+      用canvas写一个“火箭车”小游戏
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-08-31
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><a href="http://chenjunhao.cn/projects/carGame/">先玩一把再看（额声明：并没有通关的说）</a><br>（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）<br>小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。</p>
+<h2 id="只会写干货"><a href="#只会写干货" class="headerlink" title="只会写干货"></a>只会写干货</h2><p>怎么写游戏呢，没经验，首先想到的是我的游戏里要有什么，回忆火箭车简单的分析一下，</p>
+<ul>
+<li>地图上有公路，公路两旁是草地</li>
+<li>有一辆自己的车，可以左右上下移动</li>
+<li>有 n 个对手，对手的速度不一致</li>
+<li>有障碍物</li>
+<li>地图的路会拐弯</li>
+<li>有碰撞，碰撞后车会旋转速度减为 0</li>
+<li>有进度条</li>
+</ul>
+<p>嗯其实功能点还是不少的，挨个儿来。</p>
+<p>Before the first, 要明白 canvas 的动画原理，就像电影一样，是按桢来的，所以要有一个函数（就叫她 draw吧） 来绘制每一帧的画面，然后 requestAnimationFrame 来将每一帧连起来， requestAnimationFrame 是大约每 16 毫秒执行一次，所以画面非常连贯，看起来就是动画了。</p>
+<p>所以 canvas 动画是这么运作之后，先找素材吧，images.google.com 直接搜 car top 就是满屏的车辆俯视图，挑一些好看的合适的，拿 PS 切成 png 图，裁剪掉透明像素就好了。</p>
+<p>接下来我们先定义一些变量，比如我们的小车车、canvas 对象等：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> canvas <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'canvas'</span><span class="token punctuation">)</span> <span class="token comment">// canvas 元素</span>
+<span class="token keyword">var</span> context <span class="token operator">=</span> canvas<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token string">'2d'</span><span class="token punctuation">)</span> <span class="token comment">// 画布</span>
+<span class="token keyword">var</span> contextWidth <span class="token operator">=</span> canvas<span class="token punctuation">.</span>width <span class="token comment">// 画布宽</span>
+<span class="token keyword">var</span> contextHeight <span class="token operator">=</span> canvas<span class="token punctuation">.</span>height <span class="token comment">// 画布高</span>
+<span class="token keyword">var</span> car <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+		<span class="token literal-property property">img</span><span class="token operator">:</span> <span class="token string">'car.png'</span><span class="token punctuation">,</span> <span class="token comment">// 小车车的背景图片</span>
+		<span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// x 轴坐标</span>
+		<span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// y 轴坐标</span>
+		<span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 小车车的宽度</span>
+		<span class="token literal-property property">height</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token comment">// 小车车的高度</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 移动小车车时的坐标和速度</span>
+<span class="token keyword">var</span> move <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+		<span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 按一下方向键移动的像素距离，x 轴</span>
+		<span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+	  <span class="token literal-property property">speed</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token comment">// 移动速度</span>
+	  <span class="token literal-property property">friction</span><span class="token operator">:</span> <span class="token number">0.9</span> <span class="token comment">// 摩擦力</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>好的然后我们需要定个流程骨架，先什么再什么，嗯我们需要个 init 函数来初始化，初始化里来启动第一桢，由于 canvas 动画的原理，即意味着每一帧都要把所有内容都要绘制一遍，所以 draw 里边我们先</p>
+<ol>
+<li>clearContext清掉上一桢</li>
+<li>drawBackground画背景草地</li>
+<li>drawRoad 画公路</li>
+<li>drawEnemys 画对手的小车车</li>
+<li>drawCar 画自己的小车车</li>
+<li>requestAnimationFrame(draw) 画下一桢</li>
+</ol>
+<p>这么定义。另外还需要个 listener 函数来监听方向键按键。</p>
+<h3 id="1-clearContext清掉上一桢"><a href="#1-clearContext清掉上一桢" class="headerlink" title="1. clearContext清掉上一桢"></a>1. clearContext清掉上一桢</h3><p>这个简单，</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">clearContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	context<span class="token punctuation">.</span><span class="token function">clearRect</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> contextWidth<span class="token punctuation">,</span> contextHeight<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>即可。</p>
+<h3 id="2-drawBackground画背景草地"><a href="#2-drawBackground画背景草地" class="headerlink" title="2. drawBackground画背景草地"></a>2. drawBackground画背景草地</h3><p>我觉得还是先找素材吧，Google 了一通也没找到合适的就随便选了张拿 PS 剪了剪，然后定义变量</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> road <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+	<span class="token literal-property property">img</span><span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">direction</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token comment">// 本想用作公路的方向，并未实现</span>
+	<span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 本想用作公路的数据，并未实现</span>
+	<span class="token literal-property property">meadowI</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 草地移动距离</span>
+	<span class="token literal-property property">meadows</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 草地数据</span>
+	<span class="token literal-property property">zebraCrossing</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 公路分割线数据</span>
+	<span class="token literal-property property">zebraCrossingI</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 公路移动距离</span>
+	<span class="token literal-property property">meters</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 分？</span>
+	<span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token comment">// 公路的宽度</span>
+<span class="token punctuation">&#125;</span>
+road<span class="token punctuation">.</span>img<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">'roads.png'</span> <span class="token comment">// 草地的图片</span>
+road<span class="token punctuation">.</span>img<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> x <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>contextWidth <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> y <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>contextHeight <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> y<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> x<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			road<span class="token punctuation">.</span>meadows<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>j<span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">.</span>height<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>height<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 草地的图片加载完毕后初始化</span>
+	<span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>road.meadows 为二维数组，我们是从上到下绘制，草地还需要向下移动，所以 x 轴第一列的 y 坐标应该是负数，所以从 i = -1 开始。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">drawBackground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> x <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>contextWidth <span class="token operator">/</span> road<span class="token punctuation">.</span>img<span class="token punctuation">.</span>width<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> y <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>contextHeight <span class="token operator">/</span> road<span class="token punctuation">.</span>img<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+	road<span class="token punctuation">.</span>meadowI<span class="token operator">++</span>
+   <span class="token comment">// 这个 10 我也不知道怎么来的，是试出来的，反正从大于 10 时重置 road.meadowI 从 0 开始绘制草地是无缝连贯的</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>meadowI <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		road<span class="token punctuation">.</span>meadowI <span class="token operator">=</span> <span class="token number">0</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>meadows<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		road<span class="token punctuation">.</span>meadows<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token comment">// drawImage( img, x, y, width, height) 这里 y + meadowI * 6, 是每一帧草地都向下移动 meadowI * 6 个像素</span>
+			context<span class="token punctuation">.</span><span class="token function">drawImage</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>img<span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> road<span class="token punctuation">.</span>meadowI <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-drawRoad-画公路"><a href="#3-drawRoad-画公路" class="headerlink" title="3. drawRoad 画公路"></a>3. drawRoad 画公路</h3><p>公路也很简单，画个矩形</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">context<span class="token punctuation">.</span>fillStyle <span class="token operator">=</span> <span class="token string">'#888'</span>
+context<span class="token punctuation">.</span><span class="token function">fillRect</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>x<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> road<span class="token punctuation">.</span>width<span class="token punctuation">,</span> contextHeight<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>嗯还没说 road.x 和 road.width 怎么来的呢：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> carImg <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+carImg<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	car<span class="token punctuation">.</span>width <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width
+	car<span class="token punctuation">.</span>height <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>height
+	car<span class="token punctuation">.</span>x <span class="token operator">=</span> contextWidth <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> car<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">2</span>
+	car<span class="token punctuation">.</span>y <span class="token operator">=</span> contextHeight <span class="token operator">-</span> car<span class="token punctuation">.</span>height <span class="token operator">-</span> move<span class="token punctuation">.</span>y
+	road<span class="token punctuation">.</span>width <span class="token operator">=</span> car<span class="token punctuation">.</span>width <span class="token operator">*</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">10</span>
+	road<span class="token punctuation">.</span>x <span class="token operator">=</span> contextWidth <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> road<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">2</span>
+	<span class="token keyword">var</span> f41 <span class="token operator">=</span> road<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">4</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> j <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> contextHeight <span class="token operator">/</span> <span class="token number">50</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 嗯这个 50 我也是拍脑袋想出来的不要问为什么</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 这个 3 是因为定义公路同向 4 车道</span>
+			road<span class="token punctuation">.</span>zebraCrossing<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>road<span class="token punctuation">.</span>x <span class="token operator">+</span> f41 <span class="token operator">*</span> i<span class="token punctuation">,</span> j <span class="token operator">*</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 这个 60 也是</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+carImg<span class="token punctuation">.</span>src <span class="token operator">=</span> car<span class="token punctuation">.</span>img<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>加载上自己的小车车后，把小车车放到画布的正中下，公路的宽度定为车的宽度的 4 倍外加 10 个像素（没啥原因，就是想加 10 个像素），分割线怎么画，定义每个分割线的矩形为 宽 2 像素，高 40 像素，j = -10 的原因也是因为分割线向下移动，给人一种画面在向上前进的感觉。</p>
+<p>OK，再在空空的矩形公路上画上分割线，移动规律理同草地</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">road<span class="token punctuation">.</span>zebraCrossingI<span class="token operator">++</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>zebraCrossingI <span class="token operator">></span> <span class="token number">30</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 嗯不要问了，30 也是拍脑袋出来的</span>
+	road<span class="token punctuation">.</span>zebraCrossingI <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>zebraCrossing<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	road<span class="token punctuation">.</span>zebraCrossing<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		context<span class="token punctuation">.</span><span class="token function">fillRect</span><span class="token punctuation">(</span>i<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> road<span class="token punctuation">.</span>zebraCrossingI <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再画两条路两边的白色不可跨域实线</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">context<span class="token punctuation">.</span>fillStyle <span class="token operator">=</span> <span class="token string">'#fff'</span>
+context<span class="token punctuation">.</span><span class="token function">fillRect</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>x <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> contextHeight<span class="token punctuation">)</span>
+context<span class="token punctuation">.</span><span class="token function">fillRect</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>x <span class="token operator">+</span> road<span class="token punctuation">.</span>width<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> contextHeight<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>嗯公路就这样了，我还没想出来怎么让公路能拐弯…</p>
+<h3 id="4-drawEnemys-画对手的小车车"><a href="#4-drawEnemys-画对手的小车车" class="headerlink" title="4. drawEnemys 画对手的小车车"></a>4. drawEnemys 画对手的小车车</h3><p>想了想对手貌似不太好实现，还是先将对手作为障碍物的存在吧，嗯还是先定义些变量</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> enemySrc <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> r <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">12</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 我找了 12 张不同小车车的俯视图......</span>
+		r<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+			<span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+			<span class="token literal-property property">height</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+			<span class="token literal-property property">img</span><span class="token operator">:</span> <span class="token string">'enemy'</span><span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> r
+<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> enemys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 障碍物数据</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> enemySrc<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	enemySrc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>imgObj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	enemySrc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>imgObj<span class="token punctuation">.</span>onload <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			obj<span class="token punctuation">.</span>width <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width
+			obj<span class="token punctuation">.</span>height <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>height
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span>enemySrc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	enemySrc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>imgObj<span class="token punctuation">.</span>src <span class="token operator">=</span> enemySrc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>障碍物需要放到公路上，所以生成的时候根据 road.x road.width 公路的 x 坐标和宽度来，在初始化的时候生成第一个障碍物</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 拿到一个介于 0 到障碍物数量的随机数，因为是数组的下标所以是从 -1 开始</span>
+<span class="token keyword">var</span> _random <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> enemySrc<span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> _img <span class="token operator">=</span> enemySrc<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_random<span class="token operator">+</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">?</span> _random <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token comment">// 这个 _index 是表示这个障碍物放到从左数第几条车道的</span>
+<span class="token keyword">var</span> _index <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> enemys<span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+enemys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+	<span class="token literal-property property">img</span><span class="token operator">:</span> _img<span class="token punctuation">,</span>
+	<span class="token literal-property property">index</span><span class="token operator">:</span> _index<span class="token punctuation">,</span>
+	<span class="token literal-property property">x</span><span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> _index <span class="token operator">+</span> road<span class="token punctuation">.</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">inc</span><span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 这是这个障碍物的移动速度</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们需要生成障碍物的数据，所以需要有个 geneEnemy 函数</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">geneEnemy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> _img <span class="token operator">=</span> enemySrc<span class="token punctuation">[</span>Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> enemySrc<span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token comment">// Math.random() * 10 > 5 是表示 2 分之 1 的概率，enemys.length &lt; 3 是表示总得出现的障碍物不超过 3 个</span>
+	<span class="token comment">// 为啥又要 2 分之 1 的概率又要不超过 3 个的限定条件呢，嗯不然满屏都是障碍物了......</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">></span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> _img <span class="token operator">&amp;&amp;</span> enemys<span class="token punctuation">.</span>length <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">var</span> _index <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> enemys<span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token comment">// 如果没有上一个障碍物，或者将要生成的障碍物的所属车道 不等于 上一个障碍物的所属车道</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>enemys<span class="token punctuation">[</span>enemys<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">||</span> _index <span class="token operator">!=</span> enemys<span class="token punctuation">[</span>enemys<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			enemys<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+				<span class="token literal-property property">img</span><span class="token operator">:</span> _img<span class="token punctuation">,</span>
+				<span class="token literal-property property">index</span><span class="token operator">:</span> _index<span class="token punctuation">,</span>
+				<span class="token literal-property property">x</span><span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>road<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> _index <span class="token operator">+</span> road<span class="token punctuation">.</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+				<span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+				<span class="token literal-property property">inc</span><span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span><span class="token function">randomWithRange</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>好了，接下来我们可以画障碍物了</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">drawEnemy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>enemys<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> enemys<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>enemys<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				enemys<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> enemys<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>height <span class="token comment">// 这段干嘛的，我也忘了，看样子增加了障碍之间的距离......</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> enemys<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">></span> contextHeight<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				enemys <span class="token operator">=</span> enemys<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token comment">// 当障碍物出了画布时就清掉</span>
+			<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+				enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+=</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>inc
+				context<span class="token punctuation">.</span><span class="token function">drawImage</span><span class="token punctuation">(</span>enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>imgObj<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>width<span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>height<span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>width<span class="token punctuation">,</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>enemys<span class="token punctuation">[</span>enemys<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">></span> <span class="token punctuation">(</span>contextHeight <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 当最后一个障碍物的 y 坐标大于画布的 3 分之 1 的时候就生成新的障碍物</span>
+			<span class="token function">geneEnemy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="5-drawCar-画自己的小车车"><a href="#5-drawCar-画自己的小车车" class="headerlink" title="5. drawCar 画自己的小车车"></a>5. drawCar 画自己的小车车</h3><p>好的接下来改画我们自己的小车车了，初版的实现里我并未实现自己的车移动时有动画效果，后来搜了下才实现缓动效果</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> keys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">drawCar</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>keys<span class="token punctuation">[</span><span class="token number">38</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>move<span class="token punctuation">.</span>y <span class="token operator">></span> <span class="token operator">-</span>move<span class="token punctuation">.</span>speed<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            move<span class="token punctuation">.</span>y<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>keys<span class="token punctuation">[</span><span class="token number">40</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>move<span class="token punctuation">.</span>y <span class="token operator">&lt;</span> move<span class="token punctuation">.</span>speed<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            move<span class="token punctuation">.</span>y<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>keys<span class="token punctuation">[</span><span class="token number">39</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>move<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> move<span class="token punctuation">.</span>speed<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            move<span class="token punctuation">.</span>x<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>keys<span class="token punctuation">[</span><span class="token number">37</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>move<span class="token punctuation">.</span>x <span class="token operator">></span> <span class="token operator">-</span>move<span class="token punctuation">.</span>speed<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            move<span class="token punctuation">.</span>x<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    move<span class="token punctuation">.</span>y <span class="token operator">*=</span> move<span class="token punctuation">.</span>friction<span class="token punctuation">;</span>
+    car<span class="token punctuation">.</span>y <span class="token operator">+=</span> move<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    move<span class="token punctuation">.</span>x <span class="token operator">*=</span> move<span class="token punctuation">.</span>friction<span class="token punctuation">;</span>
+    car<span class="token punctuation">.</span>x <span class="token operator">+=</span> move<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+	context<span class="token punctuation">.</span><span class="token function">drawImage</span><span class="token punctuation">(</span>carImg<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> car<span class="token punctuation">.</span>width<span class="token punctuation">,</span> car<span class="token punctuation">.</span>height<span class="token punctuation">,</span> car<span class="token punctuation">.</span>x<span class="token punctuation">,</span> car<span class="token punctuation">.</span>y<span class="token punctuation">,</span> car<span class="token punctuation">.</span>width<span class="token punctuation">,</span> car<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	document<span class="token punctuation">.</span><span class="token function-variable function">onkeydown</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		keys<span class="token punctuation">[</span>e<span class="token punctuation">.</span>keyCode<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+	document<span class="token punctuation">.</span><span class="token function-variable function">onkeyup</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		keys<span class="token punctuation">[</span>e<span class="token punctuation">.</span>keyCode<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个不解释了…</p>
+<h3 id="6-然后呢"><a href="#6-然后呢" class="headerlink" title="6. 然后呢"></a>6. 然后呢</h3><p>嗯接下来其实可以玩了，但是还缺了点什么，对碰撞检测呢，写了一大串</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">detectAccident</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> carCoordinate <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+		<span class="token literal-property property">topLeft</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 左上角</span>
+			<span class="token literal-property property">x</span><span class="token operator">:</span> car<span class="token punctuation">.</span>x <span class="token operator">+</span> carCorner<span class="token punctuation">,</span>
+			<span class="token literal-property property">y</span><span class="token operator">:</span> car<span class="token punctuation">.</span>y <span class="token operator">+</span> carCorner
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">topRight</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 右上角</span>
+			<span class="token literal-property property">x</span><span class="token operator">:</span> car<span class="token punctuation">.</span>x <span class="token operator">+</span> car<span class="token punctuation">.</span>width <span class="token operator">-</span> carCorner<span class="token punctuation">,</span>
+			<span class="token literal-property property">y</span><span class="token operator">:</span> car<span class="token punctuation">.</span>y <span class="token operator">+</span> carCorner
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">bottomLeft</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 左下角</span>
+			<span class="token literal-property property">x</span><span class="token operator">:</span> car<span class="token punctuation">.</span>x <span class="token operator">+</span> carCorner<span class="token punctuation">,</span>
+			<span class="token literal-property property">y</span><span class="token operator">:</span> car<span class="token punctuation">.</span>y <span class="token operator">+</span> car<span class="token punctuation">.</span>height <span class="token operator">-</span> carCorner
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">bottomRight</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 右下角</span>
+			<span class="token literal-property property">x</span><span class="token operator">:</span> car<span class="token punctuation">.</span>x <span class="token operator">+</span> car<span class="token punctuation">.</span>width <span class="token operator">-</span> carCorner<span class="token punctuation">,</span>
+			<span class="token literal-property property">y</span><span class="token operator">:</span> car<span class="token punctuation">.</span>y <span class="token operator">+</span> car<span class="token punctuation">.</span>height <span class="token operator">-</span> carCorner
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">// console.log(enemys.length)</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>car<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>x <span class="token operator">-</span> carCorner<span class="token punctuation">)</span>
+		<span class="token operator">||</span>
+		<span class="token punctuation">(</span>car<span class="token punctuation">.</span>x <span class="token operator">+</span> car<span class="token punctuation">.</span>width<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token punctuation">(</span>road<span class="token punctuation">.</span>x <span class="token operator">+</span> road<span class="token punctuation">.</span>width <span class="token operator">+</span> carCorner<span class="token punctuation">)</span>
+	<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">throw</span> <span class="token string">'AccidentException'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> enemys<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">var</span> enemysCarCoordinate <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			<span class="token literal-property property">topLeft</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 左上角</span>
+				<span class="token literal-property property">x</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">+</span> carCorner<span class="token punctuation">,</span>
+				<span class="token literal-property property">y</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> carCorner
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token literal-property property">topRight</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 右上角</span>
+				<span class="token literal-property property">x</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">+</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>width <span class="token operator">-</span> carCorner<span class="token punctuation">,</span>
+				<span class="token literal-property property">y</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> carCorner
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token literal-property property">bottomLeft</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 左下角</span>
+				<span class="token literal-property property">x</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">+</span> carCorner<span class="token punctuation">,</span>
+				<span class="token literal-property property">y</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>height <span class="token operator">-</span> carCorner
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token literal-property property">bottomRight</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 右下角</span>
+				<span class="token literal-property property">x</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">+</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>width <span class="token operator">-</span> carCorner<span class="token punctuation">,</span>
+				<span class="token literal-property property">y</span><span class="token operator">:</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> enemys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>img<span class="token punctuation">.</span>height <span class="token operator">-</span> carCorner
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>
+			<span class="token function">isAccident</span><span class="token punctuation">(</span>carCoordinate<span class="token punctuation">,</span> enemysCarCoordinate<span class="token punctuation">)</span>
+		<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">throw</span> <span class="token string">'AccidentException'</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">isAccident</span><span class="token punctuation">(</span><span class="token parameter">car<span class="token punctuation">,</span> enemy</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span>  <span class="token punctuation">(</span>car<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>y <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>y <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>y <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>y<span class="token punctuation">)</span> <span class="token operator">||</span>
+			<span class="token punctuation">(</span>car<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>y <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>y <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>y <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>y<span class="token punctuation">)</span> <span class="token operator">||</span>
+			<span class="token punctuation">(</span>car<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>x <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>x <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>y <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>y <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>y <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>bottomLeft<span class="token punctuation">.</span>y<span class="token punctuation">)</span> <span class="token operator">||</span>
+			<span class="token punctuation">(</span>car<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>x <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topLeft<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>x <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>y <span class="token operator">>=</span> enemy<span class="token punctuation">.</span>topRight<span class="token punctuation">.</span>y <span class="token operator">&amp;&amp;</span>
+			car<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>y <span class="token operator">&lt;=</span> enemy<span class="token punctuation">.</span>bottomRight<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>嗯，大概就是酱紫啦，再加上开始和结束，就算暂时完工了，有时间再继续研究怎么让路拐弯…，还是很遗憾并没有做的跟火箭车一样…( p_q)</p>
+<p>代码见 resource 吧…(￣∀￣)。</p>
+<p>第一次写小游戏，欢迎大神指教(o^^o)♪。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2016083101',
+        title: '2016083101',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+          <div class="main-footer">
+  
+    © 2022 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
