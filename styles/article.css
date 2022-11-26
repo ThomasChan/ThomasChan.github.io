@@ -44,11 +44,26 @@
   line-height: line-height;
   text-align: justify;
 }
+.article .article-entry h1 {
+  line-height: 1.2;
+  margin: 4rem 0 2rem;
+}
+.article .article-entry h2,
+.article .article-entry h3,
+.article .article-entry h4 {
+  line-height: 1.2;
+  margin: 2rem 0 1rem;
+}
+.article .article-entry code:not([class*=language-]) {
+  background: rgba(31,117,254,0.21);
+  padding: 4px;
+  border-radius: 2px;
+}
 .article .article-entry blockquote {
   background: #f9f9f9;
   border-left: 5px solid #d3d3d3;
   margin: 0 0 1.5em 0px;
-  padding: 0.5em 2em;
+  padding: 1em;
   font-family: font-serif;
   font-size: 0.9em;
 }

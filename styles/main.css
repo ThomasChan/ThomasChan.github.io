@@ -191,47 +191,22 @@ a:hover {
 }
 html,
 body {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   color: #333;
 }
-.main-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-}
 .main-content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 250px;
-  bottom: 0;
-  height: 100%;
-  padding: 20px 40px 0;
-  overflow: auto;
+  position: relative;
+  max-width: 960px;
+  padding-left: 250px;
+  margin: 0 auto;
   word-wrap: break-word;
 }
 .main-footer {
   padding: 20px 0;
 }
 @media screen and (max-width: 768px) {
-  .main-container {
-    top: 45px;
-    left: 0px;
-    bottom: 0;
-    height: auto;
-  }
   .main-content {
-    left: 0;
-    bottom: 0;
-    height: auto;
-    padding: 10px 10px;
+    padding: 0 20px;
   }
 }
 .main-footer {
@@ -239,7 +214,8 @@ body {
   color: #333;
 }
 .sidebar-bg {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   bottom: 0;
@@ -334,6 +310,7 @@ body {
 .sidebar-bg .archive-list .archive-list-item {
   vertical-align: top;
   font-size: 12px;
+  margin: 4px 0;
 }
 .sidebar-bg .category-list .category-list-item a,
 .sidebar-bg .tag-list .category-list-item a,
@@ -392,24 +369,65 @@ body {
   vertical-align: top;
 }
 @media screen and (max-width: 768px) {
-  .sidebar {
+  .sidebar-bg {
     left: -400px;
     width: 300px;
     max-width: 100%;
     z-index: 9999999;
     transition-duration: 0.3s;
   }
-  .sidebar.in {
+  .sidebar-bg.in {
     left: 0;
   }
-  .sidebar .header {
+  .sidebar-bg .header {
     padding-right: 15px;
   }
-  .sidebar .title {
+  .sidebar-bg .title {
     display: none;
   }
-  .sidebar .nav > li > a {
+  .sidebar-bg .nav > li > a {
     padding: 5px 10px;
+  }
+  .sidebar-bg .category-list .category-list-item,
+  .sidebar-bg .tag-list .category-list-item,
+  .sidebar-bg .archive-list .category-list-item,
+  .sidebar-bg .category-list .tag-list-item,
+  .sidebar-bg .tag-list .tag-list-item,
+  .sidebar-bg .archive-list .tag-list-item,
+  .sidebar-bg .category-list .archive-list-item,
+  .sidebar-bg .tag-list .archive-list-item,
+  .sidebar-bg .archive-list .archive-list-item {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  .sidebar-bg .category-list .category-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .category-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .category-list-item a .tag-list-count,
+  .sidebar-bg .category-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .category-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .category-list .category-list-item a .category-list-count,
+  .sidebar-bg .tag-list .category-list-item a .category-list-count,
+  .sidebar-bg .archive-list .category-list-item a .category-list-count,
+  .sidebar-bg .category-list .tag-list-item a .category-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .category-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .category-list-count,
+  .sidebar-bg .category-list .archive-list-item a .category-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .category-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .category-list-count,
+  .sidebar-bg .category-list .category-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .category-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .category-list-item a .archive-list-count,
+  .sidebar-bg .category-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .category-list .archive-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .archive-list-count {
+    font-size: 14px;
   }
 }
 .article .article-header {
@@ -458,11 +476,26 @@ body {
   line-height: 1.6em;
   text-align: justify;
 }
+.article .article-entry h1 {
+  line-height: 1.2;
+  margin: 4rem 0 2rem;
+}
+.article .article-entry h2,
+.article .article-entry h3,
+.article .article-entry h4 {
+  line-height: 1.2;
+  margin: 2rem 0 1rem;
+}
+.article .article-entry code:not([class*=language-]) {
+  background: rgba(31,117,254,0.21);
+  padding: 4px;
+  border-radius: 2px;
+}
 .article .article-entry blockquote {
   background: #f9f9f9;
   border-left: 5px solid #d3d3d3;
   margin: 0 0 1.5em 0px;
-  padding: 0.5em 2em;
+  padding: 1em;
   font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-size: 0.9em;
 }
@@ -603,6 +636,8 @@ body {
 }
 pre[class*=language-].line-numbers.line-numbers code {
   padding-left: 10px;
+  padding-top: 22px;
+  padding-bottom: 22px;
 }
 pre[class*=language-]>code {
   border-left-width: 4px;

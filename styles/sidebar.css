@@ -1,5 +1,6 @@
 .sidebar-bg {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   bottom: 0;
@@ -94,6 +95,7 @@
 .sidebar-bg .archive-list .archive-list-item {
   vertical-align: top;
   font-size: 12px;
+  margin: 4px 0;
 }
 .sidebar-bg .category-list .category-list-item a,
 .sidebar-bg .tag-list .category-list-item a,
@@ -152,23 +154,64 @@
   vertical-align: top;
 }
 @media mq-mobile {
-  .sidebar {
+  .sidebar-bg {
     left: -400px;
     width: 300px;
     max-width: 100%;
     z-index: 9999999;
     transition-duration: 0.3s;
   }
-  .sidebar.in {
+  .sidebar-bg.in {
     left: 0;
   }
-  .sidebar .header {
+  .sidebar-bg .header {
     padding-right: 15px;
   }
-  .sidebar .title {
+  .sidebar-bg .title {
     display: none;
   }
-  .sidebar .nav > li > a {
+  .sidebar-bg .nav > li > a {
     padding: 5px 10px;
+  }
+  .sidebar-bg .category-list .category-list-item,
+  .sidebar-bg .tag-list .category-list-item,
+  .sidebar-bg .archive-list .category-list-item,
+  .sidebar-bg .category-list .tag-list-item,
+  .sidebar-bg .tag-list .tag-list-item,
+  .sidebar-bg .archive-list .tag-list-item,
+  .sidebar-bg .category-list .archive-list-item,
+  .sidebar-bg .tag-list .archive-list-item,
+  .sidebar-bg .archive-list .archive-list-item {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  .sidebar-bg .category-list .category-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .category-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .category-list-item a .tag-list-count,
+  .sidebar-bg .category-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .tag-list-count,
+  .sidebar-bg .category-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .tag-list-count,
+  .sidebar-bg .category-list .category-list-item a .category-list-count,
+  .sidebar-bg .tag-list .category-list-item a .category-list-count,
+  .sidebar-bg .archive-list .category-list-item a .category-list-count,
+  .sidebar-bg .category-list .tag-list-item a .category-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .category-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .category-list-count,
+  .sidebar-bg .category-list .archive-list-item a .category-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .category-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .category-list-count,
+  .sidebar-bg .category-list .category-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .category-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .category-list-item a .archive-list-count,
+  .sidebar-bg .category-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .tag-list-item a .archive-list-count,
+  .sidebar-bg .category-list .archive-list-item a .archive-list-count,
+  .sidebar-bg .tag-list .archive-list-item a .archive-list-count,
+  .sidebar-bg .archive-list .archive-list-item a .archive-list-count {
+    font-size: 14px;
   }
 }

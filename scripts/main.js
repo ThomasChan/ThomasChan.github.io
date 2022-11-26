@@ -5,11 +5,11 @@
   Ps.initialize($('.sidebar')[0]);
 
   $('.sidebar-toggle').click(function(e){
-    $('.sidebar').toggleClass('in');
+    $('.sidebar-bg').toggleClass('in');
   });
 
   $('.main-content').click(function(e){
-    $('.sidebar').removeClass('in');
+    $('.sidebar-bg').removeClass('in');
   });
 
   // Caption
