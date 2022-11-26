@@ -491,6 +491,14 @@ body {
   padding: 4px;
   border-radius: 2px;
 }
+.article .article-entry a.headerlink::before {
+  content: '#';
+  margin-right: 6px;
+}
+.article .article-entry a:not(.headerlink) {
+  padding: 4px;
+  outline: 1px dashed #1f75fe;
+}
 .article .article-entry blockquote {
   background: #f9f9f9;
   border-left: 5px solid #d3d3d3;
