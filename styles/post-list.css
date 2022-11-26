@@ -8,6 +8,9 @@
   list-style: none;
   border-left: 5px solid color-border;
 }
+.post-list .post-list-item:hover {
+  border-left-color: color-link;
+}
 .post-list .article-info {
   font-size: 13px;
 }

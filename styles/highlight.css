@@ -1,0 +1,7 @@
+pre[class*=language-].line-numbers.line-numbers code {
+  padding-left: 10px;
+}
+pre[class*=language-]>code {
+  border-left-width: 4px;
+  border-left-color: color-link;
+}
