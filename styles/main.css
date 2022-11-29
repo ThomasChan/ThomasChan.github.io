@@ -497,7 +497,11 @@ body {
 }
 .article .article-entry a:not(.headerlink) {
   padding: 4px;
+  margin: 0 4px;
   outline: 1px dashed #1f75fe;
+}
+.article .article-entry figure > a:not(.headerlink) {
+  margin: 0;
 }
 .article .article-entry blockquote {
   background: #f9f9f9;
@@ -648,8 +652,14 @@ pre[class*=language-].line-numbers.line-numbers code {
   padding-bottom: 22px;
 }
 pre[class*=language-]>code {
-  border-left-width: 4px;
+  border-left-width: 1px;
   border-left-color: #1f75fe;
+  font-size: 12px;
+  background-image: none;
+}
+pre[class*=language-]::before,
+pre[class*=language-]::after {
+  content: none;
 }
 .pagination {
   margin-bottom: 20px;
