@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
 <meta property="article:published_time" content="2022-11-29T04:41:15.000Z">
-<meta property="article:modified_time" content="2022-11-29T05:45:54.615Z">
+<meta property="article:modified_time" content="2022-11-29T09:31:23.270Z">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="reactjs">
 <meta property="article:tag" content="html">
@@ -201,7 +201,8 @@
 <p>中级工程师大多也会遗漏取消请求、debounce、时序问题。</p>
 <p>评分标准其实就对应了一次完整交互动作的 n 个状态，实现一个好的交互组件，我们需要仔细想一下交互过程中的状态，才能完整的处理每个过程。</p>
 <p>以题目来说，这个组件是</p>
-<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// Component.tsx</span>
+<span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>userInfo<span class="token punctuation">,</span> setUserInfo<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'无数据'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
     </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
@@ -215,12 +216,13 @@
     </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
     </span><span class="token punctuation">&#123;</span>userInfo<span class="token punctuation">&#125;</span><span class="token plain-text">
   </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>接下来我们往组件上添加状态</p>
 <p>加初始值</p>
 <p>我们需要定义好当前的选中值，才能依此来发请求、标记选中状态、取消其它发出的请求。</p>
 <p>注意 html option tag 的 value 只能是字符串。</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">// Component.tsx
+const Component: React.FC = () => &#123;
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
 </span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
 </span><span class="token prefix inserted">+</span><span class="token line"> const onChange = event => &#123;
@@ -229,11 +231,12 @@
 </span><span class="token prefix inserted">+</span><span class="token line">
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
 </span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">    &lt;select>
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>加 disabled、loading 状态、选中状态</p>
 <p>disabled 状态就是 loading=true 的情况。</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">// Component.tsx
+const Component: React.FC = () => &#123;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const [loading, setLoading] = React.useState(false);
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
 </span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
@@ -241,7 +244,7 @@
 </span><span class="token prefix unchanged"> </span><span class="token line">   setValue(event.target.value);
 </span><span class="token prefix unchanged"> </span><span class="token line"> &#125;;
 </span></span>
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>选中状态就是当前值等于 option value，当前值是string，index是number，判断相等要做类型转换。</p>
 <pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       return &lt;option
@@ -250,7 +253,8 @@
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">         value=&#123;`$&#123;index&#125;`&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>接下来就是发请求了，要注意 loading、abort 状态</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">// Component.tsx
+const Component: React.FC = () => &#123;
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [loading, setLoading] = React.useState(false);
 </span><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
 </span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
@@ -286,7 +290,7 @@
 </span><span class="token prefix inserted">+</span><span class="token line"> &#125;, [value]);
 </span></span>
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
-</span><span class="token prefix unchanged"> </span><span class="token line">   &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</span><span class="token prefix unchanged"> </span><span class="token line">   &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>再给展示内容加上 loading 信息</p>
 <pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &lt;/select>
@@ -302,7 +306,8 @@
 </ol>
 <p>等作为 props 传递给组件，还要考虑 option 的内容溢出、title 等。</p>
 <p>完整代码</p>
-<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// Component.tsx</span>
+<span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>loading<span class="token punctuation">,</span> setLoading<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>userInfo<span class="token punctuation">,</span> setUserInfo<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'无数据'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">useState</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -350,7 +355,7 @@
     </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
     </span><span class="token punctuation">&#123;</span>loading <span class="token operator">?</span> <span class="token string">'正在加载...'</span> <span class="token operator">:</span> userInfo<span class="token punctuation">&#125;</span><span class="token plain-text">
   </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>希望本文能帮助你写出更完整的交互组件。</p>
 

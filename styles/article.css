@@ -65,7 +65,11 @@
 }
 .article .article-entry a:not(.headerlink) {
   padding: 4px;
+  margin: 0 4px;
   outline: 1px dashed color-link;
+}
+.article .article-entry figure > a:not(.headerlink) {
+  margin: 0;
 }
 .article .article-entry blockquote {
   background: #f9f9f9;

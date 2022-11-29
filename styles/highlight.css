@@ -4,6 +4,12 @@ pre[class*=language-].line-numbers.line-numbers code {
   padding-bottom: 22px;
 }
 pre[class*=language-]>code {
-  border-left-width: 4px;
+  border-left-width: 1px;
   border-left-color: color-link;
+  font-size: 12px;
+  background-image: none;
+}
+pre[class*=language-]::before,
+pre[class*=language-]::after {
+  content: none;
 }
