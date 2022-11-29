@@ -661,6 +661,12 @@ pre[class*=language-]::before,
 pre[class*=language-]::after {
   content: none;
 }
+pre[class*=language-]>code .token.inserted {
+  background: rgba(206,234,196,0.439);
+}
+pre[class*=language-]>code .token.deleted {
+  background: rgba(220,168,168,0.31);
+}
 .pagination {
   margin-bottom: 20px;
 }

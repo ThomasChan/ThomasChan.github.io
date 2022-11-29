@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
 <meta property="article:published_time" content="2022-11-29T04:41:15.000Z">
-<meta property="article:modified_time" content="2022-11-29T09:31:23.270Z">
+<meta property="article:modified_time" content="2022-11-29T10:45:35.232Z">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="reactjs">
 <meta property="article:tag" content="html">
@@ -230,73 +230,73 @@ const Component: React.FC = () => &#123;
 </span><span class="token prefix inserted">+</span><span class="token line"> &#125;;
 </span><span class="token prefix inserted">+</span><span class="token line">
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">    &lt;select>
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">   &lt;select>
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">   &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>加 disabled、loading 状态、选中状态</p>
 <p>disabled 状态就是 loading=true 的情况。</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">// Component.tsx
-const Component: React.FC = () => &#123;
-<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const [loading, setLoading] = React.useState(false);
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
-</span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
-</span><span class="token prefix unchanged"> </span><span class="token line"> const onChange = event => &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">   setValue(event.target.value);
-</span><span class="token prefix unchanged"> </span><span class="token line"> &#125;;
-</span></span>
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-diff-tsx" data-language="diff-tsx"><code class="language-diff-tsx">&#x2F;&#x2F; Component.tsx
+const Component: React.FC &#x3D; () &#x3D;&gt; &#123;
++ const [loading, setLoading] &#x3D; React.useState(false);
+  const [userInfo, setUserInfo] &#x3D; React.useState(&#39;无数据&#39;);
+  const [value, setValue] &#x3D; React.useState&lt;string&gt;();
+  const onChange &#x3D; event &#x3D;&gt; &#123;
+    setValue(event.target.value);
+  &#125;;
+
+  return &lt;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>选中状态就是当前值等于 option value，当前值是string，index是number，判断相等要做类型转换。</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       return &lt;option
-</span><span class="token prefix unchanged"> </span><span class="token line">         key=&#123;index&#125; // 很多人也容易忘记设置 key
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">         selected=&#123;+value === index&#125;
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">         value=&#123;`$&#123;index&#125;`&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-diff-tsx" data-language="diff-tsx"><code class="language-diff-tsx">        return &lt;option
+          key&#x3D;&#123;index&#125; &#x2F;&#x2F; 很多人也容易忘记设置 key
++         selected&#x3D;&#123;+value &#x3D;&#x3D;&#x3D; index&#125;
+          value&#x3D;&#123;&#96;$&#123;index&#125;&#96;&#125;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>接下来就是发请求了，要注意 loading、abort 状态</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">// Component.tsx
-const Component: React.FC = () => &#123;
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [loading, setLoading] = React.useState(false);
-</span><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
-</span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
-</span><span class="token prefix unchanged"> </span><span class="token line"> const onChange = event => &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">   setValue(event.target.value);
-</span><span class="token prefix unchanged"> </span><span class="token line"> &#125;;
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const doFetch = (userId: string) => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">   const abort = new AbortController();
-</span><span class="token prefix inserted">+</span><span class="token line">   setLoading(true);
-</span><span class="token prefix inserted">+</span><span class="token line">   // 传递 abort 信号
-</span><span class="token prefix inserted">+</span><span class="token line">   fetch(`url?userId=$&#123;userId&#125;`, &#123; signal: abort.signal &#125;)
-</span><span class="token prefix inserted">+</span><span class="token line">     .then(res => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">       setUserInfo(res.data);
-</span><span class="token prefix inserted">+</span><span class="token line">     &#125;)
-</span><span class="token prefix inserted">+</span><span class="token line">     .catch(err => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">       setUserInfo(err.message);
-</span><span class="token prefix inserted">+</span><span class="token line">     &#125;)
-</span><span class="token prefix inserted">+</span><span class="token line">     .finally(() => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">       setLoading(false);
-</span><span class="token prefix inserted">+</span><span class="token line">     &#125;);
-</span><span class="token prefix inserted">+</span><span class="token line">   // 最后将 abort 控制器返回出去，以便取消请求
-</span><span class="token prefix inserted">+</span><span class="token line">   return abort;
-</span><span class="token prefix inserted">+</span><span class="token line"> &#125;;
-</span><span class="token prefix inserted">+</span><span class="token line">
-</span><span class="token prefix inserted">+</span><span class="token line"> // 使用 useEffect 监听 value 变化发送请求
-</span><span class="token prefix inserted">+</span><span class="token line"> // 同时取消上一次正在发送的请求
-</span><span class="token prefix inserted">+</span><span class="token line"> React.useEffect(() => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">   const abort = value &amp;&amp; doFetch(value);
-</span><span class="token prefix inserted">+</span><span class="token line">   return () => &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">     // 若请求很迅速，abort 不会做任何事
-</span><span class="token prefix inserted">+</span><span class="token line">     if (typeof abort === 'function') abort();
-</span><span class="token prefix inserted">+</span><span class="token line">   &#125;;
-</span><span class="token prefix inserted">+</span><span class="token line"> &#125;, [value]);
-</span></span>
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
-</span><span class="token prefix unchanged"> </span><span class="token line">   &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-diff-tsx" data-language="diff-tsx"><code class="language-diff-tsx">&#x2F;&#x2F; Component.tsx
+const Component: React.FC &#x3D; () &#x3D;&gt; &#123;
+  const [loading, setLoading] &#x3D; React.useState(false);
+  const [userInfo, setUserInfo] &#x3D; React.useState(&#39;无数据&#39;);
+  const [value, setValue] &#x3D; React.useState&lt;string&gt;();
+  const onChange &#x3D; event &#x3D;&gt; &#123;
+    setValue(event.target.value);
+  &#125;;
++ const doFetch &#x3D; (userId: string) &#x3D;&gt; &#123;
++   const abort &#x3D; new AbortController();
++   setLoading(true);
++   &#x2F;&#x2F; 传递 abort 信号
++   fetch(&#96;url?userId&#x3D;$&#123;userId&#125;&#96;, &#123; signal: abort.signal &#125;)
++     .then(res &#x3D;&gt; &#123;
++       setUserInfo(res.data);
++     &#125;)
++     .catch(err &#x3D;&gt; &#123;
++       setUserInfo(err.message);
++     &#125;)
++     .finally(() &#x3D;&gt; &#123;
++       setLoading(false);
++     &#125;);
++   &#x2F;&#x2F; 最后将 abort 控制器返回出去，以便取消请求
++   return abort;
++ &#125;;
++
++ &#x2F;&#x2F; 使用 useEffect 监听 value 变化发送请求
++ &#x2F;&#x2F; 同时取消上一次正在发送的请求
++ React.useEffect(() &#x3D;&gt; &#123;
++   const abort &#x3D; value &amp;&amp; doFetch(value);
++   return () &#x3D;&gt; &#123;
++     &#x2F;&#x2F; 若请求很迅速，abort 不会做任何事
++     if (typeof abort &#x3D;&#x3D;&#x3D; &#39;function&#39;) abort();
++   &#125;;
++ &#125;, [value]);
+
+  return &lt;&gt;
+    &lt;select onChange&#x3D;&#123;onChange&#125;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>再给展示内容加上 loading 信息</p>
-<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &lt;/select>
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">   &#123;userInfo&#125;
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">   &#123;loading ? '正在加载...' : userInfo&#125;
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> &lt;/>;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-diff-tsx" data-language="diff-tsx"><code class="language-diff-tsx">    &lt;&#x2F;select&gt;
+-   &#123;userInfo&#125;
++   &#123;loading ? &#39;正在加载...&#39; : userInfo&#125;
+  &lt;&#x2F;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>至此这个定制组件就很完整了，其中忽略了 userInfo 的类型，当它是 string，若实际情况是 object 的话，也要做相应处理。</p>
 <p>想要进一步抽象为通用组件，还需要将</p>
