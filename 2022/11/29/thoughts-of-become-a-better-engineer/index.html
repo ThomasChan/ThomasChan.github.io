@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    如何写好一个交互组件
+  
+</title>
+
+<meta name="description" content="几个月前刷微博，看到老赵的一条，感同身受。 老赵也给出了评分标准，满分10分：  基本实现无误（4分） 显示 loading 字样（1分） 合理错误捕捉（1分） 知道在切换选择后取消未完成的请求（2分） 做 debounce 或 trottle（1分） 处理好各种情况之间的时序问题（1分）  基本实现无误比较笼统，具体还有几点要考虑  初始值 选中状态  小白或者初级工程师基本上能写出来下拉、发请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何写好一个交互组件">
+<meta property="og:url" content="http://chenjunhao.cn/2022/11/29/thoughts-of-become-a-better-engineer/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="几个月前刷微博，看到老赵的一条，感同身受。 老赵也给出了评分标准，满分10分：  基本实现无误（4分） 显示 loading 字样（1分） 合理错误捕捉（1分） 知道在切换选择后取消未完成的请求（2分） 做 debounce 或 trottle（1分） 处理好各种情况之间的时序问题（1分）  基本实现无误比较笼统，具体还有几点要考虑  初始值 选中状态  小白或者初级工程师基本上能写出来下拉、发请">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
+<meta property="article:published_time" content="2022-11-29T04:41:15.000Z">
+<meta property="article:modified_time" content="2022-11-29T05:45:54.615Z">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="reactjs">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/archives" title="ByYear" external="false">ByYear</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="archive-list-container">
+                  <a href="javascript:;" target="_self">归档</a>
+                  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a><span class="archive-list-count">2</span></li></ul>
+                </li>
+              
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-thoughts-of-become-a-better-engineer" class="article article-type-post">
+  
+    <h1 class="article-header">
+      如何写好一个交互组件
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2022-11-29
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p><img src="/assets/M1cPDldO7.png" alt="M1cPDldO7"><br>几个月前刷微博，看到<a target="_blank" rel="noopener" href="https://weibo.com/u/1560442584">老赵</a>的一条，感同身受。</p>
+<p>老赵也给出了评分标准，满分10分：</p>
+<ol>
+<li>基本实现无误（4分）</li>
+<li>显示 loading 字样（1分）</li>
+<li>合理错误捕捉（1分）</li>
+<li>知道在切换选择后取消未完成的请求（2分）</li>
+<li>做 debounce 或 trottle（1分）</li>
+<li>处理好各种情况之间的时序问题（1分）</li>
+</ol>
+<p>基本实现无误比较笼统，具体还有几点要考虑</p>
+<ol>
+<li>初始值</li>
+<li>选中状态</li>
+</ol>
+<p>小白或者初级工程师基本上能写出来下拉、发请求、展示请求结果，会忽略 选中状态、loading、取消请求等。</p>
+<p>中级工程师大多也会遗漏取消请求、debounce、时序问题。</p>
+<p>评分标准其实就对应了一次完整交互动作的 n 个状态，实现一个好的交互组件，我们需要仔细想一下交互过程中的状态，才能完整的处理每个过程。</p>
+<p>以题目来说，这个组件是</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>userInfo<span class="token punctuation">,</span> setUserInfo<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'无数据'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token punctuation">&#123;</span><span class="token keyword">new</span> <span class="token class-name"><span class="token builtin">Array</span></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span>
+          <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>index<span class="token punctuation">&#125;</span></span> <span class="token comment">// 很多人也容易忘记设置 key</span>
+          <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>index<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token punctuation">&#123;</span>index<span class="token punctuation">&#125;</span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">></span></span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token punctuation">&#123;</span>userInfo<span class="token punctuation">&#125;</span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接下来我们往组件上添加状态</p>
+<p>加初始值</p>
+<p>我们需要定义好当前的选中值，才能依此来发请求、标记选中状态、取消其它发出的请求。</p>
+<p>注意 html option tag 的 value 只能是字符串。</p>
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
+</span><span class="token prefix inserted">+</span><span class="token line"> const onChange = event => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">   setValue(event.target.value);
+</span><span class="token prefix inserted">+</span><span class="token line"> &#125;;
+</span><span class="token prefix inserted">+</span><span class="token line">
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
+</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">    &lt;select>
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>加 disabled、loading 状态、选中状态</p>
+<p>disabled 状态就是 loading=true 的情况。</p>
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const [loading, setLoading] = React.useState(false);
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
+</span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
+</span><span class="token prefix unchanged"> </span><span class="token line"> const onChange = event => &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">   setValue(event.target.value);
+</span><span class="token prefix unchanged"> </span><span class="token line"> &#125;;
+</span></span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>选中状态就是当前值等于 option value，当前值是string，index是number，判断相等要做类型转换。</p>
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       return &lt;option
+</span><span class="token prefix unchanged"> </span><span class="token line">         key=&#123;index&#125; // 很多人也容易忘记设置 key
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">         selected=&#123;+value === index&#125;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">         value=&#123;`$&#123;index&#125;`&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下来就是发请求了，要注意 loading、abort 状态</p>
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff">const Component: React.FC = () => &#123;
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> const [loading, setLoading] = React.useState(false);
+</span><span class="token prefix unchanged"> </span><span class="token line"> const [userInfo, setUserInfo] = React.useState('无数据');
+</span><span class="token prefix unchanged"> </span><span class="token line"> const [value, setValue] = React.useState&lt;string>();
+</span><span class="token prefix unchanged"> </span><span class="token line"> const onChange = event => &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">   setValue(event.target.value);
+</span><span class="token prefix unchanged"> </span><span class="token line"> &#125;;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const doFetch = (userId: string) => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">   const abort = new AbortController();
+</span><span class="token prefix inserted">+</span><span class="token line">   setLoading(true);
+</span><span class="token prefix inserted">+</span><span class="token line">   // 传递 abort 信号
+</span><span class="token prefix inserted">+</span><span class="token line">   fetch(`url?userId=$&#123;userId&#125;`, &#123; signal: abort.signal &#125;)
+</span><span class="token prefix inserted">+</span><span class="token line">     .then(res => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">       setUserInfo(res.data);
+</span><span class="token prefix inserted">+</span><span class="token line">     &#125;)
+</span><span class="token prefix inserted">+</span><span class="token line">     .catch(err => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">       setUserInfo(err.message);
+</span><span class="token prefix inserted">+</span><span class="token line">     &#125;)
+</span><span class="token prefix inserted">+</span><span class="token line">     .finally(() => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">       setLoading(false);
+</span><span class="token prefix inserted">+</span><span class="token line">     &#125;);
+</span><span class="token prefix inserted">+</span><span class="token line">   // 最后将 abort 控制器返回出去，以便取消请求
+</span><span class="token prefix inserted">+</span><span class="token line">   return abort;
+</span><span class="token prefix inserted">+</span><span class="token line"> &#125;;
+</span><span class="token prefix inserted">+</span><span class="token line">
+</span><span class="token prefix inserted">+</span><span class="token line"> // 使用 useEffect 监听 value 变化发送请求
+</span><span class="token prefix inserted">+</span><span class="token line"> // 同时取消上一次正在发送的请求
+</span><span class="token prefix inserted">+</span><span class="token line"> React.useEffect(() => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">   const abort = value &amp;&amp; doFetch(value);
+</span><span class="token prefix inserted">+</span><span class="token line">   return () => &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">     // 若请求很迅速，abort 不会做任何事
+</span><span class="token prefix inserted">+</span><span class="token line">     if (typeof abort === 'function') abort();
+</span><span class="token prefix inserted">+</span><span class="token line">   &#125;;
+</span><span class="token prefix inserted">+</span><span class="token line"> &#125;, [value]);
+</span></span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> return &lt;>
+</span><span class="token prefix unchanged"> </span><span class="token line">   &lt;select onChange=&#123;onChange&#125;></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>再给展示内容加上 loading 信息</p>
+<pre class="line-numbers language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &lt;/select>
+</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">   &#123;userInfo&#125;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">   &#123;loading ? '正在加载...' : userInfo&#125;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> &lt;/>;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>至此这个定制组件就很完整了，其中忽略了 userInfo 的类型，当它是 string，若实际情况是 object 的话，也要做相应处理。</p>
+<p>想要进一步抽象为通用组件，还需要将</p>
+<ol>
+<li>option 列表</li>
+<li>fetch url 甚至是 doFetch function</li>
+</ol>
+<p>等作为 props 传递给组件，还要考虑 option 的内容溢出、title 等。</p>
+<p>完整代码</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">const</span> Component<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>loading<span class="token punctuation">,</span> setLoading<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>userInfo<span class="token punctuation">,</span> setUserInfo<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'无数据'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">useState</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">onChange</span> <span class="token operator">=</span> event <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">setValue</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">doFetch</span> <span class="token operator">=</span> <span class="token punctuation">(</span>userId<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> abort <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AbortController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">setLoading</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 传递 abort 信号</span>
+    <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">url?userId=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>userId<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> signal<span class="token operator">:</span> abort<span class="token punctuation">.</span>signal <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>res <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token function">setUserInfo</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>err <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token function">setUserInfo</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">finally</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token function">setLoading</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 最后将 abort 控制器返回出去，以便取消请求</span>
+    <span class="token keyword">return</span> abort<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 使用 useEffect 监听 value 变化发送请求</span>
+  <span class="token comment">// 同时取消上一次正在发送的请求</span>
+  React<span class="token punctuation">.</span><span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> abort <span class="token operator">=</span> value <span class="token operator">&amp;&amp;</span> <span class="token function">doFetch</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// 若请求很迅速，abort 不会做任何事</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> abort <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>value<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token punctuation">&#123;</span><span class="token keyword">new</span> <span class="token class-name"><span class="token builtin">Array</span></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span>
+          <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>index<span class="token punctuation">&#125;</span></span> <span class="token comment">// 很多人也容易忘记设置 key</span>
+          <span class="token attr-name">selected</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token operator">+</span>value <span class="token operator">===</span> index<span class="token punctuation">&#125;</span></span>
+          <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>index<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token punctuation">&#123;</span>index<span class="token punctuation">&#125;</span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">></span></span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token punctuation">&#123;</span>loading <span class="token operator">?</span> <span class="token string">'正在加载...'</span> <span class="token operator">:</span> userInfo<span class="token punctuation">&#125;</span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>希望本文能帮助你写出更完整的交互组件。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '20221129',
+        title: '20221129',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2022 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
