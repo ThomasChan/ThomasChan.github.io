@@ -178,7 +178,6 @@ th {
 }
 * {
   box-sizing: border-box;
-  font-weight: 300;
 }
 a {
   color: #333;
@@ -191,7 +190,7 @@ a:hover {
 }
 html,
 body {
-  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", Menlo, sans-serif;
   color: #333;
 }
 .main-content {
@@ -508,7 +507,7 @@ body {
   border-left: 5px solid #d3d3d3;
   margin: 0 0 1.5em 0px;
   padding: 1em;
-  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", Menlo, sans-serif;
   font-size: 0.9em;
 }
 .article .article-entry blockquote.left {
