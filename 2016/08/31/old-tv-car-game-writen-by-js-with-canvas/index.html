@@ -15,7 +15,7 @@
 <meta name="description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用canvas写一个“火箭车”小游戏">
-<meta property="og:url" content="http://chenjunhao.cn/2016/08/31/old-tv-car-game-writen-by-js-with-canvas/index.html">
+<meta property="og:url" content="http://chenjunhao.cn/2016/08/31/old-tv-car-game-writen-by-js-with-canvas/">
 <meta property="og:site_name" content="Memories">
 <meta property="og:description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
 <meta property="og:locale" content="zh_CN">
@@ -103,12 +103,6 @@
                 </li>
               
             
-              
-                <li>
-                  <a href="/archives" title="ByYear" external="false">ByYear</a>
-                </li>
-              
-            
           </ul>
         
           <ul class="nav">
@@ -136,16 +130,9 @@
           <ul class="nav">
             
               
-                <li class="archive-list-container">
-                  <a href="javascript:;" target="_self">归档</a>
-                  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a><span class="archive-list-count">2</span></li></ul>
-                </li>
-              
-            
-              
                 <li class="tag-list-container">
                   <a href="javascript:;" target="_self">标签</a>
-                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
                 </li>
               
             
