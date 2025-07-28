@@ -15,12 +15,12 @@
 <meta name="description" content="本文翻译自 https:&#x2F;&#x2F;codeburst.io&#x2F;javascript-null-vs-undefined-20f955215a2 , 作者 Brandon Morelli，翻译：Thomas Chan  刚接触 js 的话，可能会认为 null 与 undefined 很相似，其实不然，本文将列述 null 与 undefined 之间的不同点与相同点。 null 是什么？null 有两个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Null vs Undefined">
-<meta property="og:url" content="http://chenjunhao.cn/2018/01/22/javascript-null-vs-undefined/">
+<meta property="og:url" content="http://chenjunhao.cn/2018/01/22/javascript-null-vs-undefined/index.html">
 <meta property="og:site_name" content="Memories">
 <meta property="og:description" content="本文翻译自 https:&#x2F;&#x2F;codeburst.io&#x2F;javascript-null-vs-undefined-20f955215a2 , 作者 Brandon Morelli，翻译：Thomas Chan  刚接触 js 的话，可能会认为 null 与 undefined 很相似，其实不然，本文将列述 null 与 undefined 之间的不同点与相同点。 null 是什么？null 有两个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-01-22T04:21:56.000Z">
-<meta property="article:modified_time" content="2022-11-26T07:01:04.237Z">
+<meta property="article:modified_time" content="2025-07-28T03:55:26.081Z">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
 
@@ -55,7 +55,7 @@
 
 
 
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body
   
     class="monochrome"
@@ -130,7 +130,7 @@
               
                 <li class="tag-list-container">
                   <a href="javascript:;" target="_self">标签</a>
-                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
                 </li>
               
             
@@ -172,26 +172,14 @@
 <h1 id="null-是什么？"><a href="#null-是什么？" class="headerlink" title="null 是什么？"></a>null 是什么？</h1><p><code>null</code> 有两个你必须知道的特征：</p>
 <ul>
 <li><code>null</code> 是空或者不存在的值</li>
-<li><code>null</code> 一定是被赋值的<br>像这样，我们给变量 <code>a</code> 赋值 <code>null</code>:<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// null</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><code>null</code> 一定是被赋值的<br>像这样，我们给变量 <code>a</code> 赋值 <code>null</code>:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h1 id="undefined-是什么？"><a href="#undefined-是什么？" class="headerlink" title="undefined 是什么？"></a>undefined 是什么？</h1><p><code>undefined</code> 通常是一个变量已经被声明，但是没有赋值，例如：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> b<span class="token punctuation">;</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 <p>也可以给变量直接赋值为 <code>undefined</code>:</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> c <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">;</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 <p>还有一种情况是从一个 <code>object</code> 里读取一个不存在的属性就返回 <code>undefined</code>:</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> d <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span>fake<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(d.<span class="property">fake</span>);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="null-与-undefined-的相同点"><a href="#null-与-undefined-的相同点" class="headerlink" title="null 与 undefined 的相同点"></a>null 与 undefined 的相同点</h1><p>在 JavaScript 里只有 <strong>6 个否定值</strong>：</p>
 <ul>
@@ -217,42 +205,27 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </ul>
 <p><code>null</code> 和 <code>undefined</code> 亦是其中两个。其他所有的值都是对象(objects, functions, arrays等等)。</p>
 <p>有趣的是，用 <code>typeof</code> 测试 <code>null</code>，会返回 <code>object</code>(译者注：这可是个大坑):</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> b<span class="token punctuation">;</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// object</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> a);</span><br><span class="line"><span class="comment">// object</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 
 <p>这个特征是 JavaScript 诞生时就有的，基本上被当做最早的 JavaScript 实现的一个错误。</p>
 <blockquote>
 <p>如果你还太熟悉 js 里的数据类型，可以看下我之前的文章: <a target="_blank" rel="noopener" href="https://codeburst.io/javascript-data-types-explained-347555cd2d4d">JavaScript 数据类型解析</a></p>
 </blockquote>
 <h1 id="null-undefined"><a href="#null-undefined" class="headerlink" title="null !== undefined"></a>null !== undefined</h1><p>综上所述， <code>null</code> 与 <code>undefined</code> 是不同的，不过有一些共同点，所以 <code>null</code> 是严格不等于 <code>undefined</code> 的。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">null</span> <span class="token operator">!==</span> <span class="token keyword">undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> !== <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
 <p>但是，用不严格比较符的时候 <code>null</code> 是等于 <code>undefined</code> 的。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">null</span> <span class="token operator">==</span> <span class="token keyword">undefined</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
 <p>在 JavaScript 里，双等号判断相等时会进行隐式类型转换，所以是不严格的。</p>
 <h1 id="实际运用中的不同"><a href="#实际运用中的不同" class="headerlink" title="实际运用中的不同"></a>实际运用中的不同</h1><p>上述所说都很好理解，那么 <code>null</code> 与 <code>undefined</code> 之间到底有啥具体不同？</p>
 <p>我们来看下面的代码：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> logHi <span class="token operator">=</span> <span class="token punctuation">(</span>str <span class="token operator">=</span> <span class="token string">'hi'</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">logHi</span> = (<span class="params">str = <span class="string">&#x27;hi&#x27;</span></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们创建了一个函数叫 <code>logHi</code>，有一个参数，且设置默认值为 <code>hi</code>，调用是这样：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">logHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// hi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>();</span><br><span class="line"><span class="comment">// hi</span></span><br></pre></td></tr></table></figure>
 <p>我们也可以传个参数覆盖默认值：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">logHi</span><span class="token punctuation">(</span><span class="token string">'bye'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// bye</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>(<span class="string">&#x27;bye&#x27;</span>);</span><br><span class="line"><span class="comment">// bye</span></span><br></pre></td></tr></table></figure>
 <p>但是！<code>undefined</code> 是不会覆盖默认值的，而 <code>null</code> 则会。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">logHi</span><span class="token punctuation">(</span><span class="token keyword">undefined</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// hi</span>
-
-<span class="token function">logHi</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// null</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>(<span class="literal">undefined</span>);</span><br><span class="line"><span class="comment">// hi</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">logHi</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
 <li><code>null</code> 是被赋值的，表示啥都没有</li>
@@ -323,7 +296,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
       <div class="main-footer">
   
-    © 2024 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+    © 2025 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
   
 </div>
 
