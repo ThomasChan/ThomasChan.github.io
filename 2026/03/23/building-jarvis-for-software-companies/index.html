@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    构建软件公司的 JARVIS：AI Native 研发中枢的方法论
+  
+</title>
+
+<meta name="description" content="构建软件公司的 JARVIS：AI Native 研发中枢的方法论Building JARVIS for Software Companies: A Methodology for AI-Native R&amp;D 摘要 &#x2F; Abstract中文： 本文提出一种将 AI 从辅助工具转变为软件公司研发核心成员的方法论框架。通过在一家拥有 10 年历史、5.7 万个 issue 的 BI 软件公司的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建软件公司的 JARVIS：AI Native 研发中枢的方法论">
+<meta property="og:url" content="http://chenjunhao.cn/2026/03/23/building-jarvis-for-software-companies/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="构建软件公司的 JARVIS：AI Native 研发中枢的方法论Building JARVIS for Software Companies: A Methodology for AI-Native R&amp;D 摘要 &#x2F; Abstract中文： 本文提出一种将 AI 从辅助工具转变为软件公司研发核心成员的方法论框架。通过在一家拥有 10 年历史、5.7 万个 issue 的 BI 软件公司的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-23T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-23T11:41:55.640Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Product Knowledge">
+<meta property="article:tag" content="OpenClaw">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-building-jarvis-for-software-companies" class="article article-type-post">
+  
+    <h1 class="article-header">
+      构建软件公司的 JARVIS：AI Native 研发中枢的方法论
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2026-03-23
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="构建软件公司的-JARVIS：AI-Native-研发中枢的方法论"><a href="#构建软件公司的-JARVIS：AI-Native-研发中枢的方法论" class="headerlink" title="构建软件公司的 JARVIS：AI Native 研发中枢的方法论"></a>构建软件公司的 JARVIS：AI Native 研发中枢的方法论</h1><h1 id="Building-JARVIS-for-Software-Companies-A-Methodology-for-AI-Native-R-amp-D"><a href="#Building-JARVIS-for-Software-Companies-A-Methodology-for-AI-Native-R-amp-D" class="headerlink" title="Building JARVIS for Software Companies: A Methodology for AI-Native R&amp;D"></a>Building JARVIS for Software Companies: A Methodology for AI-Native R&amp;D</h1><hr>
+<h2 id="摘要-Abstract"><a href="#摘要-Abstract" class="headerlink" title="摘要 / Abstract"></a>摘要 / Abstract</h2><p><strong>中文：</strong> 本文提出一种将 AI 从辅助工具转变为软件公司研发核心成员的方法论框架。通过在一家拥有 10 年历史、5.7 万个 issue 的 BI 软件公司的实践，我们验证了”产品知识库”作为 AI 研发中枢（JARVIS）记忆基座的可行性。核心发现是：<strong>AI 参与研发的瓶颈不是模型能力，而是组织记忆的结构化程度</strong>。本文从理论层面阐述为什么需要这样做、做什么、以及这样做的价值，但不涉及具体实施步骤。</p>
+<p><strong>English:</strong> This paper proposes a methodology framework for transforming AI from an auxiliary tool into a core member of a software company’s R&amp;D team. Through practice at a BI software company with a 10-year history and 57,000+ issues, we validated the feasibility of a “Product Knowledge Base” as the memory foundation for an AI R&amp;D hub (JARVIS). The core finding is: <strong>the bottleneck for AI participation in R&amp;D is not model capability, but the degree of structured organizational memory</strong>. This paper explains why this is needed, what it entails, and its value proposition — without covering specific implementation steps.</p>
+<hr>
+<h2 id="1-问题：为什么-Copilot-不够-The-Problem-Why-Copilot-Is-Not-Enough"><a href="#1-问题：为什么-Copilot-不够-The-Problem-Why-Copilot-Is-Not-Enough" class="headerlink" title="1. 问题：为什么 Copilot 不够 / The Problem: Why Copilot Is Not Enough"></a>1. 问题：为什么 Copilot 不够 / The Problem: Why Copilot Is Not Enough</h2><p>大多数软件公司对 AI 的使用停留在”代码补全”层面——GitHub Copilot、Cursor、各种 IDE 插件。这些工具在战术层面有效，但存在一个根本性缺陷：</p>
+<p>Most software companies use AI at the “code completion” level — GitHub Copilot, Cursor, various IDE plugins. These tools are tactically effective but have a fundamental flaw:</p>
+<p><strong>它们没有记忆。/ They have no memory.</strong></p>
+<p>当一个工程师面对一个 bug 时，他不只是在”写代码”。他需要：</p>
+<p>When an engineer faces a bug, they’re not just “writing code.” They need to:</p>
+<ul>
+<li><p>知道这个模块 3 年前为什么这样设计（<strong>设计决策</strong>）</p>
+</li>
+<li><p>知道类似的 bug 之前是否出现过（<strong>历史模式</strong>）</p>
+</li>
+<li><p>知道改了这里会影响哪些其他模块（<strong>跨模块依赖</strong>）</p>
+</li>
+<li><p>知道哪些方案曾经被否决过以及为什么（<strong>被否决需求</strong>）</p>
+</li>
+<li><p>知道这个功能的测试覆盖盲区在哪里（<strong>质量地图</strong>）</p>
+</li>
+<li><p>Know why this module was designed this way 3 years ago (<strong>design decisions</strong>)</p>
+</li>
+<li><p>Know if similar bugs have appeared before (<strong>historical patterns</strong>)</p>
+</li>
+<li><p>Know which other modules are affected by this change (<strong>cross-module dependencies</strong>)</p>
+</li>
+<li><p>Know which solutions were previously rejected and why (<strong>rejected features</strong>)</p>
+</li>
+<li><p>Know where the test coverage blind spots are (<strong>quality map</strong>)</p>
+</li>
+</ul>
+<p>这些知识存在于老员工的脑子里、散落在 GitLab 评论中、埋在 Slack 历史消息里。当老员工离职，这些知识就消失了。</p>
+<p>This knowledge lives in senior engineers’ heads, scattered across GitLab comments, buried in Slack message history. When senior engineers leave, this knowledge vanishes.</p>
+<p><strong>Copilot 能帮你写一个函数，但它不知道这个函数为什么不应该被写。</strong></p>
+<p><strong>Copilot can help you write a function, but it doesn’t know why that function shouldn’t be written.</strong></p>
+<hr>
+<h2 id="2-论点：AI-研发中枢需要”记忆”-The-Thesis-AI-R-amp-D-Hubs-Need-“Memory”"><a href="#2-论点：AI-研发中枢需要”记忆”-The-Thesis-AI-R-amp-D-Hubs-Need-“Memory”" class="headerlink" title="2. 论点：AI 研发中枢需要”记忆” / The Thesis: AI R&amp;D Hubs Need “Memory”"></a>2. 论点：AI 研发中枢需要”记忆” / The Thesis: AI R&amp;D Hubs Need “Memory”</h2><p>我们提出一个核心论点：</p>
+<p>We propose a core thesis:</p>
+<blockquote>
+<p><strong>要让 AI 从”工具”升级为”团队成员”，必须先解决组织记忆的结构化问题。模型能力是充分条件，结构化记忆才是必要条件。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>To upgrade AI from “tool” to “team member,” you must first solve the problem of structuring organizational memory. Model capability is a sufficient condition; structured memory is the necessary condition.</strong></p>
+</blockquote>
+<p>类比人类：一个新入职的天才工程师（等价于最强的 LLM），如果没有人给他讲公司产品的历史、设计决策、踩过的坑、被否决的方案，他也只能写出”技术上正确但业务上错误”的代码。</p>
+<p>By analogy: a newly hired genius engineer (equivalent to the strongest LLM), without anyone telling them the product’s history, design decisions, past mistakes, and rejected proposals, can only write code that is “technically correct but business-wise wrong.”</p>
+<p><strong>JARVIS 不是一个更好的 Copilot。JARVIS 是一个拥有公司完整产品记忆的研发团队成员。</strong></p>
+<p><strong>JARVIS is not a better Copilot. JARVIS is an R&amp;D team member with the company’s complete product memory.</strong></p>
+<hr>
+<h2 id="3-框架：三层时态架构-The-Framework-Three-Layer-Temporal-Architecture"><a href="#3-框架：三层时态架构-The-Framework-Three-Layer-Temporal-Architecture" class="headerlink" title="3. 框架：三层时态架构 / The Framework: Three-Layer Temporal Architecture"></a>3. 框架：三层时态架构 / The Framework: Three-Layer Temporal Architecture</h2><p>产品知识库的核心架构是按<strong>时态</strong>组织的三层结构：</p>
+<p>The core architecture of the Product Knowledge Base is a three-layer structure organized by <strong>temporal state</strong>:</p>
+<h3 id="History（历史）—-已发生的一切-Everything-That-Has-Happened"><a href="#History（历史）—-已发生的一切-Everything-That-Has-Happened" class="headerlink" title="History（历史）— 已发生的一切 / Everything That Has Happened"></a>History（历史）— 已发生的一切 / Everything That Has Happened</h3><p>覆盖产品从第一行代码到今天的所有关键事实：</p>
+<p>Covers all key facts from the product’s first line of code to today:</p>
+<ul>
+<li><p><strong>模块深度文档</strong>：每个功能模块的架构、代码路径、已知问题模式、设计决策、测试覆盖</p>
+</li>
+<li><p><strong>跨模块依赖矩阵</strong>：模块 A 改了什么会影响模块 B</p>
+</li>
+<li><p><strong>破坏性变更索引</strong>：历史上所有 breaking changes</p>
+</li>
+<li><p><strong>被否决需求索引</strong>：所有被拒绝的功能请求及其原因</p>
+</li>
+<li><p><strong>Module deep documentation</strong>: architecture, code paths, known issue patterns, design decisions, test coverage for each module</p>
+</li>
+<li><p><strong>Cross-module dependency matrix</strong>: what changes in Module A affect Module B</p>
+</li>
+<li><p><strong>Breaking changes index</strong>: all historical breaking changes</p>
+</li>
+<li><p><strong>Rejected features index</strong>: all rejected feature requests and their reasons</p>
+</li>
+</ul>
+<p>History 回答的核心问题是：**”这件事以前发生过吗？结果如何？”**</p>
+<p>The core question History answers: <strong>“Has this happened before? What was the outcome?”</strong></p>
+<h3 id="Present（现在）—-当前状态快照-Current-State-Snapshot"><a href="#Present（现在）—-当前状态快照-Current-State-Snapshot" class="headerlink" title="Present（现在）— 当前状态快照 / Current State Snapshot"></a>Present（现在）— 当前状态快照 / Current State Snapshot</h3><p>实时（或近实时）反映产品的当前状态：</p>
+<p>Reflects the product’s current state in real-time (or near real-time):</p>
+<ul>
+<li><p><strong>Backlog 快照</strong>：所有未完成的 issue，按模块、优先级、版本分类</p>
+</li>
+<li><p><strong>版本计划</strong>：当前和未来版本的排期</p>
+</li>
+<li><p><strong>团队配置</strong>：谁负责什么模块</p>
+</li>
+<li><p><strong>Backlog snapshot</strong>: all unfinished issues, categorized by module, priority, version</p>
+</li>
+<li><p><strong>Version plan</strong>: current and future version schedules</p>
+</li>
+<li><p><strong>Team configuration</strong>: who is responsible for which module</p>
+</li>
+</ul>
+<p>Present 回答的核心问题是：**”现在是什么状况？”**</p>
+<p>The core question Present answers: <strong>“What is the current situation?”</strong></p>
+<h3 id="Future（未来）—-AI-的判断产出-AI’s-Judgment-Output"><a href="#Future（未来）—-AI-的判断产出-AI’s-Judgment-Output" class="headerlink" title="Future（未来）— AI 的判断产出 / AI’s Judgment Output"></a>Future（未来）— AI 的判断产出 / AI’s Judgment Output</h3><p>这是 JARVIS 真正产生价值的层，基于 History 和 Present 的知识做出产品经理级别的判断：</p>
+<p>This is where JARVIS truly generates value — making product-manager-level judgments based on History and Present knowledge:</p>
+<ul>
+<li><p><strong>去重检测</strong>：新 issue 是否与历史 issue 重复？</p>
+</li>
+<li><p><strong>根因分析</strong>：这个 bug 的本质原因是什么？是设计缺陷还是实现失误？</p>
+</li>
+<li><p><strong>跨模块影响评估</strong>：修复这个 bug 会影响哪些其他模块？</p>
+</li>
+<li><p><strong>实现复杂度估算</strong>：根据历史类似修复的工时推算</p>
+</li>
+<li><p><strong>历史教训检索</strong>：以前类似的决策是否踩过坑？</p>
+</li>
+<li><p><strong>Duplicate detection</strong>: Is this new issue a duplicate of a historical one?</p>
+</li>
+<li><p><strong>Root cause analysis</strong>: What is the essential cause — design flaw or implementation mistake?</p>
+</li>
+<li><p><strong>Cross-module impact assessment</strong>: Which other modules will be affected?</p>
+</li>
+<li><p><strong>Implementation complexity estimation</strong>: Based on historical similar fixes</p>
+</li>
+<li><p><strong>Historical lesson retrieval</strong>: Have similar decisions led to problems before?</p>
+</li>
+</ul>
+<p>Future 回答的核心问题是：**”应该怎么做？”**</p>
+<p>The core question Future answers: <strong>“What should we do?”</strong></p>
+<hr>
+<h2 id="4-关键洞察-Key-Insights"><a href="#4-关键洞察-Key-Insights" class="headerlink" title="4. 关键洞察 / Key Insights"></a>4. 关键洞察 / Key Insights</h2><h3 id="4-1-被否决的需求是最有价值的知识-Rejected-Features-Are-the-Most-Valuable-Knowledge"><a href="#4-1-被否决的需求是最有价值的知识-Rejected-Features-Are-the-Most-Valuable-Knowledge" class="headerlink" title="4.1 被否决的需求是最有价值的知识 / Rejected Features Are the Most Valuable Knowledge"></a>4.1 被否决的需求是最有价值的知识 / Rejected Features Are the Most Valuable Knowledge</h3><p>在我们的实践中，5.7 万个 issue 里有 <strong>7,311 条被否决的需求</strong>（by design / wontfix / not a bug / duplicate）。</p>
+<p>In our practice, out of 57,000 issues, there are <strong>7,311 rejected features</strong> (by design / wontfix / not a bug / duplicate).</p>
+<p>这些被否决的需求蕴含了比已实现功能更重要的知识——它们记录了**”为什么不做”**。一个不知道”为什么不做”的 AI，会反复提出已经被否决的方案，浪费所有人的时间。</p>
+<p>These rejected features contain knowledge more important than implemented features — they record <strong>“why we decided not to do it.”</strong> An AI that doesn’t know “why not” will repeatedly propose already-rejected solutions, wasting everyone’s time.</p>
+<h3 id="4-2-94-个-Bug-可能来自同一个设计缺陷-94-Bugs-Can-Stem-from-One-Design-Flaw"><a href="#4-2-94-个-Bug-可能来自同一个设计缺陷-94-Bugs-Can-Stem-from-One-Design-Flaw" class="headerlink" title="4.2 94 个 Bug 可能来自同一个设计缺陷 / 94 Bugs Can Stem from One Design Flaw"></a>4.2 94 个 Bug 可能来自同一个设计缺陷 / 94 Bugs Can Stem from One Design Flaw</h3><p>我们对”过滤器快照”功能做了一次深度分析：这个功能自 2022 年上线以来累计产生了 94 个 bug。但这 94 个 bug 的根因可以归结为<strong>同一个设计缺陷</strong>——功能上线时没有定义清晰的边界（哪些场景支持、哪些不支持、字段删除/重命名后快照如何失效）。</p>
+<p>We conducted a deep analysis of the “filter snapshot” feature: since its launch in 2022, it has generated 94 bugs. But all 94 bugs trace back to <strong>a single design flaw</strong> — the feature launched without clearly defined boundaries (which scenarios are supported, what happens when fields are deleted/renamed, how snapshots should degrade).</p>
+<p><strong>没有产品知识库的 AI 会逐个修复这 94 个 bug。有产品知识库的 AI 会指出这是一个结构性设计缺陷，需要从根本上重新定义功能边界。</strong></p>
+<p><strong>An AI without a product knowledge base will fix these 94 bugs one by one. An AI with a product knowledge base will identify this as a structural design flaw that needs fundamental boundary redefinition.</strong></p>
+<p>这就是”工具”和”团队成员”的区别。</p>
+<p>This is the difference between a “tool” and a “team member.”</p>
+<h3 id="4-3-知识库必须与代码共同演进-The-Knowledge-Base-Must-Co-evolve-with-Code"><a href="#4-3-知识库必须与代码共同演进-The-Knowledge-Base-Must-Co-evolve-with-Code" class="headerlink" title="4.3 知识库必须与代码共同演进 / The Knowledge Base Must Co-evolve with Code"></a>4.3 知识库必须与代码共同演进 / The Knowledge Base Must Co-evolve with Code</h3><p>产品知识库不是一次性文档工程。它必须：</p>
+<p>The product knowledge base is not a one-time documentation project. It must:</p>
+<ul>
+<li><p>与 Git 仓库同源管理（版本控制、MR 审核、分支策略）</p>
+</li>
+<li><p>在每次 bug 修复后自动更新 known-issues</p>
+</li>
+<li><p>在每次设计决策后记录 decisions</p>
+</li>
+<li><p>定期从 issue 系统同步 backlog 快照</p>
+</li>
+<li><p>Be managed in the same Git workflow (version control, MR review, branching)</p>
+</li>
+<li><p>Auto-update known-issues after each bug fix</p>
+</li>
+<li><p>Record decisions after each design choice</p>
+</li>
+<li><p>Periodically sync backlog snapshots from the issue system</p>
+</li>
+</ul>
+<p><strong>如果知识库和代码脱节了，AI 读到的就是过时的信息，做出的判断比没有知识库还危险。</strong></p>
+<p><strong>If the knowledge base falls out of sync with code, the AI reads outdated information, and its judgments become more dangerous than having no knowledge base at all.</strong></p>
+<hr>
+<h2 id="5-价值模型-Value-Model"><a href="#5-价值模型-Value-Model" class="headerlink" title="5. 价值模型 / Value Model"></a>5. 价值模型 / Value Model</h2><h3 id="对工程师-For-Engineers"><a href="#对工程师-For-Engineers" class="headerlink" title="对工程师 / For Engineers"></a>对工程师 / For Engineers</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>没有 JARVIS</th>
+<th>有 JARVIS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定位 bug</td>
+<td>读代码 + 问同事 + 搜 issue（30-120 min）</td>
+<td>搜索知识库 + 历史模式匹配（5-15 min）</td>
+</tr>
+<tr>
+<td>评估影响范围</td>
+<td>凭经验猜测</td>
+<td>跨模块依赖矩阵自动标注</td>
+</tr>
+<tr>
+<td>避免重复方案</td>
+<td>不知道之前有人提过</td>
+<td>被否决需求索引自动告警</td>
+</tr>
+<tr>
+<td>新人上手</td>
+<td>3-6 个月</td>
+<td>1-2 个月（有完整的模块文档和设计决策）</td>
+</tr>
+</tbody></table>
+<h3 id="对产品经理-For-Product-Managers"><a href="#对产品经理-For-Product-Managers" class="headerlink" title="对产品经理 / For Product Managers"></a>对产品经理 / For Product Managers</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>没有 JARVIS</th>
+<th>有 JARVIS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Backlog 优先级排序</td>
+<td>凭感觉 + 客户压力</td>
+<td>历史数据支撑的多维度评分</td>
+</tr>
+<tr>
+<td>需求去重</td>
+<td>人工对比</td>
+<td>自动与 5.7 万条历史 issue 交叉检索</td>
+</tr>
+<tr>
+<td>版本规划</td>
+<td>Excel 估算</td>
+<td>基于历史修复工时的实现复杂度预测</td>
+</tr>
+</tbody></table>
+<h3 id="对组织-For-the-Organization"><a href="#对组织-For-the-Organization" class="headerlink" title="对组织 / For the Organization"></a>对组织 / For the Organization</h3><ul>
+<li><p><strong>知识不随人员流动而流失</strong>：所有设计决策、历史教训都结构化存储</p>
+</li>
+<li><p><strong>AI 能力随知识库增长而增强</strong>：不依赖更强的模型，而是更丰富的记忆</p>
+</li>
+<li><p>**研发决策从”经验驱动”变为”数据驱动”**：每个决策都有历史依据</p>
+</li>
+<li><p><strong>Knowledge doesn’t leave when people leave</strong>: all design decisions and historical lessons are structurally stored</p>
+</li>
+<li><p><strong>AI capability grows with the knowledge base</strong>: independent of stronger models, dependent on richer memory</p>
+</li>
+<li><p><strong>R&amp;D decisions shift from “experience-driven” to “data-driven”</strong>: every decision has historical backing</p>
+</li>
+</ul>
+<hr>
+<h2 id="6-前提条件-Prerequisites"><a href="#6-前提条件-Prerequisites" class="headerlink" title="6. 前提条件 / Prerequisites"></a>6. 前提条件 / Prerequisites</h2><p>这个方法论不是适用于所有公司的银弹。它有明确的前提条件：</p>
+<p>This methodology is not a silver bullet for all companies. It has clear prerequisites:</p>
+<ol>
+<li><p><strong>产品必须有足够的历史</strong>：至少 3-5 年的 issue 追踪数据。如果你的产品刚起步，先把 issue 管理做好。</p>
+</li>
+<li><p><strong>必须有结构化的 issue 管理</strong>：标签体系、模块分类、milestone 管理。垃圾进垃圾出。</p>
+</li>
+<li><p><strong>必须有人懂产品和技术</strong>：知识库的初始构建需要同时理解产品逻辑和技术实现的人来引导 AI。纯靠 AI 自动生成的知识库是垃圾。</p>
+</li>
+<li><p><strong>组织必须愿意改变工作流</strong>：知识库维护必须融入日常研发流程，而不是额外负担。</p>
+</li>
+<li><p><strong>The product must have sufficient history</strong>: at least 3-5 years of issue tracking data. If your product just started, focus on issue management first.</p>
+</li>
+<li><p><strong>Structured issue management is required</strong>: label taxonomy, module classification, milestone management. Garbage in, garbage out.</p>
+</li>
+<li><p><strong>Someone who understands both product and technology is needed</strong>: initial knowledge base construction requires someone who understands both product logic and technical implementation to guide the AI. A knowledge base auto-generated purely by AI is garbage.</p>
+</li>
+<li><p><strong>The organization must be willing to change workflows</strong>: knowledge base maintenance must integrate into daily R&amp;D processes, not be an extra burden.</p>
+</li>
+</ol>
+<hr>
+<h2 id="7-方法论的层次-Levels-of-the-Methodology"><a href="#7-方法论的层次-Levels-of-the-Methodology" class="headerlink" title="7. 方法论的层次 / Levels of the Methodology"></a>7. 方法论的层次 / Levels of the Methodology</h2><p>我们将这个方法论抽象为三个递进的层次，适用于不同阶段的公司：</p>
+<p>We abstract this methodology into three progressive levels for companies at different stages:</p>
+<h3 id="Level-1-被动记忆-Passive-Memory"><a href="#Level-1-被动记忆-Passive-Memory" class="headerlink" title="Level 1: 被动记忆 / Passive Memory"></a>Level 1: 被动记忆 / Passive Memory</h3><ul>
+<li><p>将现有文档、issue、代码注释整理成结构化知识库</p>
+</li>
+<li><p>AI 能搜索和引用，但不主动参与</p>
+</li>
+<li><p><strong>价值</strong>：加速信息检索，减少重复劳动</p>
+</li>
+<li><p>Organize existing docs, issues, and code comments into a structured knowledge base</p>
+</li>
+<li><p>AI can search and reference, but doesn’t proactively participate</p>
+</li>
+<li><p><strong>Value</strong>: accelerate information retrieval, reduce redundant work</p>
+</li>
+</ul>
+<h3 id="Level-2-主动参与-Active-Participation"><a href="#Level-2-主动参与-Active-Participation" class="headerlink" title="Level 2: 主动参与 / Active Participation"></a>Level 2: 主动参与 / Active Participation</h3><ul>
+<li><p>AI 能自动对新 issue 进行分类、去重、影响评估</p>
+</li>
+<li><p>AI 参与 Code Review，基于历史知识提出审查意见</p>
+</li>
+<li><p>知识库与 CI/CD 集成，自动更新</p>
+</li>
+<li><p><strong>价值</strong>：AI 成为研发流程的一环</p>
+</li>
+<li><p>AI can automatically classify, deduplicate, and assess impact of new issues</p>
+</li>
+<li><p>AI participates in Code Review with history-informed opinions</p>
+</li>
+<li><p>Knowledge base integrates with CI/CD for auto-updates</p>
+</li>
+<li><p><strong>Value</strong>: AI becomes part of the R&amp;D workflow</p>
+</li>
+</ul>
+<h3 id="Level-3-自主演进-Autonomous-Evolution"><a href="#Level-3-自主演进-Autonomous-Evolution" class="headerlink" title="Level 3: 自主演进 / Autonomous Evolution"></a>Level 3: 自主演进 / Autonomous Evolution</h3><ul>
+<li><p>AI 能自主维护和扩展知识库</p>
+</li>
+<li><p>AI 能发现知识盲区并主动补充</p>
+</li>
+<li><p>AI 对产品方向提出数据驱动的建议</p>
+</li>
+<li><p><strong>价值</strong>：AI 成为产品演进的核心参与者</p>
+</li>
+<li><p>AI can autonomously maintain and extend the knowledge base</p>
+</li>
+<li><p>AI can discover knowledge gaps and proactively fill them</p>
+</li>
+<li><p>AI provides data-driven suggestions for product direction</p>
+</li>
+<li><p><strong>Value</strong>: AI becomes a core participant in product evolution</p>
+</li>
+</ul>
+<p><strong>我们的实践处于 Level 1 → Level 2 的过渡阶段。</strong> Level 3 是长期目标。</p>
+<p><strong>Our practice is at the transition from Level 1 to Level 2.</strong> Level 3 is a long-term goal.</p>
+<hr>
+<h2 id="8-与现有范式的区别-How-This-Differs-from-Existing-Paradigms"><a href="#8-与现有范式的区别-How-This-Differs-from-Existing-Paradigms" class="headerlink" title="8. 与现有范式的区别 / How This Differs from Existing Paradigms"></a>8. 与现有范式的区别 / How This Differs from Existing Paradigms</h2><table>
+<thead>
+<tr>
+<th>范式 / Paradigm</th>
+<th>特点 / Characteristics</th>
+<th>局限 / Limitations</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RAG（检索增强生成）</strong></td>
+<td>把文档塞进向量库，查询时检索</td>
+<td>没有时态结构，不区分历史/现在/未来</td>
+</tr>
+<tr>
+<td><strong>Code Agent（代码智能体）</strong></td>
+<td>读代码 + 写代码</td>
+<td>只看代码不看产品历史，不知道”为什么”</td>
+</tr>
+<tr>
+<td><strong>知识图谱</strong></td>
+<td>三元组建模实体关系</td>
+<td>过于刚性，维护成本高，难以表达”被否决的原因”</td>
+</tr>
+<tr>
+<td><strong>本方法论</strong></td>
+<td>三层时态 × 模块化 × 与代码共同演进</td>
+<td>需要初始投入和持续维护</td>
+</tr>
+</tbody></table>
+<p>关键区别：**本方法论强调”记忆”而非”检索”**。记忆是有组织的、有因果关系的、会自我更新的。检索只是从一堆文本中找相似片段。</p>
+<p>Key difference: <strong>this methodology emphasizes “memory” over “retrieval.”</strong> Memory is organized, causal, and self-updating. Retrieval just finds similar fragments from a pile of text.</p>
+<hr>
+<h2 id="9-结论-Conclusion"><a href="#9-结论-Conclusion" class="headerlink" title="9. 结论 / Conclusion"></a>9. 结论 / Conclusion</h2><p>软件行业正在经历从”AI 辅助编码”到”AI 参与研发”的转型。但大多数公司卡在了中间——他们有了强大的 LLM，却没有让 LLM 真正理解自己产品的结构化记忆。</p>
+<p>The software industry is transitioning from “AI-assisted coding” to “AI-participated R&amp;D.” But most companies are stuck in between — they have powerful LLMs but lack the structured memory that would let LLMs truly understand their products.</p>
+<p><strong>JARVIS 不是一个产品，不是一个工具，不是一个 SaaS。它是一种组织能力。</strong> 它的核心不是选哪个 LLM 或用哪个框架，而是如何把十年的组织记忆变成 AI 可以理解和推理的结构化知识。</p>
+<p><strong>JARVIS is not a product, not a tool, not a SaaS. It is an organizational capability.</strong> Its core is not which LLM to choose or which framework to use, but how to transform a decade of organizational memory into structured knowledge that AI can understand and reason about.</p>
+<p>模型会迭代，框架会更替，但<strong>结构化的产品记忆只会越来越有价值</strong>。</p>
+<p>Models iterate, frameworks change, but <strong>structured product memory only becomes more valuable over time.</strong></p>
+<hr>
+<p><em>本文基于作者在一家 10 年历史的 BI 软件公司的实际实践，使用 OpenClaw 作为 AI 研发中枢运行环境。</em></p>
+<p><em>This paper is based on the author’s practice at a BI software company with 10 years of history, using OpenClaw as the AI R&amp;D hub runtime.</em></p>
+<hr>
+<p><strong>作者 / Author:</strong> Thomas Chan<br><strong>日期 / Date:</strong> 2026-03-23<br><strong>标签 / Tags:</strong> AI Native, JARVIS, Product Knowledge, Software Engineering, OpenClaw</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '20260323',
+        title: '20260323',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2026 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
