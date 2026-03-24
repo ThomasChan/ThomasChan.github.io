@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    为什么一次封闭式 AI 开发实验，测不出真正的上限
+  
+</title>
+
+<meta name="description" content="为什么一次封闭式 AI 开发实验，测不出真正的上限最近我听到一种很典型、也很有代表性的想法：找一个规模不大的软件，把需求、操作说明和测试方法先定义得足够清楚，然后把开发和测试尽量交给 AI 连续跑几天，看看它最终能做成什么样，花多少钱，踩多少坑。 我觉得这个想法并不差。恰恰相反，它是一个很自然的起点。因为只要一个团队认真思考 AI 研发，迟早都会走到这一步：先找一个边界可控的样本，做一次尽可能完整">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么一次封闭式 AI 开发实验，测不出真正的上限">
+<meta property="og:url" content="http://chenjunhao.cn/2026/03/24/why-one-shot-ai-dev-experiments-cannot-reveal-the-real-upper-bound/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="为什么一次封闭式 AI 开发实验，测不出真正的上限最近我听到一种很典型、也很有代表性的想法：找一个规模不大的软件，把需求、操作说明和测试方法先定义得足够清楚，然后把开发和测试尽量交给 AI 连续跑几天，看看它最终能做成什么样，花多少钱，踩多少坑。 我觉得这个想法并不差。恰恰相反，它是一个很自然的起点。因为只要一个团队认真思考 AI 研发，迟早都会走到这一步：先找一个边界可控的样本，做一次尽可能完整">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-24T12:10:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T11:59:24.626Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Management">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Management/" rel="tag">Management</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-why-one-shot-ai-dev-experiments-cannot-reveal-the-real-upper-bound" class="article article-type-post">
+  
+    <h1 class="article-header">
+      为什么一次封闭式 AI 开发实验，测不出真正的上限
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2026-03-24
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Management/" rel="tag">Management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="为什么一次封闭式-AI-开发实验，测不出真正的上限"><a href="#为什么一次封闭式-AI-开发实验，测不出真正的上限" class="headerlink" title="为什么一次封闭式 AI 开发实验，测不出真正的上限"></a>为什么一次封闭式 AI 开发实验，测不出真正的上限</h1><p>最近我听到一种很典型、也很有代表性的想法：找一个规模不大的软件，把需求、操作说明和测试方法先定义得足够清楚，然后把开发和测试尽量交给 AI 连续跑几天，看看它最终能做成什么样，花多少钱，踩多少坑。</p>
+<p>我觉得这个想法并不差。恰恰相反，它是一个很自然的起点。因为只要一个团队认真思考 AI 研发，迟早都会走到这一步：<strong>先找一个边界可控的样本，做一次尽可能完整的实验。</strong></p>
+<p>但问题在于，很多人会把这个实验的结果，误当成“AI 研发上限”的答案。</p>
+<p>这就不对了。</p>
+<p>一次封闭式 AI 开发实验，最多只能测到某一类能力的上限；它测不出真正的研发上限。因为软件研发真正困难的部分，从来不只是“把代码写出来”，而是<strong>如何在长周期、不完整信息和持续变化中，把事情持续做对。</strong></p>
+<hr>
+<h2 id="1-这种实验到底在测什么"><a href="#1-这种实验到底在测什么" class="headerlink" title="1. 这种实验到底在测什么"></a>1. 这种实验到底在测什么</h2><p>如果我们把任务压缩成下面这种形式：</p>
+<ul>
+<li>选一个小型项目</li>
+<li>预先写清需求</li>
+<li>预先写清操作文档</li>
+<li>预先写清测试方法</li>
+<li>把完整任务交给 AI 执行</li>
+<li>最后按结果验收</li>
+</ul>
+<p>那么它主要测到的是三件事：</p>
+<h3 id="第一，模型的代码生成能力"><a href="#第一，模型的代码生成能力" class="headerlink" title="第一，模型的代码生成能力"></a>第一，模型的代码生成能力</h3><p>AI 能不能快速补齐 CRUD、页面逻辑、数据流转、脚手架、测试样例、配置文件。</p>
+<h3 id="第二，任务说明的完备程度"><a href="#第二，任务说明的完备程度" class="headerlink" title="第二，任务说明的完备程度"></a>第二，任务说明的完备程度</h3><p>需求写得越清楚，AI 的成功率通常越高。很多所谓“模型不行”，本质上是输入根本没定义清楚。</p>
+<h3 id="第三，单轮自治的可行性"><a href="#第三，单轮自治的可行性" class="headerlink" title="第三，单轮自治的可行性"></a>第三，单轮自治的可行性</h3><p>也就是在一个相对封闭、变化较少的任务里，AI 能不能不被频繁打断，连续推进一段时间。</p>
+<p>这三件事都很重要。但它们仍然只是研发能力里的一个切片。</p>
+<p><strong>它更接近“AI 能否完成一个项目包”，而不是“AI 能否成为稳定的研发能力”。</strong></p>
+<hr>
+<h2 id="2-真正的上限，卡在代码之外"><a href="#2-真正的上限，卡在代码之外" class="headerlink" title="2. 真正的上限，卡在代码之外"></a>2. 真正的上限，卡在代码之外</h2><p>一个软件项目只要稍微拉长一点，就会出现几个立刻把单次实验打穿的问题。</p>
+<h3 id="2-1-需求不是一次性交付物，而是持续重写的东西"><a href="#2-1-需求不是一次性交付物，而是持续重写的东西" class="headerlink" title="2.1 需求不是一次性交付物，而是持续重写的东西"></a>2.1 需求不是一次性交付物，而是持续重写的东西</h3><p>很多管理者天然会想：</p>
+<blockquote>
+<p>先把任务书写完整，再交给 AI 执行。</p>
+</blockquote>
+<p>这当然没错，但真实研发里几乎不存在“写完就不变”的任务书。</p>
+<p>开发过程中你会不断发现：</p>
+<ul>
+<li>原来的边界条件没定义全</li>
+<li>某个交互看起来可行，但用起来不对</li>
+<li>某个测试口径和业务口径并不一致</li>
+<li>某个旧约束会和新需求冲突</li>
+<li>客户真正要解决的问题，和最初提的需求不是一回事</li>
+</ul>
+<p>所以软件研发不是“任务定义完毕 -&gt; 开发开始”，而更像是：</p>
+<p><strong>需求澄清 -&gt; 实现 -&gt; 发现歧义 -&gt; 回写需求 -&gt; 调整实现 -&gt; 更新测试 -&gt; 再次验收</strong></p>
+<p>这是一个循环，不是一个投递动作。</p>
+<p>如果实验设计默认需求是静态的，那么它天然测不到这个循环中的大量摩擦。</p>
+<h3 id="2-2-测试不是写几条-case，而是建立可信的反馈系统"><a href="#2-2-测试不是写几条-case，而是建立可信的反馈系统" class="headerlink" title="2.2 测试不是写几条 case，而是建立可信的反馈系统"></a>2.2 测试不是写几条 case，而是建立可信的反馈系统</h3><p>很多 AI 开发实验都会写测试，但“有测试”不等于“有反馈闭环”。</p>
+<p>真正关键的是：</p>
+<ul>
+<li>测试覆盖的是不是核心风险点</li>
+<li>测试是不是会被 AI 用来“迎合”而不是验证</li>
+<li>回归测试能不能在需求变化后持续成立</li>
+<li>失败时能不能定位到真正原因</li>
+<li>测试结论能不能被人信任</li>
+</ul>
+<p>如果这些条件不满足，那么测试只是在制造一种“看起来像工程化”的安全感。</p>
+<p>AI 很容易学会把测试跑绿，却不一定学会真正守住系统边界。</p>
+<h3 id="2-3-项目一旦变长，上下文就会成为主要矛盾"><a href="#2-3-项目一旦变长，上下文就会成为主要矛盾" class="headerlink" title="2.3 项目一旦变长，上下文就会成为主要矛盾"></a>2.3 项目一旦变长，上下文就会成为主要矛盾</h3><p>短任务里，AI 的上下文看起来够用。长任务里，问题会立刻出现：</p>
+<ul>
+<li>前面说过的话后面忘了</li>
+<li>之前定过的约束被悄悄改写</li>
+<li>旧决定没有沉淀，新决定又重复推翻</li>
+<li>修一个点时没意识到另一个模块已经依赖了旧行为</li>
+<li>相同问题被多次重新讨论</li>
+</ul>
+<p>这不是某一个模型独有的问题，而是长程研发任务的结构性问题。</p>
+<p><strong>软件越复杂，决定成败的越不是“当前窗口里写得对不对”，而是“过去的决策有没有被保存、组织、继承和调用”。</strong></p>
+<hr>
+<h2 id="3-为什么很多人会误以为这就已经接近上限"><a href="#3-为什么很多人会误以为这就已经接近上限" class="headerlink" title="3. 为什么很多人会误以为这就已经接近上限"></a>3. 为什么很多人会误以为这就已经接近上限</h2><p>因为这种实验很容易给人一种“已经非常接近真实研发”的错觉。</p>
+<p>它有需求文档，有实现，有测试，有验收，甚至还有预算统计。看起来已经很完整了。</p>
+<p>但它仍然和真实研发之间隔着几道很厚的墙。</p>
+<h3 id="3-1-它默认了知识已经存在于任务书里"><a href="#3-1-它默认了知识已经存在于任务书里" class="headerlink" title="3.1 它默认了知识已经存在于任务书里"></a>3.1 它默认了知识已经存在于任务书里</h3><p>现实里最稀缺的不是代码，而是上下文：</p>
+<ul>
+<li>这个模块为什么这样设计</li>
+<li>以前类似问题踩过什么坑</li>
+<li>哪些方案被讨论过又否掉了</li>
+<li>哪些约束是技术性的，哪些是业务性的</li>
+<li>哪些看似合理的改动会引发跨模块副作用</li>
+</ul>
+<p>这些东西通常不在任务书里，而散落在：</p>
+<ul>
+<li>老员工脑子里</li>
+<li>issue 评论里</li>
+<li>提测记录里</li>
+<li>代码历史里</li>
+<li>各种群聊和会议里</li>
+</ul>
+<p>当实验把这些全部压缩成一份“清晰任务书”时，它其实偷偷把最难的那部分工作先做掉了。</p>
+<h3 id="3-2-它默认了验收标准不会漂移"><a href="#3-2-它默认了验收标准不会漂移" class="headerlink" title="3.2 它默认了验收标准不会漂移"></a>3.2 它默认了验收标准不会漂移</h3><p>真实团队里，验收不是绝对静态的。随着产品理解加深，大家会调整对“完成”的定义。</p>
+<p>这也是为什么一个功能常常会出现这种情况：</p>
+<ul>
+<li>第一轮觉得能用</li>
+<li>第二轮发现边界不清</li>
+<li>第三轮发现扩展性不足</li>
+<li>第四轮发现测试方法本身有问题</li>
+</ul>
+<p>所以真正的研发能力，不只是把一份静态标准做到位，而是<strong>在标准不断被修正时仍然能稳定推进。</strong></p>
+<h3 id="3-3-它默认了失败是局部的，而不是系统性的"><a href="#3-3-它默认了失败是局部的，而不是系统性的" class="headerlink" title="3.3 它默认了失败是局部的，而不是系统性的"></a>3.3 它默认了失败是局部的，而不是系统性的</h3><p>单次实验里，失败常常被理解成：</p>
+<ul>
+<li>这段代码写错了</li>
+<li>这个测试没补到</li>
+<li>这个需求理解偏了</li>
+</ul>
+<p>但很多研发失败并不是局部错误，而是系统结构有问题：</p>
+<ul>
+<li>任务分解方式不对</li>
+<li>知识没有沉淀</li>
+<li>审批点设置太少</li>
+<li>工具链断裂</li>
+<li>测试口径与业务目标脱节</li>
+</ul>
+<p>这类失败不是换一个更强模型就能解决的。</p>
+<hr>
+<h2 id="4-真正该验证的，不是“写了多少代码”，而是“形成了什么闭环”"><a href="#4-真正该验证的，不是“写了多少代码”，而是“形成了什么闭环”" class="headerlink" title="4. 真正该验证的，不是“写了多少代码”，而是“形成了什么闭环”"></a>4. 真正该验证的，不是“写了多少代码”，而是“形成了什么闭环”</h2><p>如果一个团队真想摸清 AI 研发的上限，我认为指标不该围绕“产量”设计，而应该围绕“闭环”设计。</p>
+<p>比起下面这些问题：</p>
+<ul>
+<li>AI 连续跑了几天？</li>
+<li>AI 写了多少行代码？</li>
+<li>一次生成通过率多高？</li>
+<li>最后交付了多少功能？</li>
+</ul>
+<p>我更关心这些问题：</p>
+<h3 id="4-1-需求闭环是否成立"><a href="#4-1-需求闭环是否成立" class="headerlink" title="4.1 需求闭环是否成立"></a>4.1 需求闭环是否成立</h3><ul>
+<li>需求歧义是在什么时候暴露出来的？</li>
+<li>暴露后有没有被结构化回写？</li>
+<li>后续任务有没有继承这次修正？</li>
+</ul>
+<h3 id="4-2-测试闭环是否可信"><a href="#4-2-测试闭环是否可信" class="headerlink" title="4.2 测试闭环是否可信"></a>4.2 测试闭环是否可信</h3><ul>
+<li>测试是否真的覆盖核心风险？</li>
+<li>回归是否能挡住历史上已经踩过的坑？</li>
+<li>测试失败后，AI 能否区分“测试错了”还是“实现错了”？</li>
+</ul>
+<h3 id="4-3-知识闭环是否形成"><a href="#4-3-知识闭环是否形成" class="headerlink" title="4.3 知识闭环是否形成"></a>4.3 知识闭环是否形成</h3><ul>
+<li>本次开发学到的教训有没有沉淀？</li>
+<li>下一个任务是否还能复用这些知识？</li>
+<li>被否决的方案有没有被记下来，避免来回重提？</li>
+</ul>
+<h3 id="4-4-管理闭环是否可控"><a href="#4-4-管理闭环是否可控" class="headerlink" title="4.4 管理闭环是否可控"></a>4.4 管理闭环是否可控</h3><ul>
+<li>人类在什么节点介入最有效？</li>
+<li>哪些环节可以放权，哪些环节必须审批？</li>
+<li>失败发生时，能否快速止损、回滚、重规划？</li>
+</ul>
+<p>这些指标才决定了 AI 是在“完成一次活”，还是在“形成一种可复制的研发能力”。</p>
+<hr>
+<h2 id="5-我为什么越来越不相信“单-Agent-就能测出终局”"><a href="#5-我为什么越来越不相信“单-Agent-就能测出终局”" class="headerlink" title="5. 我为什么越来越不相信“单 Agent 就能测出终局”"></a>5. 我为什么越来越不相信“单 Agent 就能测出终局”</h2><p>我并不怀疑单个强模型、强 Agent 可以在局部任务上表现惊艳。事实上，现在已经有很多任务可以做到非常好。</p>
+<p>但只要任务进入下面这些状态，单 Agent 模式就会迅速暴露极限：</p>
+<ul>
+<li>任务跨度跨天、跨周</li>
+<li>需求会在中途变化</li>
+<li>需要多种工具配合</li>
+<li>需要追溯历史决策</li>
+<li>需要维护长期知识</li>
+<li>需要多个子任务并行推进</li>
+<li>需要把失败经验沉淀到下一轮</li>
+</ul>
+<p>这时决定成败的已经不是“这个 Agent 强不强”，而是有没有一个更高层的系统来负责：</p>
+<ul>
+<li>记忆</li>
+<li>状态</li>
+<li>任务分发</li>
+<li>工具编排</li>
+<li>测试反馈</li>
+<li>人机边界</li>
+</ul>
+<p>换句话说：</p>
+<p><strong>单 Agent 擅长完成动作，研发中枢负责维持秩序。</strong></p>
+<p>真正的上限，不在“一个 AI 能连续做多久”，而在“一个系统能否让多个 AI 环节长期协同且不失真”。</p>
+<hr>
+<h2 id="6-这也是为什么我会走向-JARVIS"><a href="#6-这也是为什么我会走向-JARVIS" class="headerlink" title="6. 这也是为什么我会走向 JARVIS"></a>6. 这也是为什么我会走向 JARVIS</h2><p>我后来越来越明确一件事：</p>
+<p>软件公司的 AI 研发，真正要解决的不是“怎么让 AI 多写一点代码”，而是“怎么让 AI 在研发过程中不反复失忆、不反复踩坑、不反复回到零”。</p>
+<p>这就要求你有一个研发中枢，而不是一个会写代码的黑盒。</p>
+<p>这个中枢至少要能处理几件事：</p>
+<ul>
+<li>记住产品历史，而不是每次从头问一遍</li>
+<li>区分已交付能力、当前 backlog、未来判断，而不是全部混成一锅</li>
+<li>把历史 bug、设计决策、被否决需求变成可检索、可调用的记忆</li>
+<li>让测试不只是“跑绿”，而是真正成为边界守卫</li>
+<li>在多个任务和多个 Agent 之间维持统一状态</li>
+</ul>
+<p>我把这类东西叫做 JARVIS。它不是一个更酷的名字，也不是一个更大的 prompt，而是一个研发系统层面的答案。</p>
+<hr>
+<h2 id="7-所以这类实验还有没有价值？当然有"><a href="#7-所以这类实验还有没有价值？当然有" class="headerlink" title="7. 所以这类实验还有没有价值？当然有"></a>7. 所以这类实验还有没有价值？当然有</h2><p>我并不是在否定“小范围 AI 开发实验”。</p>
+<p>相反，我认为它依然非常值得做，只是不要把它误读成终局验证。</p>
+<p>它最适合验证的是：</p>
+<ul>
+<li>哪类任务最适合交给 AI</li>
+<li>需求清晰度对成功率的影响有多大</li>
+<li>测试前置能带来多大收益</li>
+<li>人工介入点应该放在哪里</li>
+<li>当前模型在本团队工具链里的真实表现如何</li>
+</ul>
+<p>它是一个很好的<strong>局部压测手段</strong>，也是很好的组织教育工具。团队做完一次，就会更清楚：AI 的强项在哪里，弱项在哪里，组织真正的瓶颈在哪里。</p>
+<p>但一旦你想把 AI 从一次性实验，升级成持续性的研发能力，你就必须进入下一个问题：</p>
+<blockquote>
+<p><strong>不是 AI 能不能做完这个任务，而是组织能不能把 AI 放进一个稳定闭环里。</strong></p>
+</blockquote>
+<hr>
+<h2 id="8-结语"><a href="#8-结语" class="headerlink" title="8. 结语"></a>8. 结语</h2><p>一次封闭式 AI 开发实验，测得出模型能力、任务设计能力和局部自治能力；但它测不出软件研发真正的上限。</p>
+<p>真正的上限，取决于一家公司能否把需求、实现、测试、验收、知识沉淀和组织记忆连接成一个持续运转的系统。</p>
+<p>如果没有这个系统，AI 最多只是一个偶尔惊艳的开发者。</p>
+<p>如果有这个系统，AI 才有可能变成稳定的研发力量。</p>
+<p>而这两者之间，差的不是几万行代码，差的是一整套闭环能力。</p>
+<hr>
+<p><em>延伸阅读：如果说本文讨论的是“为什么一次实验不足以说明问题”，那么下一步真正要讨论的，就是从 AI 写代码到 AI 驱动研发，中间到底差了什么。</em></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026032401',
+        title: '2026032401',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2026 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

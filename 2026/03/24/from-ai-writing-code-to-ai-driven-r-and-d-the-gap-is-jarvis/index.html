@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS
+  
+</title>
+
+<meta name="description" content="从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS今天很多团队已经接受了一件事：AI 会写代码，而且会越写越好。 无论是 Copilot、Cursor，还是各种 coding agent，大家都已经见过它们在局部任务上的惊艳表现：补函数、改 bug、写测试、搭页面、重构样板代码、生成接口调用、解释旧代码……这些事，AI 确实已经很能打。 但奇怪的是，真正把 AI 用进研发体系里的团队">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS">
+<meta property="og:url" content="http://chenjunhao.cn/2026/03/24/from-ai-writing-code-to-ai-driven-r-and-d-the-gap-is-jarvis/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS今天很多团队已经接受了一件事：AI 会写代码，而且会越写越好。 无论是 Copilot、Cursor，还是各种 coding agent，大家都已经见过它们在局部任务上的惊艳表现：补函数、改 bug、写测试、搭页面、重构样板代码、生成接口调用、解释旧代码……这些事，AI 确实已经很能打。 但奇怪的是，真正把 AI 用进研发体系里的团队">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-24T12:20:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T12:00:20.045Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Product Knowledge">
+<meta property="article:tag" content="Software Development">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Management/" rel="tag">Management</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-from-ai-writing-code-to-ai-driven-r-and-d-the-gap-is-jarvis" class="article article-type-post">
+  
+    <h1 class="article-header">
+      从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2026-03-24
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="从-AI-写代码，到-AI-驱动研发：中间差了一个-JARVIS"><a href="#从-AI-写代码，到-AI-驱动研发：中间差了一个-JARVIS" class="headerlink" title="从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS"></a>从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS</h1><p>今天很多团队已经接受了一件事：AI 会写代码，而且会越写越好。</p>
+<p>无论是 Copilot、Cursor，还是各种 coding agent，大家都已经见过它们在局部任务上的惊艳表现：补函数、改 bug、写测试、搭页面、重构样板代码、生成接口调用、解释旧代码……这些事，AI 确实已经很能打。</p>
+<p>但奇怪的是，真正把 AI 用进研发体系里的团队，还是很少。</p>
+<p>原因不在于模型不够强，而在于很多团队对“AI 参与研发”的理解，还停留在一个过于简化的画面里：</p>
+<blockquote>
+<p>给 AI 一份需求，它就去写代码；写完后人来验收。</p>
+</blockquote>
+<p>这当然是起点，但离真正的“AI 驱动研发”还差得很远。</p>
+<p>我现在越来越明确：</p>
+<p><strong>从 AI 写代码，到 AI 驱动研发，中间不是差一个更强的模型，而是差一个 JARVIS。</strong></p>
+<p>这里说的 JARVIS，不是某个具体产品名，也不是一个酷炫的 Agent 壳，而是一个更本质的东西：<strong>AI Native 研发中枢。</strong></p>
+<hr>
+<h2 id="1-“AI-写代码”到底是什么范式"><a href="#1-“AI-写代码”到底是什么范式" class="headerlink" title="1. “AI 写代码”到底是什么范式"></a>1. “AI 写代码”到底是什么范式</h2><p>先说清楚，AI 写代码并没有错，而且已经很有价值。</p>
+<p>它的典型工作方式是：</p>
+<ul>
+<li>人提出一个任务</li>
+<li>AI 读取当前代码和上下文</li>
+<li>AI 生成修改方案</li>
+<li>AI 编写或修改代码</li>
+<li>人类 review、测试、决定是否接受</li>
+</ul>
+<p>这个范式为什么有效？因为它很好地利用了 LLM 的几个长处：</p>
+<ul>
+<li>语言到代码的映射能力</li>
+<li>对常见模式的归纳能力</li>
+<li>对局部上下文的推理能力</li>
+<li>高速生成样板和重复结构的能力</li>
+</ul>
+<p>在任务短、边界清晰、上下文有限的时候，这种模式甚至已经足够强。</p>
+<p>但它有个根本限制：</p>
+<p><strong>它默认问题主要发生在“实现层”。</strong></p>
+<p>换句话说，它假设：只要需求大致明确，真正需要 AI 解决的主要就是代码实现。</p>
+<p>而真实的软件研发并不是这样。</p>
+<hr>
+<h2 id="2-研发真正复杂的地方，不在“写”，而在“持续做对”"><a href="#2-研发真正复杂的地方，不在“写”，而在“持续做对”" class="headerlink" title="2. 研发真正复杂的地方，不在“写”，而在“持续做对”"></a>2. 研发真正复杂的地方，不在“写”，而在“持续做对”</h2><p>一个工程任务越往后走，你就越会发现，真正消耗团队的并不是写代码本身，而是下面这些东西：</p>
+<ul>
+<li>这个需求边界到底是什么</li>
+<li>为什么历史上会这样设计</li>
+<li>之前类似问题有没有踩过坑</li>
+<li>某个改动会影响哪些模块</li>
+<li>哪些方案看起来合理，但组织已经否决过</li>
+<li>哪些测试是关键守门点</li>
+<li>哪些地方必须人工批准，哪些可以自动推进</li>
+</ul>
+<p>这些东西共同决定了：</p>
+<ul>
+<li>代码是不是“业务上正确”</li>
+<li>修复会不会引入回归</li>
+<li>新需求会不会和旧约束冲突</li>
+<li>团队会不会重复讨论同一个问题</li>
+<li>AI 会不会每轮都像一个刚入职的新同事</li>
+</ul>
+<p>所以研发的难点，从来不只是“生成能力”，而是：</p>
+<blockquote>
+<p><strong>如何在长周期、多约束、会变化的环境里，保持记忆和秩序。</strong></p>
+</blockquote>
+<p>而这正是“AI 写代码”范式天然缺的部分。</p>
+<hr>
+<h2 id="3-为什么单个-coding-agent-很难直接升级成研发系统"><a href="#3-为什么单个-coding-agent-很难直接升级成研发系统" class="headerlink" title="3. 为什么单个 coding agent 很难直接升级成研发系统"></a>3. 为什么单个 coding agent 很难直接升级成研发系统</h2><p>一个强 coding agent，通常已经能做很多事：</p>
+<ul>
+<li>读代码</li>
+<li>写代码</li>
+<li>跑命令</li>
+<li>执行测试</li>
+<li>修改文件</li>
+<li>总结结果</li>
+</ul>
+<p>但一旦你希望它承担研发系统级职责，它马上会碰到几个结构性问题。</p>
+<h3 id="3-1-它的记忆是脆弱的"><a href="#3-1-它的记忆是脆弱的" class="headerlink" title="3.1 它的记忆是脆弱的"></a>3.1 它的记忆是脆弱的</h3><p>即使模型上下文越来越大，研发中的关键记忆仍然不是靠“塞更多 token”解决的。</p>
+<p>因为真正重要的记忆不是一堆文本片段，而是：</p>
+<ul>
+<li>设计决策</li>
+<li>历史 bug 模式</li>
+<li>被否决需求及理由</li>
+<li>模块之间的因果关系</li>
+<li>当前版本计划和 backlog 状态</li>
+<li>哪些知识已经过期，哪些仍然有效</li>
+</ul>
+<p>这些内容需要被组织、维护、演化，不是简单堆在上下文里就够。</p>
+<h3 id="3-2-它对“现在的状态”掌握得不稳定"><a href="#3-2-它对“现在的状态”掌握得不稳定" class="headerlink" title="3.2 它对“现在的状态”掌握得不稳定"></a>3.2 它对“现在的状态”掌握得不稳定</h3><p>研发不是只有代码仓库。还有很多关键状态分散在别处：</p>
+<ul>
+<li>issue 系统</li>
+<li>MR / PR 审查</li>
+<li>版本计划</li>
+<li>发布环境</li>
+<li>测试环境</li>
+<li>人员分工</li>
+<li>历史讨论</li>
+</ul>
+<p>单个 coding agent 很容易只看见“当前 checkout 的代码”，却看不见“这个任务此刻在整个组织里处于什么状态”。</p>
+<h3 id="3-3-它缺少角色分层"><a href="#3-3-它缺少角色分层" class="headerlink" title="3.3 它缺少角色分层"></a>3.3 它缺少角色分层</h3><p>真实研发里，开发、测试、产品判断、风险评估、知识维护，并不是一个动作。</p>
+<p>如果让单个 Agent 同时扮演所有角色，表面上看很统一，实际上很容易出现：</p>
+<ul>
+<li>自己写、自己测、自己宣布成功</li>
+<li>没有独立视角去发现目标漂移</li>
+<li>没有机制把经验沉淀给下一轮</li>
+<li>没有边界去阻止“为了通过而通过”</li>
+</ul>
+<p>这会让系统越来越黑盒。</p>
+<h3 id="3-4-它无法天然处理长期协同"><a href="#3-4-它无法天然处理长期协同" class="headerlink" title="3.4 它无法天然处理长期协同"></a>3.4 它无法天然处理长期协同</h3><p>任务一旦跨天、跨周、多分支、多模块推进，就需要有人维护这些信息：</p>
+<ul>
+<li>现在有哪些任务在进行中</li>
+<li>谁依赖谁</li>
+<li>哪个结论已经确认</li>
+<li>哪个实验失败了</li>
+<li>哪些知识应该固化进系统</li>
+<li>哪些流程应该被调整</li>
+</ul>
+<p>如果没有一个中枢，所有任务都只是局部冲刺。你会看到很多“局部都很聪明，整体却越来越乱”的场面。</p>
+<hr>
+<h2 id="4-JARVIS-真正补上的，不是编码能力，而是系统能力"><a href="#4-JARVIS-真正补上的，不是编码能力，而是系统能力" class="headerlink" title="4. JARVIS 真正补上的，不是编码能力，而是系统能力"></a>4. JARVIS 真正补上的，不是编码能力，而是系统能力</h2><p>我现在更愿意把 JARVIS 理解成这样一个系统：</p>
+<blockquote>
+<p><strong>它负责让 AI 在研发过程中拥有记忆、知道状态、会使用工具、能回收经验，并在关键节点接受人类约束。</strong></p>
+</blockquote>
+<p>这意味着 JARVIS 要补上的，不是一两个功能，而是几类核心能力。</p>
+<h3 id="4-1-记忆层：让-AI-不再每次从零开始"><a href="#4-1-记忆层：让-AI-不再每次从零开始" class="headerlink" title="4.1 记忆层：让 AI 不再每次从零开始"></a>4.1 记忆层：让 AI 不再每次从零开始</h3><p>如果一个 AI 每次接任务都像第一次接触这个产品，那它再强也只是“高智商实习生”。</p>
+<p>记忆层至少应该包括：</p>
+<ul>
+<li>历史功能和设计决策</li>
+<li>历史 bug 与修复模式</li>
+<li>已知风险和边界条件</li>
+<li>被否决需求和原因</li>
+<li>过去实验的结论与失败教训</li>
+</ul>
+<p>这类记忆不只是为了检索，更是为了帮助 AI 在一开始就进入“组织语境”。</p>
+<h3 id="4-2-状态层：让-AI-知道现在发生了什么"><a href="#4-2-状态层：让-AI-知道现在发生了什么" class="headerlink" title="4.2 状态层：让 AI 知道现在发生了什么"></a>4.2 状态层：让 AI 知道现在发生了什么</h3><p>除了历史，AI 还必须知道“此刻”的状态：</p>
+<ul>
+<li>当前 open issue 和优先级</li>
+<li>版本节奏与排期</li>
+<li>哪些任务已经在进行中</li>
+<li>哪些代码已合并、哪些还在 review</li>
+<li>测试环境和发布环境的现实情况</li>
+</ul>
+<p>没有状态层，AI 很容易给出“理论上正确、当下不适用”的建议。</p>
+<h3 id="4-3-编排层：把研发活动拆成可控环节"><a href="#4-3-编排层：把研发活动拆成可控环节" class="headerlink" title="4.3 编排层：把研发活动拆成可控环节"></a>4.3 编排层：把研发活动拆成可控环节</h3><p>研发中很多事情不该由一个 Agent 一把梭，而应该被拆成：</p>
+<ul>
+<li>需求澄清</li>
+<li>方案判断</li>
+<li>实现</li>
+<li>测试</li>
+<li>回归验证</li>
+<li>知识更新</li>
+<li>风险审查</li>
+</ul>
+<p>编排层的意义在于：</p>
+<ul>
+<li>不同环节可以调用不同能力</li>
+<li>每一步都有明确输入输出</li>
+<li>出错时可以知道错在哪一层</li>
+<li>失败经验可以回写到具体环节，而不是笼统归因给“AI 不行”</li>
+</ul>
+<h3 id="4-4-测试层：让系统对“做对”有真实反馈"><a href="#4-4-测试层：让系统对“做对”有真实反馈" class="headerlink" title="4.4 测试层：让系统对“做对”有真实反馈"></a>4.4 测试层：让系统对“做对”有真实反馈</h3><p>很多团队把 AI 测试理解成“让 AI 自己写点测试”。</p>
+<p>这远远不够。</p>
+<p>测试层真正的职责是：</p>
+<ul>
+<li>把历史 bug 变成可复现、可回归的守门点</li>
+<li>把业务边界显式化，而不是隐藏在口头经验里</li>
+<li>让每次修复都能留下防重复发生的结构</li>
+</ul>
+<p>测试不是附属品，而是 AI 研发闭环里的约束器。</p>
+<h3 id="4-5-人机边界层：让自动化不会滑向失控"><a href="#4-5-人机边界层：让自动化不会滑向失控" class="headerlink" title="4.5 人机边界层：让自动化不会滑向失控"></a>4.5 人机边界层：让自动化不会滑向失控</h3><p>真正成熟的 AI 研发体系，不是“人不看代码”，而是：</p>
+<ul>
+<li>人不需要盯每一个局部动作</li>
+<li>但人要定义边界、审批点、验收标准和风险阈值</li>
+</ul>
+<p>哪些环节可放权，哪些必须停下来问人，这不是工程细节，而是系统设计问题。</p>
+<hr>
+<h2 id="5-为什么我说“中间差了一个-JARVIS”"><a href="#5-为什么我说“中间差了一个-JARVIS”" class="headerlink" title="5. 为什么我说“中间差了一个 JARVIS”"></a>5. 为什么我说“中间差了一个 JARVIS”</h2><p>因为从能力结构上看，这中间确实有一道清晰的断层。</p>
+<h3 id="AI-写代码时，关注的是："><a href="#AI-写代码时，关注的是：" class="headerlink" title="AI 写代码时，关注的是："></a>AI 写代码时，关注的是：</h3><ul>
+<li>当前任务</li>
+<li>当前代码</li>
+<li>当前窗口里的局部正确性</li>
+</ul>
+<h3 id="AI-驱动研发时，关注的是："><a href="#AI-驱动研发时，关注的是：" class="headerlink" title="AI 驱动研发时，关注的是："></a>AI 驱动研发时，关注的是：</h3><ul>
+<li>历史连续性</li>
+<li>当前组织状态</li>
+<li>多环节之间的协同关系</li>
+<li>失败后的恢复机制</li>
+<li>经验的沉淀与复用</li>
+</ul>
+<p>前者更像一个很强的执行器。</p>
+<p>后者开始接近一个真正的研发系统。</p>
+<p>而把执行器变成系统，中间必须有一个负责记忆、状态、编排和边界控制的中枢。这就是我说的 JARVIS。</p>
+<hr>
+<h2 id="6-JARVIS-不是“一个更大的-Prompt”"><a href="#6-JARVIS-不是“一个更大的-Prompt”" class="headerlink" title="6. JARVIS 不是“一个更大的 Prompt”"></a>6. JARVIS 不是“一个更大的 Prompt”</h2><p>这是最容易被误解的地方。</p>
+<p>很多人会下意识地认为：</p>
+<ul>
+<li>多给点文档</li>
+<li>把 prompt 写复杂一些</li>
+<li>接上更多 MCP / Tool</li>
+<li>换个更强模型</li>
+</ul>
+<p>是不是就等于 JARVIS 了？</p>
+<p>不是。</p>
+<p>这些东西可能是材料，但不是系统。</p>
+<p>真正的 JARVIS 至少有三个关键特征：</p>
+<h3 id="第一，它有结构化记忆，而不是临时喂料"><a href="#第一，它有结构化记忆，而不是临时喂料" class="headerlink" title="第一，它有结构化记忆，而不是临时喂料"></a>第一，它有结构化记忆，而不是临时喂料</h3><p>它知道哪些是历史事实，哪些是当前状态，哪些是未来判断。</p>
+<h3 id="第二，它能持续更新，而不是一次性构建"><a href="#第二，它能持续更新，而不是一次性构建" class="headerlink" title="第二，它能持续更新，而不是一次性构建"></a>第二，它能持续更新，而不是一次性构建</h3><p>每次修 bug、做决策、发生回归，都会反向更新它的记忆和规则。</p>
+<h3 id="第三，它服务于组织，而不是服务于单次对话"><a href="#第三，它服务于组织，而不是服务于单次对话" class="headerlink" title="第三，它服务于组织，而不是服务于单次对话"></a>第三，它服务于组织，而不是服务于单次对话</h3><p>它不是为了让某一次回答更聪明，而是为了让整个研发体系越来越稳定、越来越会积累。</p>
+<p>所以，JARVIS 的本质不是“更聪明地回答问题”，而是“让组织的 AI 能力具有连续性”。</p>
+<hr>
+<h2 id="7-在我的实践里，JARVIS-为什么越来越像必选项"><a href="#7-在我的实践里，JARVIS-为什么越来越像必选项" class="headerlink" title="7. 在我的实践里，JARVIS 为什么越来越像必选项"></a>7. 在我的实践里，JARVIS 为什么越来越像必选项</h2><p>最近我越来越强烈地感受到：</p>
+<p>如果没有研发中枢，AI 在复杂研发任务里会不断出现同一种浪费：</p>
+<ul>
+<li>明明以前分析过的问题，又重新分析一遍</li>
+<li>明明以前否过的方案，又重新提出来</li>
+<li>明明以前修过的 bug，没有沉淀成回归测试</li>
+<li>明明系统里已有知识，Agent 却像不知道一样重新摸索</li>
+</ul>
+<p>这些浪费看起来是“小问题”，累积起来却会吞掉大量信心和效率。</p>
+<p>相反，一旦你开始把：</p>
+<ul>
+<li>issue 历史</li>
+<li>模块知识</li>
+<li>设计决策</li>
+<li>已知问题</li>
+<li>回归测试</li>
+<li>当前 backlog</li>
+<li>版本计划</li>
+</ul>
+<p>逐渐组织成一个能被 AI 调用、也能随着研发共同演进的体系，很多东西就开始变了。</p>
+<p>AI 不再只是“帮你写”。</p>
+<p>它开始能够：</p>
+<ul>
+<li>基于历史判断问题是不是重复出现</li>
+<li>提前指出某类改动的结构性风险</li>
+<li>把零散 issue 看成模式，而不是孤立事件</li>
+<li>在多次任务之间形成连续上下文</li>
+</ul>
+<p>也就是说，它开始不是一个代码工人，而是一个真正参与研发判断的成员。</p>
+<hr>
+<h2 id="8-结语"><a href="#8-结语" class="headerlink" title="8. 结语"></a>8. 结语</h2><p>软件行业接下来几年一定会继续看到更强的 coding agent。</p>
+<p>但如果一个团队只是把更强的 agent 接进现有流程，最后大概率只会得到一个更能干的局部执行器，而不是一个真正的 AI 研发系统。</p>
+<p>从 AI 写代码，到 AI 驱动研发，中间真正差的那一步，不是模型升级，不是 token 扩容，也不是 prompt engineering。</p>
+<p>中间差的是一个能承载组织记忆、实时状态、任务编排、测试约束和人机边界的研发中枢。</p>
+<p>我把它叫做 JARVIS。</p>
+<p>它不是为了让 AI 看起来更酷，而是为了让 AI 真正能够成为软件公司的长期生产力。</p>
+<hr>
+<p><em>上一篇文章讨论了为什么单次实验测不出真正上限；这一篇想说明，要跨过那道上限，缺的不是更强的“写”，而是一个能让 AI 持续“做对”的系统。</em></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026032402',
+        title: '2026032402',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2026 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

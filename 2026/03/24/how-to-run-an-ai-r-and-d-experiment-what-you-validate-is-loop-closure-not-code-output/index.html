@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力
+  
+</title>
+
+<meta name="description" content="AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力如果一家软件公司准备认真做 AI 研发实验，我通常会建议：先别急着问“哪个模型最强”，也别先问“能不能完全不看代码”。 更应该先问的是：  我们到底想验证什么？  这是一个看起来很简单、但很多实验一开始就答错的问题。 很多团队做 AI 研发实验时，默认的衡量方式是：  写了多少代码 自动完成了多少功能 连续跑了多久 人工介入少不少 总成本高不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力">
+<meta property="og:url" content="http://chenjunhao.cn/2026/03/24/how-to-run-an-ai-r-and-d-experiment-what-you-validate-is-loop-closure-not-code-output/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力如果一家软件公司准备认真做 AI 研发实验，我通常会建议：先别急着问“哪个模型最强”，也别先问“能不能完全不看代码”。 更应该先问的是：  我们到底想验证什么？  这是一个看起来很简单、但很多实验一开始就答错的问题。 很多团队做 AI 研发实验时，默认的衡量方式是：  写了多少代码 自动完成了多少功能 连续跑了多久 人工介入少不少 总成本高不">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-24T12:30:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T12:01:10.891Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Management">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Management/" rel="tag">Management</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-how-to-run-an-ai-r-and-d-experiment-what-you-validate-is-loop-closure-not-code-output" class="article article-type-post">
+  
+    <h1 class="article-header">
+      AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2026-03-24
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Management/" rel="tag">Management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="AI-研发实验该怎么做：验证的不是代码产量，而是闭环能力"><a href="#AI-研发实验该怎么做：验证的不是代码产量，而是闭环能力" class="headerlink" title="AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力"></a>AI 研发实验该怎么做：验证的不是代码产量，而是闭环能力</h1><p>如果一家软件公司准备认真做 AI 研发实验，我通常会建议：先别急着问“哪个模型最强”，也别先问“能不能完全不看代码”。</p>
+<p>更应该先问的是：</p>
+<blockquote>
+<p><strong>我们到底想验证什么？</strong></p>
+</blockquote>
+<p>这是一个看起来很简单、但很多实验一开始就答错的问题。</p>
+<p>很多团队做 AI 研发实验时，默认的衡量方式是：</p>
+<ul>
+<li>写了多少代码</li>
+<li>自动完成了多少功能</li>
+<li>连续跑了多久</li>
+<li>人工介入少不少</li>
+<li>总成本高不高</li>
+</ul>
+<p>这些指标不是没用，但如果把它们当成核心指标，实验很容易走偏。因为它们更多测到的是<strong>产量</strong>，而不是<strong>研发能力</strong>。</p>
+<p>而软件研发真正要验证的，从来不只是“AI 能不能写出来”，而是：</p>
+<p><strong>AI 能不能在需求、实现、测试、验收和知识沉淀之间形成一个可靠闭环。</strong></p>
+<p>如果不能，产量再高，也只是一次漂亮的冲刺；如果能，哪怕一开始产量不高，也说明这套体系有长期价值。</p>
+<hr>
+<h2 id="1-为什么“代码产量”是一个危险的主指标"><a href="#1-为什么“代码产量”是一个危险的主指标" class="headerlink" title="1. 为什么“代码产量”是一个危险的主指标"></a>1. 为什么“代码产量”是一个危险的主指标</h2><p>产量很好看，尤其适合做演示。</p>
+<p>比如：</p>
+<ul>
+<li>一周内扩了多少功能</li>
+<li>代码行数从几千变几万</li>
+<li>新增多少页面、接口、测试</li>
+<li>一个 Agent 连续工作了多长时间</li>
+</ul>
+<p>这些数字天然有冲击力，管理者也容易理解。</p>
+<p>但问题是，代码产量有三个天然偏差。</p>
+<h3 id="1-1-它鼓励系统追求“多做”，而不是“做对”"><a href="#1-1-它鼓励系统追求“多做”，而不是“做对”" class="headerlink" title="1.1 它鼓励系统追求“多做”，而不是“做对”"></a>1.1 它鼓励系统追求“多做”，而不是“做对”</h3><p>一旦团队把产量放在首位，AI 很容易朝下面这些方向优化：</p>
+<ul>
+<li>更快生成代码</li>
+<li>更少停下来确认边界</li>
+<li>更倾向于“先做出来再说”</li>
+<li>更倾向于补表层测试让结果看起来完整</li>
+</ul>
+<p>这会让实验很热闹，但不一定很扎实。</p>
+<h3 id="1-2-它会掩盖返工成本"><a href="#1-2-它会掩盖返工成本" class="headerlink" title="1.2 它会掩盖返工成本"></a>1.2 它会掩盖返工成本</h3><p>很多 AI 产出看起来很快，真正贵的是后面的事情：</p>
+<ul>
+<li>第二轮需求变动后是否还能稳住</li>
+<li>旧功能会不会被新功能打坏</li>
+<li>新人接手时是否看得懂</li>
+<li>下一轮迭代时是否需要大面积返工</li>
+</ul>
+<p>如果这些成本不计入实验，产量指标就会显著失真。</p>
+<h3 id="1-3-它无法反映组织学习"><a href="#1-3-它无法反映组织学习" class="headerlink" title="1.3 它无法反映组织学习"></a>1.3 它无法反映组织学习</h3><p>研发实验真正有价值的部分，不只是交付了一个样品，而是团队有没有通过这次实验学会：</p>
+<ul>
+<li>哪类任务适合 AI</li>
+<li>哪些地方必须人工介入</li>
+<li>哪些测试最关键</li>
+<li>哪些知识必须提前结构化</li>
+<li>哪种任务拆分方式最有效</li>
+</ul>
+<p>这些学习如果没有沉淀，下一次实验就还会从头踩一遍坑。</p>
+<hr>
+<h2 id="2-什么叫“闭环能力”"><a href="#2-什么叫“闭环能力”" class="headerlink" title="2. 什么叫“闭环能力”"></a>2. 什么叫“闭环能力”</h2><p>我这里说的闭环，不是一个抽象口号，而是指一件具体的事：</p>
+<blockquote>
+<p>一个任务从提出，到实现，到测试，到验收，到经验回收，能否形成自洽、可追踪、可复用的循环。</p>
+</blockquote>
+<p>如果一个实验真的要有方法论价值，我认为至少要看五个闭环。</p>
+<h3 id="2-1-需求闭环"><a href="#2-1-需求闭环" class="headerlink" title="2.1 需求闭环"></a>2.1 需求闭环</h3><p>看什么？</p>
+<ul>
+<li>需求是否被充分澄清</li>
+<li>歧义是否能在过程中被及时暴露</li>
+<li>暴露出的歧义是否被回写到文档或系统</li>
+<li>后续任务是否继承了这些修正</li>
+</ul>
+<p>很多团队会低估这件事。实际上，需求闭环往往是实验成败的第一分水岭。</p>
+<p>AI 不是怕复杂需求，AI 更怕模糊需求和漂移需求。</p>
+<h3 id="2-2-实现闭环"><a href="#2-2-实现闭环" class="headerlink" title="2.2 实现闭环"></a>2.2 实现闭环</h3><p>看什么？</p>
+<ul>
+<li>实现方案是否与需求边界一致</li>
+<li>中途发现问题后，是否能调整而不是硬凑</li>
+<li>多轮修改后，代码结构是否仍然保持可维护</li>
+<li>一个改动是否会牵出意料之外的连锁副作用</li>
+</ul>
+<p>实现闭环关注的不是“有没有写出来”，而是“有没有在变化中持续写对”。</p>
+<h3 id="2-3-测试闭环"><a href="#2-3-测试闭环" class="headerlink" title="2.3 测试闭环"></a>2.3 测试闭环</h3><p>看什么？</p>
+<ul>
+<li>测试是否覆盖最关键风险</li>
+<li>测试失败时，AI 是否能真正定位原因</li>
+<li>历史 bug 是否被转化为回归测试</li>
+<li>测试策略是否随着需求边界更新而同步演进</li>
+</ul>
+<p>如果测试闭环不成立，实验里的“通过”通常没有太大说服力。</p>
+<h3 id="2-4-验收闭环"><a href="#2-4-验收闭环" class="headerlink" title="2.4 验收闭环"></a>2.4 验收闭环</h3><p>看什么？</p>
+<ul>
+<li>验收标准是否清晰且可执行</li>
+<li>标准变化后，是否有机制同步到实现和测试</li>
+<li>人工 review 是否集中在高价值节点，而不是被迫到处补洞</li>
+<li>最终交付是否真的满足业务目的，而不是只满足形式标准</li>
+</ul>
+<p>一个成熟实验的目标，不是消灭人工验收，而是把人工验收放在最有价值的位置上。</p>
+<h3 id="2-5-知识闭环"><a href="#2-5-知识闭环" class="headerlink" title="2.5 知识闭环"></a>2.5 知识闭环</h3><p>这是最容易被忽略、但我认为最重要的一环。</p>
+<p>看什么？</p>
+<ul>
+<li>这次实验学到了什么</li>
+<li>哪些方案被证明有效</li>
+<li>哪些失败模式反复出现</li>
+<li>哪些知识应该沉淀成规则、模板、回归用例或知识卡片</li>
+<li>下一轮任务能否直接复用这些成果</li>
+</ul>
+<p>如果一个实验结束后，只有代码，没有知识回收，那它对组织的长期价值非常有限。</p>
+<hr>
+<h2 id="3-一个更合理的-AI-研发实验，应该怎么设计指标"><a href="#3-一个更合理的-AI-研发实验，应该怎么设计指标" class="headerlink" title="3. 一个更合理的 AI 研发实验，应该怎么设计指标"></a>3. 一个更合理的 AI 研发实验，应该怎么设计指标</h2><p>如果让我给一家软件公司设计 AI 研发实验指标，我会把指标分成四类。</p>
+<h3 id="3-1-效率指标：可以看，但不能独大"><a href="#3-1-效率指标：可以看，但不能独大" class="headerlink" title="3.1 效率指标：可以看，但不能独大"></a>3.1 效率指标：可以看，但不能独大</h3><ul>
+<li>单任务完成时长</li>
+<li>人工介入次数</li>
+<li>需求到交付的总周期</li>
+<li>自动化完成的工作量占比</li>
+</ul>
+<p>这些指标重要，但只能说明“快不快”。</p>
+<h3 id="3-2-质量指标：决定实验有没有可信度"><a href="#3-2-质量指标：决定实验有没有可信度" class="headerlink" title="3.2 质量指标：决定实验有没有可信度"></a>3.2 质量指标：决定实验有没有可信度</h3><ul>
+<li>核心测试通过率</li>
+<li>回归缺陷数量</li>
+<li>修复一个问题引入的新问题数量</li>
+<li>多轮修改后的结构稳定性</li>
+<li>需求变更后的适应能力</li>
+</ul>
+<p>这些指标说明“稳不稳”。</p>
+<h3 id="3-3-学习指标：决定实验是不是一次性的"><a href="#3-3-学习指标：决定实验是不是一次性的" class="headerlink" title="3.3 学习指标：决定实验是不是一次性的"></a>3.3 学习指标：决定实验是不是一次性的</h3><ul>
+<li>新发现的规则是否被记录</li>
+<li>失败原因是否结构化归档</li>
+<li>高价值提示词、流程模板、操作规范是否沉淀</li>
+<li>历史经验是否影响后续任务表现</li>
+</ul>
+<p>这些指标说明“会不会越做越强”。</p>
+<h3 id="3-4-系统指标：决定-AI-能不能真正进入研发体系"><a href="#3-4-系统指标：决定-AI-能不能真正进入研发体系" class="headerlink" title="3.4 系统指标：决定 AI 能不能真正进入研发体系"></a>3.4 系统指标：决定 AI 能不能真正进入研发体系</h3><ul>
+<li>知识库是否持续更新</li>
+<li>任务分工是否清晰</li>
+<li>审批点是否合理</li>
+<li>状态是否可追踪</li>
+<li>不同 Agent / 工具 / 环节之间是否能协同</li>
+</ul>
+<p>这些指标说明“能不能规模化”。</p>
+<hr>
+<h2 id="4-为什么我建议从“小而真实”的任务开始，而不是从“简单-demo”开始"><a href="#4-为什么我建议从“小而真实”的任务开始，而不是从“简单-demo”开始" class="headerlink" title="4. 为什么我建议从“小而真实”的任务开始，而不是从“简单 demo”开始"></a>4. 为什么我建议从“小而真实”的任务开始，而不是从“简单 demo”开始</h2><p>做 AI 实验，很多人会倾向于挑一个最简单的 demo 任务，觉得这样成功率高。</p>
+<p>但我更倾向于另一种标准：</p>
+<blockquote>
+<p><strong>任务可以小，但必须真实。</strong></p>
+</blockquote>
+<p>什么叫真实？</p>
+<ul>
+<li>它真的对应一个用户或业务问题</li>
+<li>它真的有边界条件和历史包袱</li>
+<li>它真的需要测试和验收</li>
+<li>它真的会暴露组织流程中的问题</li>
+</ul>
+<p>只有这样的任务，才能测出团队真正的摩擦点。</p>
+<p>太假的 demo 往往只会验证一件事：模型很会做 demo。</p>
+<p>这对组织设计帮助不大。</p>
+<hr>
+<h2 id="5-我会怎么判断一个实验是不是“做对了”"><a href="#5-我会怎么判断一个实验是不是“做对了”" class="headerlink" title="5. 我会怎么判断一个实验是不是“做对了”"></a>5. 我会怎么判断一个实验是不是“做对了”</h2><p>不是看最后代码多漂亮，而是看实验结束后，团队有没有得到下面这些东西：</p>
+<h3 id="第一，一套更清晰的人机边界"><a href="#第一，一套更清晰的人机边界" class="headerlink" title="第一，一套更清晰的人机边界"></a>第一，一套更清晰的人机边界</h3><p>知道：</p>
+<ul>
+<li>什么事情可以放心让 AI 直接做</li>
+<li>什么事情必须由人定义边界</li>
+<li>什么节点必须人工审批</li>
+</ul>
+<h3 id="第二，一套更清晰的任务分解方式"><a href="#第二，一套更清晰的任务分解方式" class="headerlink" title="第二，一套更清晰的任务分解方式"></a>第二，一套更清晰的任务分解方式</h3><p>知道：</p>
+<ul>
+<li>什么任务适合整体下发</li>
+<li>什么任务必须拆成多个阶段</li>
+<li>什么任务应该由不同角色或不同 Agent 协作完成</li>
+</ul>
+<h3 id="第三，一套更清晰的测试策略"><a href="#第三，一套更清晰的测试策略" class="headerlink" title="第三，一套更清晰的测试策略"></a>第三，一套更清晰的测试策略</h3><p>知道：</p>
+<ul>
+<li>哪些测试最能挡住真实风险</li>
+<li>哪些历史 bug 最值得优先固化为回归用例</li>
+<li>哪些“跑绿”其实没有意义</li>
+</ul>
+<h3 id="第四，一批真正沉淀下来的组织知识"><a href="#第四，一批真正沉淀下来的组织知识" class="headerlink" title="第四，一批真正沉淀下来的组织知识"></a>第四，一批真正沉淀下来的组织知识</h3><p>知道：</p>
+<ul>
+<li>哪些模式会反复失败</li>
+<li>哪些输入会显著提升成功率</li>
+<li>哪些流程可以标准化</li>
+<li>哪些系统信息必须结构化才能让 AI 用起来</li>
+</ul>
+<p>如果一个实验做完后，这四类东西都更清楚了，那即使它没有产出惊人的代码量，我也认为它是成功的。</p>
+<p>反过来，如果代码写了很多，但团队仍然不知道下一次应该怎么做得更稳，那它更像是一场表演，不像一套方法论验证。</p>
+<hr>
+<h2 id="6-这也是为什么“AI-研发实验”最后一定会通向研发中枢"><a href="#6-这也是为什么“AI-研发实验”最后一定会通向研发中枢" class="headerlink" title="6. 这也是为什么“AI 研发实验”最后一定会通向研发中枢"></a>6. 这也是为什么“AI 研发实验”最后一定会通向研发中枢</h2><p>只要你认真做两三轮实验，就会很快意识到：</p>
+<p>问题逐渐不再是“模型会不会写”，而变成了：</p>
+<ul>
+<li>历史知识放在哪里</li>
+<li>当前状态怎么同步</li>
+<li>谁来维护任务上下文</li>
+<li>测试经验怎么回收</li>
+<li>被否决方案怎么避免反复重提</li>
+<li>哪些规则应该沉淀成组织资产</li>
+</ul>
+<p>一旦问题走到这一步，你就已经不再是在设计一个实验，而是在设计一个系统。</p>
+<p>也就是我一直在说的那件事：</p>
+<p><strong>真正有价值的 AI 研发，不会停留在“让 AI 参与几个任务”，而会继续走向“为 AI 建立一个研发中枢”。</strong></p>
+<p>因为没有中枢，闭环就只能靠人肉维持；而只要规模稍微一上来，人肉闭环就一定会断。</p>
+<hr>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>如果你准备做 AI 研发实验，我的建议很简单：</p>
+<p>别把“写了多少代码”当成首要答案。</p>
+<p>真正值得验证的，是这套体系能不能把需求、实现、测试、验收和知识沉淀连成闭环；是这次实验结束后，组织是不是比实验开始前更知道如何和 AI 协作；是下一次任务来时，团队能不能在上一次的基础上继续往前走，而不是重新开始。</p>
+<p>代码产量说明的是 AI 有多忙。</p>
+<p>闭环能力说明的是 AI 能不能真正进入你的研发系统。</p>
+<p>两者相比，后者才决定上限。</p>
+<hr>
+<p><em>如果说前两篇文章讨论的是“为什么一次实验不够”和“为什么中间差了一个 JARVIS”，那么这一篇更想回答管理层最实际的问题：AI 研发实验到底该如何设计，才不会只得到一组好看的产量数字。</em></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026032403',
+        title: '2026032403',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2026 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
