@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层
+  
+</title>
+
+<meta name="description" content="JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层最近 Harness Engineering 突然火了。 OpenAI 发了 Harness engineering: leveraging Codex in an agent-first world，Anthropic 发了 Effective harnesses for long-running agents，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层">
+<meta property="og:url" content="http://chenjunhao.cn/2026/03/31/jarvis-and-harness-engineering/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层最近 Harness Engineering 突然火了。 OpenAI 发了 Harness engineering: leveraging Codex in an agent-first world，Anthropic 发了 Effective harnesses for long-running agents，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-31T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-31T10:27:10.977Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="Harness Engineering">
+<meta property="article:tag" content="Agent">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+
+<link rel="stylesheet" href="/scripts/prism.css">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Memories</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar-bg">
+  <div class="sidebar">
+    <div class="header">
+      <h1 class="title"><a href="/">Memories</a></h1>
+      
+      <div class="info">
+        <div class="content">
+          
+          
+        </div>
+        
+          <div class="avatar">
+            
+              <a href="/resume"><img src="/assets/avator.jpeg"></a>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div class="body">
+      
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/" title="Home" external="false">Home</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li>
+                  <a href="/resume" title="About" external="false">About</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://github.com/thomaschan" title="Github" target="_blank" rel="noopener">Github</a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="/something" title="Something" external="false">Something</a>
+                </li>
+              
+            
+          </ul>
+        
+          <ul class="nav">
+            
+              
+                <li class="tag-list-container">
+                  <a href="javascript:;" target="_self">标签</a>
+                  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/" rel="tag">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Harness-Engineering/" rel="tag">Harness Engineering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Management/" rel="tag">Management</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Product-Knowledge/" rel="tag">Product Knowledge</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Development/" rel="tag">Software Development</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/" rel="tag">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/" rel="tag">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3-js/" rel="tag">d3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emotions/" rel="tag">emotions</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphql/" rel="tag">graphql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/project-management/" rel="tag">project management</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requirejs/" rel="tag">requirejs</a><span class="tag-list-count">1</span></li></ul>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </div>
+  </div>
+</div>
+
+    <div class="main-content">
+      <article id="post-jarvis-and-harness-engineering" class="article article-type-post">
+  
+    <h1 class="article-header">
+      JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2026-03-31
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Engineering/" rel="tag">Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harness-Engineering/" rel="tag">Harness Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JARVIS/" rel="tag">JARVIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="JARVIS-与-Harness-Engineering：AI-研发的记忆层和运行层"><a href="#JARVIS-与-Harness-Engineering：AI-研发的记忆层和运行层" class="headerlink" title="JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层"></a>JARVIS 与 Harness Engineering：AI 研发的记忆层和运行层</h1><p>最近 Harness Engineering 突然火了。</p>
+<p>OpenAI 发了 <a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">Harness engineering: leveraging Codex in an agent-first world</a>，Anthropic 发了 <a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Effective harnesses for long-running agents</a>，LangChain 发了 <a target="_blank" rel="noopener" href="https://blog.langchain.com/the-anatomy-of-an-agent-harness/">The Anatomy of an Agent Harness</a>，Martin Fowler / Thoughtworks 也写了 <a target="_blank" rel="noopener" href="https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html">Harness Engineering</a>。GitHub 上甚至出现了一个 <a target="_blank" rel="noopener" href="https://github.com/walkinglabs/awesome-harness-engineering">awesome-harness-engineering</a> 列表，收录了几十个相关资源。</p>
+<p>这不是偶然的。当 coding agent 从”写个函数”进化到”跑一整天帮你做 feature”，工程界终于意识到了一件事：</p>
+<p><strong>Agent 的瓶颈不是模型能力，而是模型运行的环境。</strong></p>
+<p>我读完这些材料后，一个强烈的感受是：Harness Engineering 正在把我过去几个月在 JARVIS 上做的事情中的一部分，抽象成了一个通用范式。但只是一部分。</p>
+<p>JARVIS 和 Harness Engineering 之间，既有重叠，也有根本性的差异。这篇文章想把这件事说清楚。</p>
+<hr>
+<h2 id="Harness-Engineering-到底在说什么"><a href="#Harness-Engineering-到底在说什么" class="headerlink" title="Harness Engineering 到底在说什么"></a>Harness Engineering 到底在说什么</h2><p>先说清概念。</p>
+<p>Harness 这个词，最早来自 Anthropic 对 Claude Code 的工程实践。它的核心含义是：</p>
+<blockquote>
+<p><strong>Agent = Model + Harness</strong></p>
+<p>模型提供推理能力，Harness 提供一切让推理能落地的环境。</p>
+</blockquote>
+<p>具体来说，Harness Engineering 关注的是：</p>
+<h3 id="1-Context-Engineering（上下文工程）"><a href="#1-Context-Engineering（上下文工程）" class="headerlink" title="1. Context Engineering（上下文工程）"></a>1. Context Engineering（上下文工程）</h3><p>怎么管理 agent 的上下文窗口。不是”塞得越多越好”，而是把上下文当作<strong>工作记忆预算</strong>来管理。Manus 团队讲的 KV-cache 局部性、工具屏蔽、文件系统记忆；Anthropic 讲的 context condensation；OpenHands 讲的 bounded conversation memory——都是在解决同一个问题：<strong>agent 跑久了，上下文会失控。</strong></p>
+<h3 id="2-Constraints-amp-Guardrails（约束与护栏）"><a href="#2-Constraints-amp-Guardrails（约束与护栏）" class="headerlink" title="2. Constraints &amp; Guardrails（约束与护栏）"></a>2. Constraints &amp; Guardrails（约束与护栏）</h3><p>怎么让 agent 自主但不失控。沙箱、权限策略、审批节点、工具边界。Anthropic 讲的 sandboxing、MCP 执行控制；HumanLayer 讲的 12 Factor Agents；Thoughtworks 讲的 quality check in the loop——都是在回答：<strong>自动化的边界在哪？</strong></p>
+<h3 id="3-Specs-amp-Agent-Files（规约与指令文件）"><a href="#3-Specs-amp-Agent-Files（规约与指令文件）" class="headerlink" title="3. Specs &amp; Agent Files（规约与指令文件）"></a>3. Specs &amp; Agent Files（规约与指令文件）</h3><p>AGENTS.md、CLAUDE.md、agent.md——这些 repo-local 的指令文件告诉 agent”在这个仓库里怎么工作”。GitHub 的 Spec Kit 更进一步，把 spec-driven development 变成标准流程。</p>
+<h3 id="4-Evals-amp-Observability（评估与可观测性）"><a href="#4-Evals-amp-Observability（评估与可观测性）" class="headerlink" title="4. Evals &amp; Observability（评估与可观测性）"></a>4. Evals &amp; Observability（评估与可观测性）</h3><p>怎么知道 agent 做得好不好。不只是看最终结果，还要 trace 整个过程。OpenAI 的 eval skills、Anthropic 的 trace grading、LangChain 的 multi-turn eval——agent 越自主，你越需要可观测性。</p>
+<h3 id="5-Runtime-amp-Orchestration（运行时与编排）"><a href="#5-Runtime-amp-Orchestration（运行时与编排）" class="headerlink" title="5. Runtime &amp; Orchestration（运行时与编排）"></a>5. Runtime &amp; Orchestration（运行时与编排）</h3><p>Agent 的生命周期管理：启动、暂停、恢复、多 agent 协调。LangChain 的 deepagents、Inngest 的 AgentKit、SWE-agent 的执行环境。</p>
+<p>如果用一句话总结 Harness Engineering：</p>
+<blockquote>
+<p><strong>它关心的是 agent 怎么跑。</strong></p>
+</blockquote>
+<hr>
+<h2 id="JARVIS-在说什么"><a href="#JARVIS-在说什么" class="headerlink" title="JARVIS 在说什么"></a>JARVIS 在说什么</h2><p>我之前写过两篇关于 JARVIS 的文章：<a href="/2026/03/23/building-jarness-for-software-companies/">《构建软件公司的 JARVIS》</a> 讲方法论框架，<a href="/2026/03/24/from-ai-writing-code-to-ai-driven-r-and-d-the-gap-is-jarvis/">《从 AI 写代码到 AI 驱动研发》</a> 讲为什么 coding agent 不等于研发系统。</p>
+<p>核心论点不重复了，只提最关键的一条：</p>
+<blockquote>
+<p><strong>JARVIS 关心的不是 agent 怎么跑，而是 agent 跑的时候脑子里有什么。</strong></p>
+</blockquote>
+<p>具体来说，JARVIS 是一个按 <strong>History / Present / Future</strong> 三层时态架构组织的产品知识库：</p>
+<ul>
+<li><strong>History</strong>：5.7 万个 issue 的分类索引、18 个模块的深度文档、635+ 条 MR 修复摘要、7311 条被否决需求、60+ 条破坏性变更、跨模块依赖矩阵</li>
+<li><strong>Present</strong>：当前 backlog 快照、版本计划、团队配置</li>
+<li><strong>Future</strong>：AI 对 backlog 的去重检测、优先级分析、排期推荐</li>
+</ul>
+<p>它解决的核心问题是：<strong>当 AI agent 面对一个 bug 时，它不只是看当前代码——它知道这个模块 3 年前为什么这样设计，知道类似的 bug 之前怎么修的，知道哪些方案已经被否决过。</strong></p>
+<p>用一句话总结 JARVIS：</p>
+<blockquote>
+<p><strong>它关心的是 agent 知道什么。</strong></p>
+</blockquote>
+<hr>
+<h2 id="本质区别：运行层-vs-记忆层"><a href="#本质区别：运行层-vs-记忆层" class="headerlink" title="本质区别：运行层 vs 记忆层"></a>本质区别：运行层 vs 记忆层</h2><p>现在区别就很清晰了。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Harness Engineering</th>
+<th>JARVIS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心问题</strong></td>
+<td>Agent 怎么跑</td>
+<td>Agent 知道什么</td>
+</tr>
+<tr>
+<td><strong>关注点</strong></td>
+<td>上下文管理、约束、评估、编排、运行时</td>
+<td>组织记忆、产品知识、历史决策、已知模式</td>
+</tr>
+<tr>
+<td><strong>时间跨度</strong></td>
+<td>单次任务 ~ 单次会话</td>
+<td>产品全生命周期（年）</td>
+</tr>
+<tr>
+<td><strong>数据来源</strong></td>
+<td>当前代码、当前任务、当前对话</td>
+<td>历史 issue、设计文档、MR 记录、被否决需求</td>
+</tr>
+<tr>
+<td><strong>知识形态</strong></td>
+<td>指令文件（AGENTS.md）、工具定义、Prompt</td>
+<td>结构化知识库（模块文档、索引、交叉引用）</td>
+</tr>
+<tr>
+<td><strong>更新频率</strong></td>
+<td>随 repo 变化</td>
+<td>随每次 bug 修复、设计决策、版本发布</td>
+</tr>
+<tr>
+<td><strong>通用 vs 专有</strong></td>
+<td>通用范式，适用于所有 agent</td>
+<td>公司/产品专有，不可迁移</td>
+</tr>
+</tbody></table>
+<p>打一个比方：</p>
+<p><strong>Harness Engineering 是给 agent 搭一个好的手术室——灯光、器械、监控设备、安全规程都到位。</strong></p>
+<p><strong>JARVIS 是让上手术台的 agent 拥有十年临床经验——知道这个病人的病史，知道上次手术为什么失败，知道哪些药有禁忌。</strong></p>
+<p>手术室很重要。但一个没有临床经验的医生，在再好的手术室里也可能犯致命错误。</p>
+<p>反过来，一个经验丰富的老医生，在简陋的条件下也能救命——但如果给他一个好的手术室，他能做得更好。</p>
+<p><strong>这就是 JARVIS 和 Harness Engineering 的关系：它们解决不同层的问题，且互相增强。</strong></p>
+<hr>
+<h2 id="Harness-Engineering-里缺失的那一块"><a href="#Harness-Engineering-里缺失的那一块" class="headerlink" title="Harness Engineering 里缺失的那一块"></a>Harness Engineering 里缺失的那一块</h2><p>读完 awesome-harness-engineering 的全部资源后，我注意到一个有趣的缺口。</p>
+<p>这个列表有六大分类：</p>
+<ol>
+<li>Context, Memory &amp; Working State</li>
+<li>Constraints, Guardrails &amp; Safe Autonomy</li>
+<li>Specs, Agent Files &amp; Workflow Design</li>
+<li>Evals &amp; Observability</li>
+<li>Benchmarks</li>
+<li>Runtimes, Harnesses &amp; Reference Implementations</li>
+</ol>
+<p>第一类”Context, Memory &amp; Working State”听起来最接近 JARVIS 做的事。但仔细看内容：</p>
+<ul>
+<li>Anthropic 讲的是<strong>上下文窗口管理</strong>——怎么不浪费 token</li>
+<li>Manus 讲的是<strong>KV-cache 局部性</strong>——怎么让缓存命中率更高</li>
+<li>OpenHands 讲的是<strong>会话压缩</strong>——怎么在长对话里不丢关键信息</li>
+<li>HumanLayer 讲的是<strong>上下文漂移</strong>——怎么让 agent 不跑偏</li>
+</ul>
+<p>这些全是<strong>运行时记忆</strong>——agent 在一次执行过程中怎么管理自己的短期记忆。</p>
+<p>但<strong>组织记忆</strong>呢？</p>
+<ul>
+<li>这个模块为什么这样设计？</li>
+<li>上次类似的 bug 是怎么修的？</li>
+<li>哪些方案被否决过？</li>
+<li>这个功能的测试覆盖盲区在哪？</li>
+<li>修了这里会影响哪些其他模块？</li>
+</ul>
+<p>这类知识不在上下文窗口里，不在 AGENTS.md 里，不在任何 harness 组件里。</p>
+<p><strong>Harness Engineering 的”Memory”是工作记忆（Working Memory），JARVIS 的”Memory”是长期记忆（Long-term Memory）。</strong></p>
+<p>一个是 RAM，一个是硬盘。两个都需要，但它们不是同一个东西。</p>
+<hr>
+<h2 id="JARVIS-本身也需要-Harness"><a href="#JARVIS-本身也需要-Harness" class="headerlink" title="JARVIS 本身也需要 Harness"></a>JARVIS 本身也需要 Harness</h2><p>反过来说，JARVIS 光有知识库也不够。</p>
+<p>在实际操作中，JARVIS 的知识库需要被 agent 有效调用。这里面涉及的问题恰恰就是 Harness Engineering 关心的：</p>
+<h3 id="上下文预算分配"><a href="#上下文预算分配" class="headerlink" title="上下文预算分配"></a>上下文预算分配</h3><p>JARVIS 有 18 个模块、每个模块有 overview、known-issues、decisions、test-coverage、faq。如果 agent 接到一个 charts 模块的 bug，不能把 18 个模块的文档全塞进上下文——需要智能路由。这是 Context Engineering 的问题。</p>
+<h3 id="工具边界设计"><a href="#工具边界设计" class="headerlink" title="工具边界设计"></a>工具边界设计</h3><p>Agent 应该能搜索 JARVIS、能更新 JARVIS，但不应该在没有人工审批的情况下删除或覆盖关键知识。这是 Guardrails 的问题。</p>
+<h3 id="知识更新的评估"><a href="#知识更新的评估" class="headerlink" title="知识更新的评估"></a>知识更新的评估</h3><p>Agent 从一次 bug 修复中提炼出的 known-issue 条目，质量怎么样？有没有幻觉？这是 Evals 的问题。</p>
+<h3 id="多-agent-协调"><a href="#多-agent-协调" class="headerlink" title="多 agent 协调"></a>多 agent 协调</h3><p>一个 agent 在修 bug，另一个在更新知识库，还有一个在跑回归测试。它们之间怎么协调？这是 Orchestration 的问题。</p>
+<p>所以：</p>
+<blockquote>
+<p><strong>JARVIS 提供了 agent 需要的知识，Harness Engineering 提供了 agent 使用这些知识的可靠方式。</strong></p>
+</blockquote>
+<hr>
+<h2 id="搭配组合：一个实践方案"><a href="#搭配组合：一个实践方案" class="headerlink" title="搭配组合：一个实践方案"></a>搭配组合：一个实践方案</h2><p>在我的实际工作中，JARVIS + Harness 的搭配是这样运作的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────┐</span><br><span class="line">│                 AI 研发中枢 (JARVIS)               │</span><br><span class="line">│                                                   │</span><br><span class="line">│  ┌──────────┐  ┌──────────┐  ┌──────────┐       │</span><br><span class="line">│  │ History  │  │ Present  │  │ Future   │       │</span><br><span class="line">│  │ 历史知识  │  │ 当前状态  │  │ AI 判断  │       │</span><br><span class="line">│  └────┬─────┘  └────┬─────┘  └────┬─────┘       │</span><br><span class="line">│       │              │              │             │</span><br><span class="line">│       └──────────────┼──────────────┘             │</span><br><span class="line">│                      │                            │</span><br><span class="line">│              ┌───────▼───────┐                    │</span><br><span class="line">│              │  Knowledge    │                    │</span><br><span class="line">│              │  Router       │ ← Context Eng.     │</span><br><span class="line">│              └───────┬───────┘                    │</span><br><span class="line">└──────────────────────┼────────────────────────────┘</span><br><span class="line">                       │</span><br><span class="line">┌──────────────────────┼────────────────────────────┐</span><br><span class="line">│              Agent Harness                         │</span><br><span class="line">│                      │                            │</span><br><span class="line">│  ┌──────────┐  ┌─────▼─────┐  ┌──────────┐       │</span><br><span class="line">│  │Guardrails│  │  Agent    │  │  Evals   │       │</span><br><span class="line">│  │ 约束护栏  │  │  Runtime  │  │ 评估追踪  │       │</span><br><span class="line">│  └──────────┘  └─────┬─────┘  └──────────┘       │</span><br><span class="line">│                      │                            │</span><br><span class="line">│  ┌──────────┐  ┌─────▼─────┐  ┌──────────┐       │</span><br><span class="line">│  │  Tools   │  │Orchestr.  │  │ Sandbox  │       │</span><br><span class="line">│  │ 工具接口  │  │ 任务编排   │  │ 安全沙箱  │       │</span><br><span class="line">│  └──────────┘  └───────────┘  └──────────┘       │</span><br><span class="line">└───────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>一个典型的 bug 修复流程：</p>
+<ol>
+<li><strong>Issue 进入</strong> → Harness 接收任务，分配给 agent</li>
+<li><strong>知识路由</strong> → JARVIS 根据 issue 内容匹配模块，推送相关的 overview、known-issues、decisions</li>
+<li><strong>上下文组装</strong> → Harness 的 Context Engineering 决定推多少知识进上下文（预算管理）</li>
+<li><strong>方案生成</strong> → Agent 基于知识库生成修复方案</li>
+<li><strong>约束检查</strong> → Harness 的 Guardrails 检查方案是否触及已知风险（JARVIS 的 cross-module interactions）</li>
+<li><strong>代码实现</strong> → Agent 写代码</li>
+<li><strong>测试验证</strong> → Harness 运行测试，对比 JARVIS 的 test-coverage 确认覆盖</li>
+<li><strong>知识回写</strong> → 修复完成后，agent 更新 JARVIS 的 known-issues 和 fix-knowledge</li>
+<li><strong>评估记录</strong> → Harness 的 Evals 记录整个过程的质量指标</li>
+</ol>
+<p><strong>每一步都同时需要 JARVIS 和 Harness。缺了任何一层，系统都不完整。</strong></p>
+<hr>
+<h2 id="对行业的一个预测"><a href="#对行业的一个预测" class="headerlink" title="对行业的一个预测"></a>对行业的一个预测</h2><p>读完 Harness Engineering 的整个生态后，我有一个判断：</p>
+<p><strong>Harness Engineering 会在 2026-2027 年被标准化。Context Engineering、Evals、Guardrails 这些东西会变成基础设施，就像 CI/CD 在 2015 年被标准化一样。</strong></p>
+<p>但是：</p>
+<p><strong>组织记忆不会被标准化。</strong></p>
+<p>因为每家公司的产品不同、历史不同、设计决策不同、踩过的坑不同。你可以用同一套 Harness 框架，但你不能用同一套 JARVIS。</p>
+<p>这意味着：</p>
+<ul>
+<li>Harness Engineering 会变成开源工具和平台（已经在发生了——SWE-agent、AgentKit、deepagents）</li>
+<li>但每家公司的”记忆层”必须自己建</li>
+</ul>
+<p><strong>Harness 是买得到的。记忆是买不到的。</strong></p>
+<p>这也是为什么我说 JARVIS 不是一个产品，而是一种组织能力。它的价值不在于技术实现（技术并不复杂），而在于<strong>你对自己产品的理解深度</strong>——你能把多少年的组织记忆结构化，就决定了你的 AI 能有多强。</p>
+<hr>
+<h2 id="给实践者的建议"><a href="#给实践者的建议" class="headerlink" title="给实践者的建议"></a>给实践者的建议</h2><p>如果你正在尝试让 AI 更深度地参与研发，我的建议是：</p>
+<h3 id="如果你还没开始"><a href="#如果你还没开始" class="headerlink" title="如果你还没开始"></a>如果你还没开始</h3><p><strong>先做 Harness，再做 JARVIS。</strong></p>
+<p>Harness 的投入产出比更直接：写好 AGENTS.md、配好沙箱、接好测试、设好审批节点。这些是低垂的果实，能立刻提升 coding agent 的可靠性。</p>
+<h3 id="如果-Harness-已经做好了"><a href="#如果-Harness-已经做好了" class="headerlink" title="如果 Harness 已经做好了"></a>如果 Harness 已经做好了</h3><p><strong>开始建记忆层。</strong></p>
+<p>从 issue 系统开始：导出历史 issue，做模块分类，提取高频 bug 模式和被否决需求。你会发现，光是”让 AI 知道哪些方案之前被否决过”，就能省掉大量重复讨论。</p>
+<h3 id="如果两者都在做"><a href="#如果两者都在做" class="headerlink" title="如果两者都在做"></a>如果两者都在做</h3><p><strong>关注连接点。</strong></p>
+<p>记忆层和运行层的连接是最容易出问题的地方：知识路由是否准确？上下文预算是否合理？知识回写是否有质量保障？这些”接缝”决定了系统的实际效果。</p>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Harness Engineering 的火不是偶然。它标志着行业从”模型军备竞赛”转向”工程基建竞赛”。</p>
+<p>但我想补充一点：</p>
+<p><strong>工程基建解决的是”怎么跑”的问题。而”跑向哪里”和”基于什么判断”，需要另一层东西。</strong></p>
+<p>JARVIS 就是那另一层。</p>
+<p>它不是 Harness 的替代品，而是 Harness 的上游。Harness 让 agent 跑得稳，JARVIS 让 agent 跑得对。</p>
+<p>一个跑得稳但不知道该干什么的 agent，只是一个高效的随机游走器。</p>
+<p>一个知道该干什么但跑不稳的 agent，只是一个有想法但手抖的外科医生。</p>
+<p><strong>你两个都需要。</strong></p>
+<hr>
+<p><em>前两篇文章：<a href="/2026/03/23/building-jarvis-for-software-companies/">《构建软件公司的 JARVIS》</a> | <a href="/2026/03/24/from-ai-writing-code-to-ai-driven-r-and-d-the-gap-is-jarvis/">《从 AI 写代码到 AI 驱动研发》</a></em></p>
+<p><em>本文提到的 Harness Engineering 资源汇总：<a target="_blank" rel="noopener" href="https://github.com/walkinglabs/awesome-harness-engineering">awesome-harness-engineering</a></em></p>
+<hr>
+<p><strong>作者：</strong> Thomas Chan<br><strong>日期：</strong> 2026-03-31<br><strong>标签：</strong> JARVIS, Harness Engineering, AI Agent, Context Engineering, Software R&amp;D</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+  <img
+    title="打开微信扫一扫"
+    class="thankyou"
+    src="/assets/thankyou.jpeg"
+    style="width: 300px;margin: 20px auto;display: block;" />
+
+
+
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026033101',
+        title: '2026033101',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+
+
+      <div class="main-footer">
+  
+    © 2026 Memories - Powered by <a href="http://hexo.io" target="_blank">Hexo</a>
+  
+</div>
+
+    </div>
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+
+
+<script src="/scripts/prism.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
