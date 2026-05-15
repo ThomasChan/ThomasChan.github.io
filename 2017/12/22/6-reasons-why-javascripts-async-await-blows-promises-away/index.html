@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>6 个原因告诉你 Async/Await 比 Promise 好用（教程） | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="本文翻译自 https:&#x2F;&#x2F;hackernoon.com&#x2F;6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9 , 作者 Mostafa Gaafar，翻译：Thomas Chan  你可能还不知道 Node 从 7.6 版本就已经原生支持 async&#x2F;await 了。如果你还没用过的话，这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6 个原因告诉你 Async&#x2F;Await 比 Promise 好用（教程）">
+<meta property="og:url" content="http://chenjunhao.cn/2017/12/22/6-reasons-why-javascripts-async-await-blows-promises-away/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="本文翻译自 https:&#x2F;&#x2F;hackernoon.com&#x2F;6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9 , 作者 Mostafa Gaafar，翻译：Thomas Chan  你可能还不知道 Node 从 7.6 版本就已经原生支持 async&#x2F;await 了。如果你还没用过的话，这">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-22T13:35:32.000Z">
+<meta property="article:modified_time" content="2025-07-28T03:55:26.000Z">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-6-reasons-why-javascripts-async-await-blows-promises-away" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2017</span>
+        
+      </div>
+      <h1 class="article-header">6 个原因告诉你 Async/Await 比 Promise 好用（教程）</h1>
+      <div class="article-info">
+        <span>2017.12.22</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">抛弃 Promise 拥抱 Async/Await</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <blockquote>
+<p>本文翻译自 <a target="_blank" rel="noopener" href="https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9">https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9</a> , 作者 <a target="_blank" rel="noopener" href="https://hackernoon.com/@mgaafar?source=post_header_lockup">Mostafa Gaafar</a>，翻译：<a href="http://chenjunhao.cn/">Thomas Chan</a></p>
+</blockquote>
+<p>你可能还不知道 Node 从 7.6 版本就已经原生支持 async/await 了。如果你还没用过的话，这儿有一堆理由和例子让你立刻对它爱不释手。</p>
+<p>[更新]：<a target="_blank" rel="noopener" href="https://nodejs.org/en/blog/release/v8.0.0/">Node 8 LTS</a> 现在已完全支持 async/await。</p>
+<h1 id="Async-await-101"><a href="#Async-await-101" class="headerlink" title="Async/await 101"></a>Async/await 101</h1><p>先给不知道本文在讲什么的同学简单介绍一下 async/await 是什么</p>
+<ul>
+<li>Async/await 是一种新的写异步程序的语法糖，之前一直用的是回调函数和 Promise。</li>
+<li>Async/await 其实建立在 Promise 之上，不能跟回调函数一起用。</li>
+<li>Async/await 跟 Promise 一样是无阻塞的</li>
+<li>Async/await 的代码写起来更像是同步的，这正是厉害之处。</li>
+</ul>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>假设我们有一个 <code>getJSON</code> 函数返回一个 promise，promise resolve 一个 JSON 对象。我们只想调用一下这个函数并打印出 JSON 对象，然后返回 <code>&quot;done&quot;</code>。</p>
+<p>用 promise 写的话是这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt;</span><br><span class="line">  <span class="title function_">getJSON</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;done&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="title function_">makeRequest</span>()</span><br></pre></td></tr></table></figure>
+
+<p>而用 async/await 写的话则是这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">await</span> <span class="title function_">getJSON</span>())</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;done&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">makeRequest</span>()</span><br></pre></td></tr></table></figure>
+
+<p>这有几个不同点：</p>
+<ol>
+<li><code>async</code> 关键字在 function 前面，<code>await</code> 关键字只能用在使用 <code>async</code> 的函数内。<strong>所有 <code>async</code> 函数都会返回一个 promise, promise resolve 的值就是函数里 return 的值（例子里就是 “done”）</strong>。</li>
+<li>这就说明我们是不能在 <code>async</code> 函数外边使用 <code>await</code> 的。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是不能执行的</span></span><br><span class="line"><span class="comment">// await makeRequest()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样是可以的</span></span><br><span class="line"><span class="title function_">makeRequest</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><code>await getJSON()</code> 的意思是 <code>console.log</code> 将会等待 <code>getJSON</code> 的处理结果，然后再打印出来。</li>
+</ol>
+<h1 id="为什么-async-await-更好？"><a href="#为什么-async-await-更好？" class="headerlink" title="为什么 async/await 更好？"></a>为什么 async/await 更好？</h1><h2 id="1-简洁干净"><a href="#1-简洁干净" class="headerlink" title="1. 简洁干净"></a>1. 简洁干净</h2><p>我们将会少些很多代码！在上例里我们只写了三行代码。我们不需要再写 <code>.then</code>，创建一个匿名函数处理 response，或者把 <code>data</code> 赋值给一个可能不需要的变量。同时我们也避免了代码嵌套。这个优点在下边更多的例子显而易见。</p>
+<h2 id="2-错误处理"><a href="#2-错误处理" class="headerlink" title="2. 错误处理"></a>2. 错误处理</h2><p>Async/await 终于能让我们用 <code>try/catch</code> 在一个层级里处理 <code>同步</code> 和 <code>异步</code> 的错误了。在下面的 promise 例子里，如果 <code>JSON.parse</code> 报错了，<code>try/catch</code> 是抓不住的，因为 <code>JSON.parse</code> 在 promise 里。我们需要在 promise 后加上 <code>.catch</code> 再重复一遍我们的错误处理逻辑，可能才会在真报错的时候帮到我们知道具体错误是什么。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="title function_">getJSON</span>()</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// JSON.parse 可能会 parse 失败</span></span><br><span class="line">        <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(result)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// 取消 catch 的注释来处理异步错误</span></span><br><span class="line">      <span class="comment">// .catch((err) =&gt; &#123;</span></span><br><span class="line">      <span class="comment">//   console.log(err)</span></span><br><span class="line">      <span class="comment">// &#125;)</span></span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我们再来看看相同的代码用 async/await 的实现。<code>catch</code> 是会抓到 parse 失败的错误的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// JSON.parse 可能会 parse 失败</span></span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="keyword">await</span> <span class="title function_">getJSON</span>())</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-条件判断"><a href="#3-条件判断" class="headerlink" title="3. 条件判断"></a>3. 条件判断</h2><p>像下边这个例子里，先获取数据然后判断是直接返回该数据还是需要再获取别的数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">getJSON</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">needsAnotherRequest</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">makeAnotherRequest</span>(data)</span><br><span class="line">          .<span class="title function_">then</span>(<span class="function"><span class="params">moreData</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(moreData)</span><br><span class="line">            <span class="keyword">return</span> moreData</span><br><span class="line">          &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这代码看着都头疼，一不小心就迷失在多层嵌套（6 层）、数据准备、多处 return。</p>
+<p>而用 async/await 重写后就很简单易懂了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">getJSON</span>()</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">needsAnotherRequest</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> moreData = <span class="keyword">await</span> <span class="title function_">makeAnotherRequest</span>(data);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(moreData)</span><br><span class="line">    <span class="keyword">return</span> moreData</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-中间值"><a href="#4-中间值" class="headerlink" title="4. 中间值"></a>4. 中间值</h2><p>你可能会遇到这种情况，你调用了 <code>promise1</code>，然后用返回值去调 <code>promise2</code>, 然后再用 <code>promise1</code> 和 <code>promise2</code> 的返回值去调 <code>promise3</code>，代码像这样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">promise1</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">value1</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">promise2</span>(value1)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function"><span class="params">value2</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// do something</span></span><br><span class="line">          <span class="keyword">return</span> <span class="title function_">promise3</span>(value1, value2)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 <code>promise3</code> 不需要 <code>value1</code> 还能少嵌套一层。如果你实在受不了多层嵌套，还能像下边这样用 <code>Promise.all</code> 包装一下 1 和 2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">promise1</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">value1</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>([value1, <span class="title function_">promise2</span>(value1)])</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">[value1, value2]</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">promise3</span>(value1, value2)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的写法牺牲了一些可读性。<code>value1</code> 和 <code>value2</code> 除了避免多层嵌套好像没什么其他理由应该在一个数组里。</p>
+<p>相同的逻辑用 async/await 实现简直不要太简单和直观，是不是让你想起了曾经为了让 promise 不那么难看所花的时间。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> value1 = <span class="keyword">await</span> <span class="title function_">promise1</span>()</span><br><span class="line">  <span class="keyword">const</span> value2 = <span class="keyword">await</span> <span class="title function_">promise2</span>(value1)</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">promise3</span>(value1, value2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-错误堆栈"><a href="#5-错误堆栈" class="headerlink" title="5. 错误堆栈"></a>5. 错误堆栈</h2><p>想象我们有一段代码，用链的形式调用了一堆 promise，然后在某个地方抛出一个错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">callAPromise</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">callAPromise</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">callAPromise</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">callAPromise</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;oops&quot;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">makeRequest</span>()</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">    <span class="comment">// output</span></span><br><span class="line">    <span class="comment">// Error: oops at callAPromise.then.then.then.then.then (index.js:8:13)</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>promise 链返回的错误堆栈信息完全看不出来是哪儿报的错。更糟的是堆栈信息还具有误导性，信息里所包含的唯一一个函数名字 <code>callAPromise</code> 完全跟这个错误没关系（不过文件名和代码行数还是有用的）。</p>
+<p>然而 async/await 给的错误堆栈是直接指向报错的函数的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">makeRequest</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">callAPromise</span>()</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;oops&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">makeRequest</span>()</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">    <span class="comment">// 输出</span></span><br><span class="line">    <span class="comment">// Error: oops at makeRequest (index.js:7:9)</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>当然这在你本地开发模式下没多大帮助，但是在线上 debug 的时候还是非常有用的。像这种情况下，如果能知道错误是来自 <code>makeRequest</code> 肯定要好过来自 <code>then.then.then</code>…..</p>
+<h2 id="6-Debugging"><a href="#6-Debugging" class="headerlink" title="6. Debugging"></a>6. Debugging</h2><p>最后一点，async/await 的一个杀手锏就是非常容易 debug。Debug promises 有两个痛点</p>
+<ol>
+<li>不能在箭头函数里设置断点。</li>
+<li>如果你在 <code>.then</code> 里设置断点，像平时一样一步一步看函数的执行，debugger 是不会跟到 <code>.then</code> 里去的，因为它只能按步执行同步的代码。</li>
+</ol>
+<p>而用 async/await 你不需要箭头函数，而且你能像 debug 同步的代码一样来 debug await。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Async/await 是近几年 JavaScript 新增的几个革命性 features 之一，它让人意识到 promises 的语法是多么的乱。</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li>很明显异步代码写起来行数会变少，你可能需要适应一下新的语法，不过熟悉 C# 的人应该很熟悉这个语法了。</li>
+<li>是的，Note 7 不是 LTS 版本，不过 node 8 下个月就发布了，而且迁移代码到新版本也没有什么影响。[更新]：Node 8 LTS 发了。</li>
+</ul>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2017122201',
+        title: '2017122201',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

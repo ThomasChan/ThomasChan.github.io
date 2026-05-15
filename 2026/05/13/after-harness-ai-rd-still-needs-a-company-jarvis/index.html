@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>Harness 之后，公司还是得有自己的 JARVIS | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="Harness 之后，公司还是得有自己的 JARVIS上一篇《JARVIS 正在变成 AI 研发组织的运行中枢》写的是内部变化：最近一个月，JARVIS 具体收进了哪些运行规则。 外面这一波文章和项目，已经把问题推到了很靠前的位置。再往前一步，就会碰到公司内部那层收口。 把 OpenAI、Martin Fowler、LangChain、Mitchell Hashimoto、Tanka、ArcKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harness 之后，公司还是得有自己的 JARVIS">
+<meta property="og:url" content="http://chenjunhao.cn/2026/05/13/after-harness-ai-rd-still-needs-a-company-jarvis/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="Harness 之后，公司还是得有自己的 JARVIS上一篇《JARVIS 正在变成 AI 研发组织的运行中枢》写的是内部变化：最近一个月，JARVIS 具体收进了哪些运行规则。 外面这一波文章和项目，已经把问题推到了很靠前的位置。再往前一步，就会碰到公司内部那层收口。 把 OpenAI、Martin Fowler、LangChain、Mitchell Hashimoto、Tanka、ArcKit">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-13T13:40:00.000Z">
+<meta property="article:modified_time" content="2026-05-13T11:43:33.000Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Harness Engineering">
+<meta property="article:tag" content="Organizational Memory">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-after-harness-ai-rd-still-needs-a-company-jarvis" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2026</span>
+        
+      </div>
+      <h1 class="article-header">Harness 之后，公司还是得有自己的 JARVIS</h1>
+      <div class="article-info">
+        <span>2026.05.13</span>
+        
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/Engineering/">#Engineering</a>
+        
+          <a href="/tags/JARVIS/">#JARVIS</a>
+        
+          <a href="/tags/Harness-Engineering/">#Harness Engineering</a>
+        
+          <a href="/tags/Organizational-Memory/">#Organizational Memory</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">接着上一篇往下写。上一篇讲的是 JARVIS 最近一个月收进了哪些运行规则。这篇换个角度，把 OpenAI、Martin Fowler、LangChain、Mitchell Hashimoto、Tanka、ArcKit，还有最近几篇中文文章放在一起看。沿着这条线往下走，会更容易看清另一件事：agent 能跑起来很重要，但真进公司以后，最后还是得按这家公司自己的做法干活。这层东西，还是可以叫 JARVIS。</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <p>上一篇<a href="/2026/05/13/jarvis-is-becoming-the-operating-hub-of-ai-rd-organizations/">《JARVIS 正在变成 AI 研发组织的运行中枢》</a>写的是内部变化：最近一个月，JARVIS 具体收进了哪些运行规则。</p>
+<p>外面这一波文章和项目，已经把问题推到了很靠前的位置。再往前一步，就会碰到公司内部那层收口。</p>
+<p>把 OpenAI、Martin Fowler、LangChain、Mitchell Hashimoto、Tanka、ArcKit，还有最近几篇中文文章放在一起看，轮廓其实已经很清楚了：行业已经走到 harness 这一步了，但公司里最后还得有一层自己的收口。这层东西，还是可以叫 JARVIS。</p>
+<hr>
+<h2 id="讨论已经从-prompt-走到-harness-了"><a href="#讨论已经从-prompt-走到-harness-了" class="headerlink" title="讨论已经从 prompt 走到 harness 了"></a>讨论已经从 prompt 走到 harness 了</h2><p>这两年 AI 研发的讨论走得很快。</p>
+<p>最早大家盯着的是 AI 会不会写代码。Copilot、Cursor、Claude Code，还有各种 coding agent，把写函数、补测试、改样板代码这些事做得越来越顺手。再往前走，问题就变了。任务一长、上下文一多、工具一接、权限一放开，模型另外一面很快就出来了：会忘，会猜，会漂，也会把一句像样的话直接当结论交上来。</p>
+<p>所以后面的讨论开始往 harness 收。</p>
+<p>OpenAI 在讲 harness engineering。Martin Fowler 在讲怎么把 coding agent 塞进工程系统。LangChain 在拆 agent harness 的运行结构。Mitchell Hashimoto 在写自己怎么把 AI 用进日常开发。中文这边也开始往实处走了，讨论 review、tests、guardrails、context、memory、知识沉淀，还有非确定性怎么被工程系统接住。</p>
+<p>这一波变化说明，AI 研发的话题已经从“prompt 写得漂不漂亮”，往“agent 怎么进真实研发”挪了。</p>
+<hr>
+<h2 id="Harness-很重要，因为没有这层，agent-根本进不了现场"><a href="#Harness-很重要，因为没有这层，agent-根本进不了现场" class="headerlink" title="Harness 很重要，因为没有这层，agent 根本进不了现场"></a>Harness 很重要，因为没有这层，agent 根本进不了现场</h2><p>这一点现在已经很清楚了。</p>
+<p>没有 harness，agent 最多帮你补几段代码，回答几个问题。真要长期干活，靠不住。</p>
+<p>一个能长期干活的 agent，至少得有这些东西：</p>
+<ul>
+<li>明确的运行环境</li>
+<li>可用但受控的工具</li>
+<li>权限边界</li>
+<li>review 和测试回路</li>
+<li>出错以后能停下来的机制</li>
+<li>长任务里的上下文管理</li>
+</ul>
+<p>这些东西一补上，agent 才算真的从聊天框里走出来。它能进 repo，读文件，跑命令，改代码，提 PR，拿到反馈后继续往下做。</p>
+<p>所以 harness 的价值也很直接：它解决的是 agent 能不能稳定干活。</p>
+<hr>
+<h2 id="但真到了公司里，后面还有一层问题会立刻冒出来"><a href="#但真到了公司里，后面还有一层问题会立刻冒出来" class="headerlink" title="但真到了公司里，后面还有一层问题会立刻冒出来"></a>但真到了公司里，后面还有一层问题会立刻冒出来</h2><p>问题也就在这里。</p>
+<p>就算 harness 已经搭起来了，很多关键判断还是没人替你回答。</p>
+<p>比如：</p>
+<ul>
+<li>这个模块当年为什么这样设计</li>
+<li>这个需求以前为什么被否过</li>
+<li>这次修复要补哪条回归点</li>
+<li>哪些路径默认别碰</li>
+<li>什么情况必须升级给人</li>
+<li>谁对最后验收负责</li>
+<li>这次处理完以后，哪些经验应该沉回系统</li>
+</ul>
+<p>这些都不会随着 harness 一起自动长出来。</p>
+<p>公司里真正难的地方，很多时候也不在模型会不会调工具，在默认做法。</p>
+<p>同样是一个 bug，不同公司第一步就可能完全不一样。有人先看历史 issue，有人先看线上日志，有人先看最近两次发布改了什么。有人要求先补测试再改代码，有人要求先复现，有人要求先确认是不是老问题重演。有人把某些改动当高风险动作，默认必须升级；有人把某些经验当成口头规矩，一直没写下来。</p>
+<p>这些东西要是还在系统外面，agent 最后就只能自己猜。</p>
+<p>而“自己猜”刚好是模型最容易翻车的地方。</p>
+<hr>
+<h2 id="把这几类材料放在一起看，缺口其实很好认"><a href="#把这几类材料放在一起看，缺口其实很好认" class="headerlink" title="把这几类材料放在一起看，缺口其实很好认"></a>把这几类材料放在一起看，缺口其实很好认</h2><p>OpenAI、Fowler、LangChain、Mitchell Hashimoto 这一波内容，核心都在往一个方向推：怎么让 agent 能进工程系统，能持续执行，能被 review，能被约束，出了问题也能被看见。</p>
+<p>Tanka 往前提的是 intent、role、memory 这一层。它提醒大家，AI 真进组织以后，不能只被看成一个工具面板。它要接住人的意图，也要接住角色带来的判断差异。</p>
+<p>ArcKit 往前提的是另一层：专业知识不一定只待在文档里，也可以被压成 workflow、templates、commands、reviews 这种能反复跑的动作结构。很多团队的问题也确实不在“有没有文档”，而在文档有没有变成默认动作。</p>
+<p>中文这边，像《Harness不是目的，知识才是护城河》《Martin Fowler 的 AI 研发提醒：非确定性进了研发链路，Harness 才真正开始承重》《软件工程的功底是智能时代生死攸关的要素》这些文章，也在把问题往实处推。重点已经落到知识沉淀、非确定性、工程基本功这些地方了。</p>
+<p>把这些东西拼起来，已经能看出一条很完整的线。但公司内部真要长期跑，后面还差最后一层收口。</p>
+<p>因为总得继续回答这些问题：</p>
+<ul>
+<li>默认动作到底由谁来写</li>
+<li>例外情况怎么处理</li>
+<li>历史经验怎么沉下来</li>
+<li>这次该停、该升、还是该继续，由谁拍板</li>
+<li>哪些判断以后要变成所有 agent 的前置条件</li>
+</ul>
+<p>这几件事如果还在系统外面，前面的 harness、knowledge、memory、workflow 都有用，但还没有真正落进这家公司的日常研发里。</p>
+<hr>
+<h2 id="这层收口，还是可以叫-JARVIS"><a href="#这层收口，还是可以叫-JARVIS" class="headerlink" title="这层收口，还是可以叫 JARVIS"></a>这层收口，还是可以叫 JARVIS</h2><p>这里说的 JARVIS，已经不只是知识库，也不只是一个 agent 外壳。</p>
+<p>更关键的是，怎么把组织里已经证明有效的做法，收成 agent 默认会遵守的工作方式。</p>
+<p>这里面至少包括这些东西：</p>
+<ul>
+<li>任务进来先读什么</li>
+<li>哪些历史判断默认生效</li>
+<li>哪些地方不要直接动</li>
+<li>什么情况要升级给人</li>
+<li>这次做到什么程度才能收口</li>
+<li>结束以后哪些结果要沉回系统</li>
+</ul>
+<p>如果这些东西没有收进去，那就算资料很多，agent 还是只能现查、现拼、现判断。偶尔会做对，偶尔也会像一个刚进组的新同事，字面意思都听懂了，但还是没接上这家公司真正的做法。</p>
+<p>放在这条线里看，JARVIS 更像最后那层收口。</p>
+<p>harness 解决 agent 怎么稳定跑，Tanka 提醒 intent 和 role，ArcKit 提醒知识怎么压成动作结构，那几篇文章在补工程、知识和治理这几块。JARVIS 要做的是把这些东西接进来，再落到这家公司自己的研发闭环里。怎么进门，先看什么，谁来兜底，什么算 done，做完以后什么要沉回去，最后都得在这层落地。</p>
+<p>上一篇写的是最近一个月具体收进了哪些运行规则。这一篇讲的是，为什么这一步绕不过去。</p>
+<hr>
+<h2 id="为什么这件事最后还是得公司自己做"><a href="#为什么这件事最后还是得公司自己做" class="headerlink" title="为什么这件事最后还是得公司自己做"></a>为什么这件事最后还是得公司自己做</h2><p>我现在越来越确定，AI 研发最后拼的不会只是模型，也不会只是某个通用 harness。</p>
+<p>每家公司最难的那部分，长得都不一样。</p>
+<p>产品历史不一样。<br>仓库结构不一样。<br>工具链不一样。<br>发布节奏不一样。<br>团队协作方式不一样。<br>以前踩过的坑不一样。<br>默认的验收口径也不一样。</p>
+<p>OpenAI 的 harness、Fowler 的框架、Tanka 对 intent 和 role 的处理、ArcKit 的 workflow 和治理结构，都可以拿来参考。</p>
+<p>但轮到你们自己团队的时候，最后还是得自己回答：</p>
+<ul>
+<li>哪些经验以后默认生效</li>
+<li>哪些例外以后默认升级</li>
+<li>哪些历史判断以后不能再丢</li>
+<li>哪些知识以后必须回写</li>
+</ul>
+<p>这些东西没有通用答案，也买不来。</p>
+<p>它们只能从这家公司自己的研发过程里长出来。</p>
+<p>JARVIS 也不太像一个“装上去就能用”的标准产品。它更像公司把自己研发经验一点点收成系统的过程。外面那些文章和项目能帮你把路看清一点，但最后那层，还是得自己做。</p>
+<hr>
+<h2 id="这也是我还会继续把-JARVIS-往下做的原因"><a href="#这也是我还会继续把-JARVIS-往下做的原因" class="headerlink" title="这也是我还会继续把 JARVIS 往下做的原因"></a>这也是我还会继续把 JARVIS 往下做的原因</h2><p>把这两篇文章放在一起看，分工已经很清楚了。</p>
+<p>上一篇写的是：最近一个月，JARVIS 具体收进了哪些运行规则。</p>
+<p>这一篇写的是：为什么这件事不能停在 harness，也不能停在几篇好文章和几个好项目这里。</p>
+<p>JARVIS 也不只是一个单独的工具名。</p>
+<p>它更像一个位置。前面接得住 harness，接得住 knowledge，接得住 intent，也接得住 workflow。后面要把这些东西都落回公司自己的研发闭环里。agent 一进来，先按这套做法工作。做完以后，再把新的经验沉回去。</p>
+<p>这层如果一直没人做，很多 AI 研发讨论最后都会停在一个很尴尬的位置：大家知道方向已经变了，也知道工程系统得补强，但到了公司内部，最后还是靠几个人脑子里的经验在兜底。</p>
+<p>继续把 JARVIS 往下做，补的也是这一层。</p>
+<hr>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p>如果你想先看行业这一步已经走到哪，可以先看这些：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">OpenAI：Harness engineering: leveraging Codex in an agent-first world</a></li>
+<li><a target="_blank" rel="noopener" href="https://martinfowler.com/articles/harness-engineering.html">Martin Fowler：Harness engineering for coding agent users</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness">LangChain：The Anatomy of an Agent Harness</a></li>
+<li><a target="_blank" rel="noopener" href="https://mitchellh.com/writing/my-ai-adoption-journey">Mitchell Hashimoto：My AI Adoption Journey</a></li>
+<li><a target="_blank" rel="noopener" href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Simon Willison：The lethal trifecta for AI agents</a></li>
+</ul>
+<p>如果你想继续看知识、组织和治理这条线，也可以看这些：</p>
+<ul>
+<li>Tanka 官网与首页 blog 摘要</li>
+<li>ArcKit GitHub README</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JV4-oPP0jjsBCZ4tW3Gy1g">《Harness不是目的，知识才是护城河 —— 一个AI工程交付团队的知识沉淀实践》</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ya0M9C-TBY_d3lzcmipRDA">《Martin Fowler 的 AI 研发提醒：非确定性进了研发链路，Harness 才真正开始承重》</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAwNjQwNzU2NQ==&mid=2650409043&idx=1&sn=6453858afff384ca9e3709c07f61c1c3&chksm=82ca4fc3f38888e5c200f461800e4006fe66d1e203bb500fb7eca6e7dacd8d834b53d7ae0ab3&mpshare=1&scene=1&srcid=05133B1MVcs8yLAWa6ULw8DN&sharer_shareinfo=bd6296b687f0863f807bffda78807f16&sharer_shareinfo_first=adfddad3345e9273c013954a4beacaf8&version=4.1.36.70499&platform=mac#rd">《Google 工程师用 Claude Code 自动化 80%？模型会变，软件工程会留下》</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Tj_M1OjNbJ9HeJlfMX6qMg">《「软件工程的功底」是智能时代生死攸关的要素》</a></li>
+</ul>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026051302',
+        title: '2026051302',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

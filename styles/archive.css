@@ -1,0 +1,11 @@
+.archives-wrap {
+  display: grid;
+  gap: 18px;
+}
+.archive-year-wrap {
+  margin: 0;
+}
+a.archive-year {
+  color: color-default;
+  font-family: font-display;
+}

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>AI 研发里的 memory，至少有三层 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="AI 研发里的 memory，至少有三层最近我在往外讲 hengshi-jarvis，经常会被追问同一类问题。 JARVIS 一直讲 memory。Claude Code、Hermes 这些工具也在讲 memory。mem0、mem9、MemPalace 这一类产品更是直接拿 memory 当主线。 几个 memory 一放在一起，就容易讲糊。 然后问题就会变成：大家都在做记忆，JARVIS 到底">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 研发里的 memory，至少有三层">
+<meta property="og:url" content="http://chenjunhao.cn/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="AI 研发里的 memory，至少有三层最近我在往外讲 hengshi-jarvis，经常会被追问同一类问题。 JARVIS 一直讲 memory。Claude Code、Hermes 这些工具也在讲 memory。mem0、mem9、MemPalace 这一类产品更是直接拿 memory 当主线。 几个 memory 一放在一起，就容易讲糊。 然后问题就会变成：大家都在做记忆，JARVIS 到底">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-14T02:56:17.000Z">
+<meta property="article:modified_time" content="2026-05-14T04:16:37.000Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Organizational Memory">
+<meta property="article:tag" content="Memory">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-ai-r-and-d-memory-has-at-least-three-layers" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2026</span>
+        
+      </div>
+      <h1 class="article-header">AI 研发里的 memory，至少有三层</h1>
+      <div class="article-info">
+        <span>2026.05.14</span>
+        
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/Engineering/">#Engineering</a>
+        
+          <a href="/tags/JARVIS/">#JARVIS</a>
+        
+          <a href="/tags/Organizational-Memory/">#Organizational Memory</a>
+        
+          <a href="/tags/Memory/">#Memory</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">最近我在往外讲 hengshi-jarvis，经常会被追问：Claude Code、Hermes 这些工具也在讲 memory，mem0 这一类产品更是直接做 memory，JARVIS 为什么还要反复讲 memory。原因不复杂，这里本来就混着三层东西：coding agent 自带的 memory、mem0 这一层把资料单独存和找回的 memory、还有 jarvis-types 这种会直接改执行顺序的组织…</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <p>最近我在往外讲 <code>hengshi-jarvis</code>，经常会被追问同一类问题。</p>
+<p>JARVIS 一直讲 memory。Claude Code、Hermes 这些工具也在讲 memory。mem0、mem9、MemPalace 这一类产品更是直接拿 memory 当主线。</p>
+<p>几个 memory 一放在一起，就容易讲糊。</p>
+<p>然后问题就会变成：大家都在做记忆，JARVIS 到底多做了什么。</p>
+<p>这篇我就只讲这个问题。</p>
+<p>我想讲的是 AI 研发系统里的 memory 到底分几层，每层在记什么，为谁服务，最后怎么接到一起。</p>
+<p>前面两篇，我一篇写最近一个月 JARVIS 收进了哪些运行规则，一篇写为什么公司最后还是得有自己的 JARVIS。这一篇继续往下走，把 memory 讲透一点。</p>
+<p>这一篇先只拆 memory。后面如果继续写，我会再把 runtime、workflow、review、writeback 这些 layer 一层层拆开。</p>
+<hr>
+<h2 id="先别把-memory-当成一个词"><a href="#先别把-memory-当成一个词" class="headerlink" title="先别把 memory 当成一个词"></a>先别把 memory 当成一个词</h2><p>真进研发现场以后，memory 至少有三层。</p>
+<ul>
+<li>coding agent 自带的 memory</li>
+<li>mem0 这一类 memory infrastructure</li>
+<li>JARVIS 这一类组织执行系统里的 memory</li>
+</ul>
+<p>三层都重要，干的不是一件事。</p>
+<p>coding agent 的 memory，解决的是单个 agent 别老失忆。</p>
+<p>mem0 这类 memory layer，解决的是东西能存住、找得回、还可以多人共用。</p>
+<p>JARVIS 这层管得更靠后：这些记忆回来以后，公司默认按什么做，谁来兜底，做到什么算收口，最后怎么写回去。</p>
+<p>这三层一拆开，后面就不容易讲乱了。</p>
+<hr>
+<h2 id="第一层：coding-agent-自己的-memory"><a href="#第一层：coding-agent-自己的-memory" class="headerlink" title="第一层：coding agent 自己的 memory"></a>第一层：coding agent 自己的 memory</h2><p>Claude Code、Hermes 说自己有 memory，这没啥好争的，agent 本来就得记东西。</p>
+<p>它记的通常是这些东西：</p>
+<ul>
+<li>这个用户是谁</li>
+<li>这台机器是什么环境</li>
+<li>这个 repo 最近在干什么</li>
+<li>这个人平时怎么写、怎么走流程、怎么说话</li>
+<li>上一轮做到哪了，下次怎么少重复</li>
+<li>哪些经验可以沉成技能、提示、规则</li>
+</ul>
+<p>这层就是解决一件事：别让 agent 每一轮都像新来的。</p>
+<p>它先服务 agent 和当前用户这一段协作。工具会越来越懂你，也越来越懂当前环境。</p>
+<p>边界也很清楚。</p>
+<p>它不天然等于公司的组织记忆，更不天然等于公司的默认执行系统。今天这个 agent 记住了你的偏好，不代表另一个 agent 进来就能自动照着同一套做法干活。它更像 agent 自己的长期上下文。</p>
+<hr>
+<h2 id="第二层：mem0-们在做的-memory"><a href="#第二层：mem0-们在做的-memory" class="headerlink" title="第二层：mem0 们在做的 memory"></a>第二层：mem0 们在做的 memory</h2><p>mem0、mem9、MemPalace 这类东西，管的已经不是“某个 agent 怎么更懂我”了。它们是把 memory 单独拎出来做。</p>
+<p>它们要解决的是：</p>
+<ul>
+<li>什么值得记</li>
+<li>记下来以后怎么存</li>
+<li>记成什么结构</li>
+<li>下次怎么搜回来</li>
+<li>多个 agent、多个 runtime、多个设备能不能共用</li>
+<li>怎么更新、治理、审计</li>
+</ul>
+<p>Mem0 这条线，是想把 memory 做成一层通用底座。mem9 更看重多处共用、长期接得上。MemPalace 更看重东西留在本地，原文别被揉坏。</p>
+<p>打法不一样，但核心都一样：把“历史别散掉，重要上下文下次能回来”这件事做好。</p>
+<p>这层对 AI 研发太重要了。没有它，agent 每轮都要重新捡材料，很多事根本跑不长。</p>
+<p>边界也在这。</p>
+<p>它能把材料递回来，但通常不会替你定义公司后面按什么规矩继续做。</p>
+<hr>
+<h2 id="第三层：JARVIS-这层记的，已经不只是材料了"><a href="#第三层：JARVIS-这层记的，已经不只是材料了" class="headerlink" title="第三层：JARVIS 这层记的，已经不只是材料了"></a>第三层：JARVIS 这层记的，已经不只是材料了</h2><p>JARVIS 讲的 memory，已经走到执行这层了。</p>
+<p>JARVIS 记的，更多是公司已经跑出来的默认做法：</p>
+<ul>
+<li>任务进来先从哪条闭环进</li>
+<li>第一跳先看 issue、日志、模块总览，还是先复现</li>
+<li>什么情况必须升级给人</li>
+<li>哪些 repo 或 module 有禁区</li>
+<li>什么证据够了才能算 done</li>
+<li>哪些结果要沉到 repo 规则，哪些沉到共享 skill，哪些沉到长期知识</li>
+</ul>
+<p>这是组织 memory，而且会直接改执行顺序。</p>
+<p>同样一条历史记录，在不同团队里，后面的动作可以完全不一样。有人先补测试再动代码，有人先复现，有人高风险改动一律升级，有人要求所有收获最后回写文档，有人要求沉到技能库。</p>
+<p>所以 JARVIS 这一层真正记住的，是“这家公司平时怎么干活”。</p>
+<p>它记材料，也记默认动作。材料回来以后，系统下一步怎么走，靠的就是这层。</p>
+<hr>
+<h2 id="三层-memory-到底差在哪"><a href="#三层-memory-到底差在哪" class="headerlink" title="三层 memory 到底差在哪"></a>三层 memory 到底差在哪</h2><p>可以直接这么看：</p>
+<ul>
+<li>coding agent memory：记住“我和这个用户、这个环境怎么配合”</li>
+<li>mem0-types memory：记住“哪些材料要持久化，之后怎么被找回来”</li>
+<li>jarvis-types memory：记住“这些材料回来以后，公司默认怎么继续干活”</li>
+</ul>
+<p>换个说法也一样。</p>
+<ul>
+<li><p>第一层服务单个 agent</p>
+</li>
+<li><p>第二层服务更长的历史材料，也服务多个 agent 一起用</p>
+</li>
+<li><p>第三层服务公司自己的研发闭环</p>
+</li>
+<li><p>第一层让 agent 更懂你</p>
+</li>
+<li><p>第二层让材料能回来</p>
+</li>
+<li><p>第三层让默认动作能接着跑</p>
+</li>
+<li><p>agent 可以换</p>
+</li>
+<li><p>memory backend 也可以换</p>
+</li>
+<li><p>但公司自己的默认执行系统，不能跟着一起丢</p>
+</li>
+</ul>
+<p>所以这事不能再拿一个笼统的 memory 概念糊过去。</p>
+<p>层一分开，位置就清楚了。</p>
+<hr>
+<h2 id="它们怎么融合"><a href="#它们怎么融合" class="headerlink" title="它们怎么融合"></a>它们怎么融合</h2><p>真到现场里，这三层是套在一起干活的。</p>
+<p>真实研发里，链路大概是这样：</p>
+<ol>
+<li>任务进来，JARVIS 先判断它属于哪条闭环，该去哪个 repo 或 workspace，先读什么，第一跳先找什么证据。</li>
+<li>执行这件事的 agent 带着自己的 memory 进场。它知道当前用户偏好、机器环境、repo 现状，少走重复路。</li>
+<li>如果需要长期资料、跨会话经验、共享上下文，就从 mem0 这一类 memory layer 里把材料召回来。</li>
+<li>agent 在 JARVIS 设好的默认规则里继续干活：什么时候升级、什么时候补测试、什么时候停手、什么时候收口。</li>
+<li>任务结束后，新的东西再分层回写：有些写回 agent 自己的 memory，有些写回 memory layer，有些直接升级成 JARVIS 里的规则、skill、workflow、writeback judgment。</li>
+</ol>
+<p>放到这条链路里看，关系就清楚了。</p>
+<ul>
+<li>agent memory 负责让执行者别失忆</li>
+<li>memory infrastructure 负责让材料别散</li>
+<li>JARVIS 负责让整个系统别乱</li>
+</ul>
+<p>少一层也能凑合跑，跑不远。</p>
+<hr>
+<h2 id="最近一个月我在-hengshi-jarvis-里往前推的，基本都落在第三层"><a href="#最近一个月我在-hengshi-jarvis-里往前推的，基本都落在第三层" class="headerlink" title="最近一个月我在 hengshi-jarvis 里往前推的，基本都落在第三层"></a>最近一个月我在 hengshi-jarvis 里往前推的，基本都落在第三层</h2><p>所以我最近一个月在 <code>hengshi-jarvis</code> 里真正往前推的，很多已经不是把资料记住再找回来这么简单了。</p>
+<p>canonical runtime root、per-task clones、workspace preflight、repo routing、completion rules，这些管的都不是“什么值得存”，也不是“某个 agent 怎么更懂我”。</p>
+<p>它们写进去的，就是第三层：组织默认动作。</p>
+<p>它们在回答的是另一组问题：</p>
+<ul>
+<li>agent 应该从哪条闭环进去</li>
+<li>agent 应该在哪个 workspace 里干活</li>
+<li>开工前哪些知识必须先读</li>
+<li>什么证据出来以后才算 done</li>
+<li>哪些变化需要 durable writeback</li>
+</ul>
+<p>所以我最近这一轮往前推，重点已经落到“怎么让组织经验变成默认动作”了。</p>
+<p>所以 JARVIS 和 mem0 们不是一层。</p>
+<p>mem0 们先把材料留住。JARVIS 再把这些材料接进执行闭环。</p>
+<hr>
+<h2 id="那两篇中文文章，刚好把问题推到这里"><a href="#那两篇中文文章，刚好把问题推到这里" class="headerlink" title="那两篇中文文章，刚好把问题推到这里"></a>那两篇中文文章，刚好把问题推到这里</h2><p>最近我看的两篇中文文章，一篇在讲模型会变，软件工程会留下；另一篇在讲软件工程的功底在智能时代会更关键。</p>
+<p>这两个判断我基本都同意。</p>
+<p>因为 AI 真进研发以后，最后拼的就是工程基本功、测试习惯、review 纪律、边界意识、历史经验。</p>
+<p>但再往下问一步，就会碰到一个更具体的问题。</p>
+<p>这些东西最后留在哪？</p>
+<p>是只留在几个人脑子里。<br>是只留在某个 agent 自己的长期上下文里。<br>还是留在一套可以跨 agent、跨会话、跨团队继续生效的系统里。</p>
+<p>前两层都要有，最后还得落到第三层。</p>
+<p>不然软件工程确实会留下，但留下的方式还是口头经验、个人习惯和临场判断。agent 只能偶尔碰对，碰不成稳定系统。</p>
+<hr>
+<h2 id="为什么这一层最后还是得公司自己做"><a href="#为什么这一层最后还是得公司自己做" class="headerlink" title="为什么这一层最后还是得公司自己做"></a>为什么这一层最后还是得公司自己做</h2><p>再往下走一步，就会碰到真正麻烦的地方。</p>
+<p>因为每家公司默认怎么干活，差别都很大。</p>
+<p>同样一条记忆，在不同团队里，后面的动作可能完全不一样。</p>
+<p>有人默认先看 issue，再碰代码。有人默认先复现，再决定要不要补测试。有人要求高风险改动一律升级。有人把某些模块当禁区，agent 只能读不能改。有人要求经验最后沉到 repo 文档。有人要求沉到共享 skill。</p>
+<p>这些东西没有标准答案。</p>
+<p>所以 memory product 再强，也不会天然知道你们团队这套默认做法。</p>
+<p>它不会替你规定：</p>
+<ul>
+<li>哪些历史判断以后默认生效</li>
+<li>哪些例外情况以后默认升级</li>
+<li>哪些闭环必须补证据</li>
+<li>哪些结果这次必须写回系统</li>
+</ul>
+<p>这些事最后还是得公司自己做。</p>
+<p>所以我一直把 JARVIS 当成组织能力。它不是一个装上去就能直接通用的标准产品。</p>
+<p>外面的 memory layer、agent harness、workflow system、review system 都很重要，也都可以直接拿来用。但公司自己的收口层，还是只能从自己的研发过程里长出来。</p>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>所以今天再看 Claude Code、Hermes 的 memory，mem0-types 的 memory，还有 jarvis-types 的 memory，我会直接把它们拆成三层。</p>
+<p>第一层，让 agent 记住自己怎么和人协作。</p>
+<p>第二层，让资料稳稳留下来，之后还能被找回来。</p>
+<p>第三层，把这些资料、规则和历史判断压成公司自己的默认动作。</p>
+<p>三层都在，系统才真的立得住。</p>
+<p>JARVIS 和 mem0 们本来就该接在一起。前面的 agent 怎么换，后面的 memory 怎么换，它都得接得住。</p>
+<p>它最后要守住的是公司自己的研发闭环。工具换不换，没那么重要。</p>
+<p>这一篇先把 memory 讲到这里。</p>
+<p>后面如果继续写，我会再把 runtime、workflow、review、writeback 这些 layer 一层层拆开。</p>
+<p>这些层不讲开，JARVIS 在 AI 研发系统里的位置就还是会糊。</p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026051401',
+        title: '2026051401',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

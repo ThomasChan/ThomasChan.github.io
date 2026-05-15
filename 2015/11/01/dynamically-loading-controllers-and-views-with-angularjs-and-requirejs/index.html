@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>前端架构：requirejs+angularjs实现懒加载angular模块 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端架构：requirejs+angularjs实现懒加载angular模块">
+<meta property="og:url" content="http://chenjunhao.cn/2015/11/01/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="require.js + angular.js の一种前端架构新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-11-01T09:41:06.000Z">
+<meta property="article:modified_time" content="2022-11-26T10:23:06.000Z">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="angularjs">
+<meta property="article:tag" content="requirejs">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="blog-dynamically-loading-controllers-and-views-with-angularjs-and-requirejs" class="article article-type-blog article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2015</span>
+        
+      </div>
+      <h1 class="article-header">前端架构：requirejs+angularjs实现懒加载angular模块</h1>
+      <div class="article-info">
+        <span>2015.11.01</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+          <a href="/tags/angularjs/">#angularjs</a>
+        
+          <a href="/tags/requirejs/">#requirejs</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">新项目要完全采用 restful api 的方式来进行开发，...</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <h2 id="require-js-angular-js-の一种前端架构"><a href="#require-js-angular-js-の一种前端架构" class="headerlink" title="require.js + angular.js の一种前端架构"></a>require.js + angular.js の一种前端架构</h2><p>新项目要完全采用 restful api 的方式来进行开发，既然前端只有我一个就我说了算ԅ(≖‿≖ԅ)，工作以来还未在项目中用过 angular 开发，先简单介绍一下 angular.js ，我理解的她是一种重型前端 mvc 框架，对写 jQuery 的人来说可能上手比较困难，不过一旦理解她的思想就容易了，她内部已经做了很多工作，用她来开发的话你要关心的是数据的变动，而不是像 jQuery 一样去操作 DOM 元素，如果你对 jQuery 很熟悉的话想上手 angular 我推荐理解一下 stackoverflow 上这个问题，__<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background?rq=1">如果我对 jQuery 开发很熟如何理解 angular </a>__。</p>
+<p>requirejs 不用说都知道是用来前端懒加载 scripts 的，我在网上看到的使用 require + angular 的组合的案例模式都是一样的，无论你访问网站的哪个 url ，都会把 angular 的所有模块全部通过 require 加载下来，虽然 angular 与 backbone 这些框架貌似更适合做单页应用，但是我认为单页应用也没必要把所有的模块都加载下来，这样首屏加载就会很慢，用户体验很不好；于是我 google 了一通，终于找到了解决方法，通过 require 配合 angular route 的 resolve 方法，实现单模块加载，这样做的好处显而易见，坏处可以说没有，硬要说的话还是 angular 之前的缺点：seo 方面要单做。</p>
+<p>废话不多说，show you my code:</p>
+<p>首先项目目录结构是这样滴：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">app-|</span><br><span class="line">    |-package.json</span><br><span class="line">    |-index.html</span><br><span class="line">    |-views</span><br><span class="line">    |-src-+</span><br><span class="line">          |-img</span><br><span class="line">          |-css</span><br><span class="line">          |-js-+</span><br><span class="line">          |    |-controllers-+...</span><br><span class="line">          |    |-services-+...</span><br><span class="line">          |    +application.js</span><br><span class="line">          |    +require-config.js</span><br><span class="line">          |    +routeResolve.js</span><br><span class="line">          |-lib-+</span><br><span class="line">                +angular.min.js</span><br><span class="line">                +angular-route.min.js</span><br><span class="line">                +angular-animate.min.js</span><br><span class="line">                +angular-resourse.min.js</span><br><span class="line">                +require.js</span><br></pre></td></tr></table></figure>
+
+
+<p>index.html 长这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-cmn-Hans&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>application<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/src/lib/require.js&quot;</span> <span class="attr">data-main</span>=<span class="string">&quot;/src/js/require-config.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-view</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>require-config.js ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">    <span class="attr">baseUrl</span>: <span class="string">&#x27;/src&#x27;</span>,</span><br><span class="line">    <span class="attr">paths</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;angular&#x27;</span>: <span class="string">&#x27;lib/angular.min&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;ngRoute&#x27;</span>: <span class="string">&#x27;lib/angular-route.min&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;ngAnimate&#x27;</span>: <span class="string">&#x27;lib/angular-animate.min&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;ngResource&#x27;</span>: <span class="string">&#x27;lib/angular-resource.min&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">shim</span>: &#123;</span><br><span class="line">        <span class="attr">angular</span>: &#123;</span><br><span class="line">            <span class="built_in">exports</span> : <span class="string">&#x27;angular&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">ngRoute</span>: &#123;</span><br><span class="line">            <span class="attr">deps</span>: [<span class="string">&#x27;angular&#x27;</span>],</span><br><span class="line">            <span class="attr">exports</span>: <span class="string">&#x27;ngRoute&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">ngAnimate</span>: &#123;</span><br><span class="line">            <span class="attr">deps</span>: [<span class="string">&#x27;angular&#x27;</span>],</span><br><span class="line">            <span class="attr">exports</span>: <span class="string">&#x27;ngAnimate&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">ngResource</span>: &#123;</span><br><span class="line">            <span class="attr">deps</span>: [<span class="string">&#x27;angular&#x27;</span>],</span><br><span class="line">            <span class="attr">exports</span>: <span class="string">&#x27;ngResource&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ,<span class="attr">urlArgs</span>: <span class="string">&#x27;v=&#x27;</span>+(+<span class="keyword">new</span> <span class="title class_">Date</span>())</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">require</span>([</span><br><span class="line">    <span class="string">&#x27;js/application&#x27;</span></span><br><span class="line">], <span class="keyword">function</span>(<span class="params">application</span>)&#123;</span><br><span class="line">    angular.<span class="title function_">element</span>(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        angular.<span class="title function_">bootstrap</span>(<span class="variable language_">document</span>, [<span class="string">&#x27;application&#x27;</span>]);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>application.js ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">define</span>([</span><br><span class="line">    <span class="string">&#x27;angular&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ngRoute&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ngAnimate&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ngResource&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;js/routeResolve&#x27;</span></span><br><span class="line">], <span class="keyword">function</span>(<span class="params"> angular, ngRoute, ngAnimate, ngResource, routeResolver </span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> application = angular.<span class="title function_">module</span>(<span class="string">&#x27;application&#x27;</span>, [<span class="string">&#x27;ngRoute&#x27;</span>, <span class="string">&#x27;ngAnimate&#x27;</span>, <span class="string">&#x27;ngResource&#x27;</span>]);</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">application</span> = application;</span><br><span class="line">    application</span><br><span class="line">        .<span class="title function_">config</span>([<span class="string">&#x27;$routeProvider&#x27;</span>, <span class="string">&#x27;$controllerProvider&#x27;</span>, <span class="string">&#x27;$compileProvider&#x27;</span>, <span class="string">&#x27;$filterProvider&#x27;</span>, <span class="string">&#x27;$provide&#x27;</span>,</span><br><span class="line">            <span class="keyword">function</span>(<span class="params">$routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> route = routeResolver;</span><br><span class="line">                $routeProvider</span><br><span class="line">                    .<span class="title function_">when</span>(<span class="string">&#x27;/&#x27;</span>, &#123;</span><br><span class="line">                        <span class="attr">reloadOnSearch</span>: <span class="literal">false</span>,</span><br><span class="line">                        <span class="attr">templateUrl</span>:<span class="string">&#x27;views/index.html&#x27;</span>,</span><br><span class="line">                        <span class="attr">resolve</span>: route.<span class="title function_">resolve</span>([</span><br><span class="line">                            <span class="string">&#x27;js/services/peopleService&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;js/controllers/popup&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;js/controllers/paginator&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;js/controllers/index&#x27;</span></span><br><span class="line">                        ])</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .<span class="title function_">otherwise</span>(&#123;</span><br><span class="line">                        <span class="attr">redirectTo</span>:<span class="string">&#x27;/&#x27;</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                <span class="variable language_">window</span>.<span class="property">application</span>.<span class="property">components</span> = &#123;</span><br><span class="line">                    controller : $controllerProvider.<span class="property">register</span>,</span><br><span class="line">                    directive  : $compileProvider.<span class="property">directive</span>,</span><br><span class="line">                    filter     : $filterProvider.<span class="property">register</span>,</span><br><span class="line">                    factory    : $provide.<span class="property">factory</span>,</span><br><span class="line">                    service    : $provide.<span class="property">service</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;]);</span><br><span class="line">    <span class="keyword">return</span> application;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>routeResolve.js ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">define</span>(<span class="keyword">function</span> (<span class="params"> <span class="built_in">require</span> </span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> resolve = <span class="keyword">function</span> (<span class="params">deps, preFetchFuncs</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> routeDef = &#123;</span><br><span class="line">                <span class="attr">load</span>: [<span class="string">&#x27;$q&#x27;</span>, <span class="string">&#x27;$rootScope&#x27;</span>, <span class="keyword">function</span> (<span class="params">$q, $rootScope</span>) &#123;</span><br><span class="line">                    <span class="keyword">var</span> dependencies = deps;</span><br><span class="line">                    <span class="keyword">return</span> <span class="title function_">resolveDependencies</span>($q, $rootScope, dependencies);</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">if</span> ( preFetchFuncs ) &#123;</span><br><span class="line">                angular.<span class="title function_">merge</span>( routeDef, preFetchFuncs );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> routeDef;</span><br><span class="line">        &#125;,</span><br><span class="line">        resolveDependencies = <span class="keyword">function</span> (<span class="params">$q, $rootScope, dependencies</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> defer = $q.<span class="title function_">defer</span>();</span><br><span class="line">            <span class="built_in">require</span>(dependencies, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">                defer.<span class="title function_">resolve</span>();</span><br><span class="line">                $rootScope.$apply()</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> defer.<span class="property">promise</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">resolve</span>: resolve</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其实这就是所有的内容了，当访问首页即 ‘/‘ 时，angular route 的 resolve 方法__通过__我们封装的__routeResolve__来懒加载模块代码，当然模块代码写的时候就不是 <code>define function</code> 里再写 <code>angular.controller</code> 了，直接写 <code>window.application.components.controller</code> ，好那么问题来了，为什么要暴露 angular 的那些方法给 window 呢，原因是<a target="_blank" rel="noopener" href="https://docs.angularjs.org/guide/bootstrap"> angular 的工作方式</a>，angular 在启动之后是不能动态添加 controller 啊 service 啊之类的，在 angular 程序启动后，要添加只能通过内部的 register 方法(controller 的 register)，所以你懂的。</p>
+<p>OK，采用这种架构之后，前端__所有__代码都可以扔到 cdn 上去了，接口全部 rest api。</p>
+<p>以上。</p>
+<p>（ps: 这种架构到底有哪些坑本人还不得而知，若有很明显的坑麻烦还请告知一下我(๑╹ڡ╹)╭）</p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs">http://weblogs.asp.net/dwahlin/dynamically-loading-controllers-and-views-with-angularjs-and-requirejs</a></p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2015110101',
+        title: '2015110101',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

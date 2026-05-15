@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>用canvas写一个“火箭车”小游戏 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用canvas写一个“火箭车”小游戏">
+<meta property="og:url" content="http://chenjunhao.cn/2016/08/31/old-tv-car-game-writen-by-js-with-canvas/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="写在前面先玩一把再看（额声明：并没有通关的说）（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。 只会写干货怎么写游戏呢，没经验，首先想到">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-08-31T12:10:08.000Z">
+<meta property="article:modified_time" content="2022-11-26T10:23:06.000Z">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="canvas">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="blog-old-tv-car-game-writen-by-js-with-canvas" class="article article-type-blog article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2016</span>
+        
+      </div>
+      <h1 class="article-header">用canvas写一个“火箭车”小游戏</h1>
+      <div class="article-info">
+        <span>2016.08.31</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+          <a href="/tags/html/">#html</a>
+        
+          <a href="/tags/canvas/">#canvas</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">闲的时候总想干点什么...</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><a href="http://chenjunhao.cn/projects/carGame/">先玩一把再看（额声明：并没有通关的说）</a><br>（注：本文写在游戏写完之后，所以代码并不是从 0 开始的）<br>小时候在小霸王上玩过一款游戏，忘记名字了，应该是叫火箭车吧，看起来蛮简单的（这 flag 立的太明显了(T^T)），正好这几天比较闲，就想拿 canvas 实现一下，因为之前一直不能理解 canvas 动画，正好也熟悉熟悉锻炼一下（其实还想练练写文章）。</p>
+<h2 id="只会写干货"><a href="#只会写干货" class="headerlink" title="只会写干货"></a>只会写干货</h2><p>怎么写游戏呢，没经验，首先想到的是我的游戏里要有什么，回忆火箭车简单的分析一下，</p>
+<ul>
+<li>地图上有公路，公路两旁是草地</li>
+<li>有一辆自己的车，可以左右上下移动</li>
+<li>有 n 个对手，对手的速度不一致</li>
+<li>有障碍物</li>
+<li>地图的路会拐弯</li>
+<li>有碰撞，碰撞后车会旋转速度减为 0</li>
+<li>有进度条</li>
+</ul>
+<p>嗯其实功能点还是不少的，挨个儿来。</p>
+<p>Before the first, 要明白 canvas 的动画原理，就像电影一样，是按桢来的，所以要有一个函数（就叫她 draw吧） 来绘制每一帧的画面，然后 requestAnimationFrame 来将每一帧连起来， requestAnimationFrame 是大约每 16 毫秒执行一次，所以画面非常连贯，看起来就是动画了。</p>
+<p>所以 canvas 动画是这么运作之后，先找素材吧，images.google.com 直接搜 car top 就是满屏的车辆俯视图，挑一些好看的合适的，拿 PS 切成 png 图，裁剪掉透明像素就好了。</p>
+<p>接下来我们先定义一些变量，比如我们的小车车、canvas 对象等：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> canvas = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;canvas&#x27;</span>) <span class="comment">// canvas 元素</span></span><br><span class="line"><span class="keyword">var</span> context = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>) <span class="comment">// 画布</span></span><br><span class="line"><span class="keyword">var</span> contextWidth = canvas.<span class="property">width</span> <span class="comment">// 画布宽</span></span><br><span class="line"><span class="keyword">var</span> contextHeight = canvas.<span class="property">height</span> <span class="comment">// 画布高</span></span><br><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">		<span class="attr">img</span>: <span class="string">&#x27;car.png&#x27;</span>, <span class="comment">// 小车车的背景图片</span></span><br><span class="line">		<span class="attr">x</span>: <span class="number">0</span>, <span class="comment">// x 轴坐标</span></span><br><span class="line">		<span class="attr">y</span>: <span class="number">0</span>, <span class="comment">// y 轴坐标</span></span><br><span class="line">		<span class="attr">width</span>: <span class="number">0</span>, <span class="comment">// 小车车的宽度</span></span><br><span class="line">		<span class="attr">height</span>: <span class="number">0</span> <span class="comment">// 小车车的高度</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 移动小车车时的坐标和速度</span></span><br><span class="line"><span class="keyword">var</span> move = &#123;</span><br><span class="line">		<span class="attr">x</span>: <span class="number">0</span>, <span class="comment">// 按一下方向键移动的像素距离，x 轴</span></span><br><span class="line">		<span class="attr">y</span>: <span class="number">0</span>,</span><br><span class="line">	  <span class="attr">speed</span>: <span class="number">2</span>, <span class="comment">// 移动速度</span></span><br><span class="line">	  <span class="attr">friction</span>: <span class="number">0.9</span> <span class="comment">// 摩擦力</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>好的然后我们需要定个流程骨架，先什么再什么，嗯我们需要个 init 函数来初始化，初始化里来启动第一桢，由于 canvas 动画的原理，即意味着每一帧都要把所有内容都要绘制一遍，所以 draw 里边我们先</p>
+<ol>
+<li>clearContext清掉上一桢</li>
+<li>drawBackground画背景草地</li>
+<li>drawRoad 画公路</li>
+<li>drawEnemys 画对手的小车车</li>
+<li>drawCar 画自己的小车车</li>
+<li>requestAnimationFrame(draw) 画下一桢</li>
+</ol>
+<p>这么定义。另外还需要个 listener 函数来监听方向键按键。</p>
+<h3 id="1-clearContext清掉上一桢"><a href="#1-clearContext清掉上一桢" class="headerlink" title="1. clearContext清掉上一桢"></a>1. clearContext清掉上一桢</h3><p>这个简单，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">clearContext</span>(<span class="params"></span>) &#123;</span><br><span class="line">	context.<span class="title function_">clearRect</span>(<span class="number">0</span>, <span class="number">0</span>, contextWidth, contextHeight)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即可。</p>
+<h3 id="2-drawBackground画背景草地"><a href="#2-drawBackground画背景草地" class="headerlink" title="2. drawBackground画背景草地"></a>2. drawBackground画背景草地</h3><p>我觉得还是先找素材吧，Google 了一通也没找到合适的就随便选了张拿 PS 剪了剪，然后定义变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> road = &#123;</span><br><span class="line">	<span class="attr">img</span>: <span class="keyword">new</span> <span class="title class_">Image</span>(),</span><br><span class="line">	<span class="attr">direction</span>: <span class="number">1</span>, <span class="comment">// 本想用作公路的方向，并未实现</span></span><br><span class="line">	<span class="attr">path</span>: [], <span class="comment">// 本想用作公路的数据，并未实现</span></span><br><span class="line">	<span class="attr">meadowI</span>: <span class="number">0</span>, <span class="comment">// 草地移动距离</span></span><br><span class="line">	<span class="attr">meadows</span>: [], <span class="comment">// 草地数据</span></span><br><span class="line">	<span class="attr">zebraCrossing</span>: [], <span class="comment">// 公路分割线数据</span></span><br><span class="line">	<span class="attr">zebraCrossingI</span>: <span class="number">0</span>, <span class="comment">// 公路移动距离</span></span><br><span class="line">	<span class="attr">meters</span>: <span class="number">0</span>, <span class="comment">// 分？</span></span><br><span class="line">	<span class="attr">width</span>: <span class="number">0</span> <span class="comment">// 公路的宽度</span></span><br><span class="line">&#125;</span><br><span class="line">road.<span class="property">img</span>.<span class="property">src</span> = <span class="string">&#x27;roads.png&#x27;</span> <span class="comment">// 草地的图片</span></span><br><span class="line">road.<span class="property">img</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> x = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(contextWidth / <span class="variable language_">this</span>.<span class="property">width</span>)</span><br><span class="line">	<span class="keyword">var</span> y = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(contextHeight / <span class="variable language_">this</span>.<span class="property">height</span>)</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = -<span class="number">1</span>; i &lt; y; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; x; j++) &#123;</span><br><span class="line">			road.<span class="property">meadows</span>.<span class="title function_">push</span>([j*<span class="variable language_">this</span>.<span class="property">width</span>, i*<span class="variable language_">this</span>.<span class="property">height</span>, <span class="variable language_">this</span>.<span class="property">width</span>, <span class="variable language_">this</span>.<span class="property">height</span>])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="title function_">init</span>() <span class="comment">// 草地的图片加载完毕后初始化</span></span><br><span class="line">	<span class="title function_">listener</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>road.meadows 为二维数组，我们是从上到下绘制，草地还需要向下移动，所以 x 轴第一列的 y 坐标应该是负数，所以从 i = -1 开始。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">drawBackground</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> x = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(contextWidth / road.<span class="property">img</span>.<span class="property">width</span>)</span><br><span class="line">	<span class="keyword">var</span> y = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(contextHeight / road.<span class="property">img</span>.<span class="property">height</span>)</span><br><span class="line">	road.<span class="property">meadowI</span>++</span><br><span class="line">   <span class="comment">// 这个 10 我也不知道怎么来的，是试出来的，反正从大于 10 时重置 road.meadowI 从 0 开始绘制草地是无缝连贯的</span></span><br><span class="line">	<span class="keyword">if</span> (road.<span class="property">meadowI</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">		road.<span class="property">meadowI</span> = <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (road.<span class="property">meadows</span>.<span class="property">length</span>) &#123;</span><br><span class="line">		road.<span class="property">meadows</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">i</span>) &#123;</span><br><span class="line">       <span class="comment">// drawImage( img, x, y, width, height) 这里 y + meadowI * 6, 是每一帧草地都向下移动 meadowI * 6 个像素</span></span><br><span class="line">			context.<span class="title function_">drawImage</span>(road.<span class="property">img</span>, i[<span class="number">0</span>], i[<span class="number">1</span>] + road.<span class="property">meadowI</span> * <span class="number">6</span>, i[<span class="number">2</span>], i[<span class="number">3</span>])</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-drawRoad-画公路"><a href="#3-drawRoad-画公路" class="headerlink" title="3. drawRoad 画公路"></a>3. drawRoad 画公路</h3><p>公路也很简单，画个矩形</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.<span class="property">fillStyle</span> = <span class="string">&#x27;#888&#x27;</span></span><br><span class="line">context.<span class="title function_">fillRect</span>(road.<span class="property">x</span>, <span class="number">0</span>, road.<span class="property">width</span>, contextHeight)</span><br></pre></td></tr></table></figure>
+<p>嗯还没说 road.x 和 road.width 怎么来的呢：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> carImg = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">carImg.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	car.<span class="property">width</span> = <span class="variable language_">this</span>.<span class="property">width</span></span><br><span class="line">	car.<span class="property">height</span> = <span class="variable language_">this</span>.<span class="property">height</span></span><br><span class="line">	car.<span class="property">x</span> = contextWidth / <span class="number">2</span> - car.<span class="property">width</span> / <span class="number">2</span></span><br><span class="line">	car.<span class="property">y</span> = contextHeight - car.<span class="property">height</span> - move.<span class="property">y</span></span><br><span class="line">	road.<span class="property">width</span> = car.<span class="property">width</span> * <span class="number">4</span> + <span class="number">10</span></span><br><span class="line">	road.<span class="property">x</span> = contextWidth / <span class="number">2</span> - road.<span class="property">width</span> / <span class="number">2</span></span><br><span class="line">	<span class="keyword">var</span> f41 = road.<span class="property">width</span> / <span class="number">4</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> j = -<span class="number">10</span>; j &lt; contextHeight / <span class="number">50</span>; j++) &#123; <span class="comment">// 嗯这个 50 我也是拍脑袋想出来的不要问为什么</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) &#123; <span class="comment">// 这个 3 是因为定义公路同向 4 车道</span></span><br><span class="line">			road.<span class="property">zebraCrossing</span>.<span class="title function_">push</span>([road.<span class="property">x</span> + f41 * i, j * <span class="number">60</span>, <span class="number">2</span>, <span class="number">40</span>]) <span class="comment">// 这个 60 也是</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">carImg.<span class="property">src</span> = car.<span class="property">img</span></span><br></pre></td></tr></table></figure>
+<p>加载上自己的小车车后，把小车车放到画布的正中下，公路的宽度定为车的宽度的 4 倍外加 10 个像素（没啥原因，就是想加 10 个像素），分割线怎么画，定义每个分割线的矩形为 宽 2 像素，高 40 像素，j = -10 的原因也是因为分割线向下移动，给人一种画面在向上前进的感觉。</p>
+<p>OK，再在空空的矩形公路上画上分割线，移动规律理同草地</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">road.<span class="property">zebraCrossingI</span>++</span><br><span class="line"><span class="keyword">if</span> (road.<span class="property">zebraCrossingI</span> &gt; <span class="number">30</span>) &#123; <span class="comment">// 嗯不要问了，30 也是拍脑袋出来的</span></span><br><span class="line">	road.<span class="property">zebraCrossingI</span> = <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (road.<span class="property">zebraCrossing</span>.<span class="property">length</span>) &#123;</span><br><span class="line">	road.<span class="property">zebraCrossing</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">i</span>) &#123;</span><br><span class="line">		context.<span class="title function_">fillRect</span>(i[<span class="number">0</span>], i[<span class="number">1</span>] + road.<span class="property">zebraCrossingI</span> * <span class="number">6</span>, i[<span class="number">2</span>], i[<span class="number">3</span>])</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再画两条路两边的白色不可跨域实线</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.<span class="property">fillStyle</span> = <span class="string">&#x27;#fff&#x27;</span></span><br><span class="line">context.<span class="title function_">fillRect</span>(road.<span class="property">x</span> - <span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>, contextHeight)</span><br><span class="line">context.<span class="title function_">fillRect</span>(road.<span class="property">x</span> + road.<span class="property">width</span>, <span class="number">0</span>, <span class="number">3</span>, contextHeight)</span><br></pre></td></tr></table></figure>
+<p>嗯公路就这样了，我还没想出来怎么让公路能拐弯…</p>
+<h3 id="4-drawEnemys-画对手的小车车"><a href="#4-drawEnemys-画对手的小车车" class="headerlink" title="4. drawEnemys 画对手的小车车"></a>4. drawEnemys 画对手的小车车</h3><p>想了想对手貌似不太好实现，还是先将对手作为障碍物的存在吧，嗯还是先定义些变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> enemySrc = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> r = []</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">12</span>; i++) &#123; <span class="comment">// 我找了 12 张不同小车车的俯视图......</span></span><br><span class="line">		r.<span class="title function_">push</span>(&#123;</span><br><span class="line">			<span class="attr">width</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">height</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">img</span>: <span class="string">&#x27;enemy&#x27;</span>+i+<span class="string">&#x27;.png&#x27;</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> r</span><br><span class="line">&#125;())</span><br><span class="line"><span class="keyword">var</span> enemys = [] <span class="comment">// 障碍物数据</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = enemySrc.<span class="property">length</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">	enemySrc[i].<span class="property">imgObj</span> = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">	enemySrc[i].<span class="property">imgObj</span>.<span class="property">onload</span> = (<span class="keyword">function</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">			obj.<span class="property">width</span> = <span class="variable language_">this</span>.<span class="property">width</span></span><br><span class="line">			obj.<span class="property">height</span> = <span class="variable language_">this</span>.<span class="property">height</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)(enemySrc[i])</span><br><span class="line">	enemySrc[i].<span class="property">imgObj</span>.<span class="property">src</span> = enemySrc[i].<span class="property">img</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>障碍物需要放到公路上，所以生成的时候根据 road.x road.width 公路的 x 坐标和宽度来，在初始化的时候生成第一个障碍物</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 拿到一个介于 0 到障碍物数量的随机数，因为是数组的下标所以是从 -1 开始</span></span><br><span class="line"><span class="keyword">var</span> _random = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title function_">randomWithRange</span>(-<span class="number">1</span>, enemySrc.<span class="property">length</span> + <span class="number">1</span>))</span><br><span class="line"><span class="keyword">var</span> _img = enemySrc[((_random+<span class="number">0</span>) &gt;= <span class="number">0</span> ? _random : <span class="number">1</span>)]</span><br><span class="line"><span class="comment">// 这个 _index 是表示这个障碍物放到从左数第几条车道的</span></span><br><span class="line"><span class="keyword">var</span> _index = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title function_">randomWithRange</span>(<span class="number">0</span>, enemys.<span class="property">length</span> + <span class="number">1</span>))</span><br><span class="line">enemys = [&#123;</span><br><span class="line">	<span class="attr">img</span>: _img,</span><br><span class="line">	<span class="attr">index</span>: _index,</span><br><span class="line">	<span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">floor</span>(road.<span class="property">width</span> / <span class="number">4</span> * _index + road.<span class="property">x</span>),</span><br><span class="line">	<span class="attr">y</span>: <span class="number">0</span>,</span><br><span class="line">	<span class="attr">inc</span>: <span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title function_">randomWithRange</span>(<span class="number">2</span>, <span class="number">5</span>)) <span class="comment">// 这是这个障碍物的移动速度</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>我们需要生成障碍物的数据，所以需要有个 geneEnemy 函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">geneEnemy</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> _img = enemySrc[<span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title function_">randomWithRange</span>(-<span class="number">1</span>, enemySrc.<span class="property">length</span> + <span class="number">1</span>))]</span><br><span class="line">	<span class="comment">// Math.random() * 10 &gt; 5 是表示 2 分之 1 的概率，enemys.length &lt; 3 是表示总得出现的障碍物不超过 3 个</span></span><br><span class="line">	<span class="comment">// 为啥又要 2 分之 1 的概率又要不超过 3 个的限定条件呢，嗯不然满屏都是障碍物了......</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span> &gt; <span class="number">5</span> &amp;&amp; _img &amp;&amp; enemys.<span class="property">length</span> &lt; <span class="number">3</span>) &#123;</span><br><span class="line">		<span class="keyword">var</span> _index = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title function_">randomWithRange</span>(<span class="number">0</span>, enemys.<span class="property">length</span> + <span class="number">1</span>))</span><br><span class="line">		<span class="comment">// 如果没有上一个障碍物，或者将要生成的障碍物的所属车道 不等于 上一个障碍物的所属车道</span></span><br><span class="line">		<span class="keyword">if</span> (!enemys[enemys.<span class="property">length</span> - <span class="number">1</span>] || _index != enemys[enemys.<span class="property">length</span> - <span class="number">1</span>].<span class="property">index</span>) &#123;</span><br><span class="line">			enemys.<span class="title function_">push</span>(&#123;</span><br><span class="line">				<span class="attr">img</span>: _img,</span><br><span class="line">				<span class="attr">index</span>: _index,</span><br><span class="line">				<span class="attr">x</span>: <span class="title class_">Math</span>.<span class="title function_">floor</span>(road.<span class="property">width</span> / <span class="number">4</span> * _index + road.<span class="property">x</span>),</span><br><span class="line">				<span class="attr">y</span>: <span class="number">0</span>,</span><br><span class="line">				<span class="attr">inc</span>: <span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title function_">randomWithRange</span>(<span class="number">2</span>, <span class="number">5</span>))</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好了，接下来我们可以画障碍物了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">drawEnemy</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (enemys.<span class="property">length</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; enemys.<span class="property">length</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (enemys[i + <span class="number">1</span>]) &#123;</span><br><span class="line">				enemys[i + <span class="number">1</span>].<span class="property">y</span> + enemys[i + <span class="number">1</span>].<span class="property">height</span> <span class="comment">// 这段干嘛的，我也忘了，看样子增加了障碍之间的距离......</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= enemys.<span class="property">length</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (enemys[i].<span class="property">y</span> &gt; contextHeight) &#123;</span><br><span class="line">				enemys = enemys.<span class="title function_">slice</span>(i) <span class="comment">// 当障碍物出了画布时就清掉</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				enemys[i].<span class="property">y</span> += enemys[i].<span class="property">inc</span></span><br><span class="line">				context.<span class="title function_">drawImage</span>(enemys[i].<span class="property">img</span>.<span class="property">imgObj</span>, <span class="number">0</span>, <span class="number">0</span>, enemys[i].<span class="property">img</span>.<span class="property">width</span>, enemys[i].<span class="property">img</span>.<span class="property">height</span>, enemys[i].<span class="property">x</span>, enemys[i].<span class="property">y</span>, enemys[i].<span class="property">img</span>.<span class="property">width</span>, enemys[i].<span class="property">img</span>.<span class="property">height</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (enemys[enemys.<span class="property">length</span> - <span class="number">1</span>].<span class="property">y</span> &gt; (contextHeight / <span class="number">3</span>)) &#123; <span class="comment">// 当最后一个障碍物的 y 坐标大于画布的 3 分之 1 的时候就生成新的障碍物</span></span><br><span class="line">			<span class="title function_">geneEnemy</span>()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-drawCar-画自己的小车车"><a href="#5-drawCar-画自己的小车车" class="headerlink" title="5. drawCar 画自己的小车车"></a>5. drawCar 画自己的小车车</h3><p>好的接下来改画我们自己的小车车了，初版的实现里我并未实现自己的车移动时有动画效果，后来搜了下才实现缓动效果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> keys = [];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">drawCar</span>(<span class="params">e</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (keys[<span class="number">38</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (move.<span class="property">y</span> &gt; -move.<span class="property">speed</span>) &#123;</span><br><span class="line">            move.<span class="property">y</span>--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (keys[<span class="number">40</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (move.<span class="property">y</span> &lt; move.<span class="property">speed</span>) &#123;</span><br><span class="line">            move.<span class="property">y</span>++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (keys[<span class="number">39</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (move.<span class="property">x</span> &lt; move.<span class="property">speed</span>) &#123;</span><br><span class="line">            move.<span class="property">x</span>++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (keys[<span class="number">37</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (move.<span class="property">x</span> &gt; -move.<span class="property">speed</span>) &#123;</span><br><span class="line">            move.<span class="property">x</span>--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    move.<span class="property">y</span> *= move.<span class="property">friction</span>;</span><br><span class="line">    car.<span class="property">y</span> += move.<span class="property">y</span>;</span><br><span class="line">    move.<span class="property">x</span> *= move.<span class="property">friction</span>;</span><br><span class="line">    car.<span class="property">x</span> += move.<span class="property">x</span>;</span><br><span class="line">	context.<span class="title function_">drawImage</span>(carImg, <span class="number">0</span>, <span class="number">0</span>, car.<span class="property">width</span>, car.<span class="property">height</span>, car.<span class="property">x</span>, car.<span class="property">y</span>, car.<span class="property">width</span>, car.<span class="property">height</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">listener</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">document</span>.<span class="property">onkeydown</span> = <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">		keys[e.<span class="property">keyCode</span>] = <span class="literal">true</span></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="variable language_">document</span>.<span class="property">onkeyup</span> = <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">		keys[e.<span class="property">keyCode</span>] = <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个不解释了…</p>
+<h3 id="6-然后呢"><a href="#6-然后呢" class="headerlink" title="6. 然后呢"></a>6. 然后呢</h3><p>嗯接下来其实可以玩了，但是还缺了点什么，对碰撞检测呢，写了一大串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">detectAccident</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> carCoordinate = &#123;</span><br><span class="line">		<span class="attr">topLeft</span>: &#123; <span class="comment">// 左上角</span></span><br><span class="line">			<span class="attr">x</span>: car.<span class="property">x</span> + carCorner,</span><br><span class="line">			<span class="attr">y</span>: car.<span class="property">y</span> + carCorner</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">topRight</span>: &#123; <span class="comment">// 右上角</span></span><br><span class="line">			<span class="attr">x</span>: car.<span class="property">x</span> + car.<span class="property">width</span> - carCorner,</span><br><span class="line">			<span class="attr">y</span>: car.<span class="property">y</span> + carCorner</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">bottomLeft</span>: &#123; <span class="comment">// 左下角</span></span><br><span class="line">			<span class="attr">x</span>: car.<span class="property">x</span> + carCorner,</span><br><span class="line">			<span class="attr">y</span>: car.<span class="property">y</span> + car.<span class="property">height</span> - carCorner</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">bottomRight</span>: &#123; <span class="comment">// 右下角</span></span><br><span class="line">			<span class="attr">x</span>: car.<span class="property">x</span> + car.<span class="property">width</span> - carCorner,</span><br><span class="line">			<span class="attr">y</span>: car.<span class="property">y</span> + car.<span class="property">height</span> - carCorner</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// console.log(enemys.length)</span></span><br><span class="line">	<span class="keyword">if</span> (car.<span class="property">x</span> &lt; (road.<span class="property">x</span> - carCorner)</span><br><span class="line">		||</span><br><span class="line">		(car.<span class="property">x</span> + car.<span class="property">width</span>) &gt; (road.<span class="property">x</span> + road.<span class="property">width</span> + carCorner)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="string">&#x27;AccidentException&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; enemys.<span class="property">length</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">var</span> enemysCarCoordinate = &#123;</span><br><span class="line">			<span class="attr">topLeft</span>: &#123; <span class="comment">// 左上角</span></span><br><span class="line">				<span class="attr">x</span>: enemys[i].<span class="property">x</span> + carCorner,</span><br><span class="line">				<span class="attr">y</span>: enemys[i].<span class="property">y</span> + carCorner</span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="attr">topRight</span>: &#123; <span class="comment">// 右上角</span></span><br><span class="line">				<span class="attr">x</span>: enemys[i].<span class="property">x</span> + enemys[i].<span class="property">img</span>.<span class="property">width</span> - carCorner,</span><br><span class="line">				<span class="attr">y</span>: enemys[i].<span class="property">y</span> + carCorner</span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="attr">bottomLeft</span>: &#123; <span class="comment">// 左下角</span></span><br><span class="line">				<span class="attr">x</span>: enemys[i].<span class="property">x</span> + carCorner,</span><br><span class="line">				<span class="attr">y</span>: enemys[i].<span class="property">y</span> + enemys[i].<span class="property">img</span>.<span class="property">height</span> - carCorner</span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="attr">bottomRight</span>: &#123; <span class="comment">// 右下角</span></span><br><span class="line">				<span class="attr">x</span>: enemys[i].<span class="property">x</span> + enemys[i].<span class="property">img</span>.<span class="property">width</span> - carCorner,</span><br><span class="line">				<span class="attr">y</span>: enemys[i].<span class="property">y</span> + enemys[i].<span class="property">img</span>.<span class="property">height</span> - carCorner</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (</span><br><span class="line">			<span class="title function_">isAccident</span>(carCoordinate, enemysCarCoordinate)</span><br><span class="line">		) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="string">&#x27;AccidentException&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isAccident</span>(<span class="params">car, enemy</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span>  (car.<span class="property">topLeft</span>.<span class="property">x</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topLeft</span>.<span class="property">x</span> &lt;= enemy.<span class="property">topRight</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topLeft</span>.<span class="property">y</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">y</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topLeft</span>.<span class="property">y</span> &lt;= enemy.<span class="property">bottomLeft</span>.<span class="property">y</span>) ||</span><br><span class="line">			(car.<span class="property">topRight</span>.<span class="property">x</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topRight</span>.<span class="property">x</span> &lt;= enemy.<span class="property">topRight</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topRight</span>.<span class="property">y</span> &gt;= enemy.<span class="property">topRight</span>.<span class="property">y</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">topRight</span>.<span class="property">y</span> &lt;= enemy.<span class="property">bottomRight</span>.<span class="property">y</span>) ||</span><br><span class="line">			(car.<span class="property">bottomLeft</span>.<span class="property">x</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomLeft</span>.<span class="property">x</span> &lt;= enemy.<span class="property">topRight</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomLeft</span>.<span class="property">y</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">y</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomLeft</span>.<span class="property">y</span> &lt;= enemy.<span class="property">bottomLeft</span>.<span class="property">y</span>) ||</span><br><span class="line">			(car.<span class="property">bottomRight</span>.<span class="property">x</span> &gt;= enemy.<span class="property">topLeft</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomRight</span>.<span class="property">x</span> &lt;= enemy.<span class="property">topRight</span>.<span class="property">x</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomRight</span>.<span class="property">y</span> &gt;= enemy.<span class="property">topRight</span>.<span class="property">y</span> &amp;&amp;</span><br><span class="line">			car.<span class="property">bottomRight</span>.<span class="property">y</span> &lt;= enemy.<span class="property">bottomRight</span>.<span class="property">y</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>嗯，大概就是酱紫啦，再加上开始和结束，就算暂时完工了，有时间再继续研究怎么让路拐弯…，还是很遗憾并没有做的跟火箭车一样…( p_q)</p>
+<p>代码见 resource 吧…(￣∀￣)。</p>
+<p>第一次写小游戏，欢迎大神指教(o^^o)♪。</p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2016083101',
+        title: '2016083101',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+figure.highlight {
+  position: relative;
+  margin: 2rem 0;
+  border: 1px solid color-code-border;
+  border-radius: 10px;
+  background: linear-gradient(180deg, color-code-panel 0%, color-code-surface 100%) !important;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: shadow-soft, inset 0 1px 0 rgba(255,255,255,0.04);
+}
+figure.highlight table {
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+}
+figure.highlight tbody {
+  display: table-row-group;
+  min-width: 100%;
+}
+figure.highlight tr {
+  display: table-row;
+  border: 0;
+}
+figure.highlight td,
+figure.highlight th {
+  padding: 0;
+  border: 0;
+  vertical-align: top;
+  white-space: pre;
+}
+.article-entry figure.highlight td,
+.article-entry figure.highlight th {
+  padding: 0;
+  border-bottom: 0;
+  white-space: pre;
+}
+figure.highlight td.code {
+  width: 100%;
+}
+figure.highlight .gutter {
+  width: 48px;
+  min-width: 48px;
+  border-right: 1px solid color-code-border;
+  background: color-code-surface;
+  color: color-code-muted;
+  user-select: none;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+figure.highlight .code {
+  min-width: 0;
+}
+figure.highlight .gutter pre,
+figure.highlight .code pre {
+  margin: 0;
+  padding: 16px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: color-code-ink !important;
+  font-family: font-mono;
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+figure.highlight .gutter .line,
+figure.highlight .code .line {
+  display: block;
+}
+figure.highlight .gutter br,
+figure.highlight .code br {
+  display: none;
+}
+figure.highlight .code,
+figure.highlight .code pre {
+  color: color-code-ink !important;
+}
+figure.highlight .comment {
+  color: color-code-comment !important;
+  font-style: italic;
+}
+figure.highlight .keyword,
+figure.highlight .built_in,
+figure.highlight .builtin,
+figure.highlight .tag,
+figure.highlight .attr,
+figure.highlight .attr-name,
+figure.highlight .selector-tag {
+  color: color-code-keyword !important;
+  font-weight: 600;
+}
+figure.highlight .string,
+figure.highlight .attr-value,
+figure.highlight .template-variable {
+  color: color-code-string !important;
+}
+figure.highlight .number,
+figure.highlight .literal,
+figure.highlight .symbol {
+  color: color-code-number !important;
+}
+figure.highlight .title,
+figure.highlight .function,
+figure.highlight .function_,
+figure.highlight .class,
+figure.highlight .class-name,
+figure.highlight .class_ {
+  color: color-code-function !important;
+  font-weight: 600;
+}
+figure.highlight .property,
+figure.highlight .params {
+  color: color-code-property !important;
+}
+figure.highlight .gutter pre {
+  padding-right: 12px !important;
+  text-align: right;
+}
+figure.highlight.diff .addition,
+figure.highlight.diff .deletion {
+  display: block;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+figure.highlight.diff .addition {
+  color: color-code-string !important;
+  background: rgba(90,168,120,0.14);
+}
+figure.highlight.diff .deletion {
+  color: color-code-number !important;
+  background: rgba(211,91,91,0.12);
+}
+@media mq-mobile {
+  figure.highlight {
+    margin: 1.4rem 0;
+    border-radius: 8px;
+  }
+  figure.highlight .gutter {
+    width: 40px;
+    min-width: 40px;
+  }
+  figure.highlight .gutter pre,
+  figure.highlight .code pre {
+    padding: 12px !important;
+    font-size: 0.8rem;
+    line-height: 1.56;
+  }
+}

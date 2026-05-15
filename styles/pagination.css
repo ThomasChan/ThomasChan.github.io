@@ -1,0 +1,64 @@
+.pagination {
+  max-width: 52rem;
+  padding-top: 14px;
+}
+.pagination__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+.pagination__meta {
+  margin: 0;
+  color: rgba(101,90,79,0.72);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pagination-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  min-width: 0;
+}
+.pagination .page-number,
+.pagination .extend {
+  display: inline-flex;
+  align-items: baseline;
+  min-width: auto;
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  color: rgba(97,81,63,0.74);
+  background: transparent;
+  line-height: 1.5;
+  text-decoration: none;
+  text-decoration-color: rgba(97,81,63,0.24);
+  text-underline-offset: 0.14em;
+}
+.pagination .page-number:hover,
+.pagination .extend:hover {
+  color: color-link-hover;
+  text-decoration: underline;
+}
+.pagination .space {
+  color: color-muted;
+}
+.pagination .current {
+  color: color-default;
+  box-shadow: inset 0 -1px 0 rgba(169,149,121,0.54);
+}
+@media mq-mobile {
+  .pagination {
+    padding-top: 12px;
+  }
+  .pagination__inner,
+  .pagination-links {
+    gap: 6px 10px;
+  }
+  .pagination__meta {
+    flex-basis: 100%;
+  }
+}

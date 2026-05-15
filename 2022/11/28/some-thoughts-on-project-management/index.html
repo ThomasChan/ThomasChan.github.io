@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>项目管理的一些思考 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="现状俗话说家家有本难念的经，每个公司的情况都不太一样，当你的团队遇到项目管理问题时，通常会怎么做？看了很多关于瀑布流、敏捷开发、迭代式开发模式的文章、讨论，没有一个能套到自己身上。 目前团队采用的管理模式类似于 scrum，以一个季度为一个迭代，每两周为 1 个 sprint。迭代第一个 sprint 通常会进行需求讨论+产品设计+技术优化，第二个 sprint 开始进行功能开发+上个sprint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目管理的一些思考">
+<meta property="og:url" content="http://chenjunhao.cn/2022/11/28/some-thoughts-on-project-management/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="现状俗话说家家有本难念的经，每个公司的情况都不太一样，当你的团队遇到项目管理问题时，通常会怎么做？看了很多关于瀑布流、敏捷开发、迭代式开发模式的文章、讨论，没有一个能套到自己身上。 目前团队采用的管理模式类似于 scrum，以一个季度为一个迭代，每两周为 1 个 sprint。迭代第一个 sprint 通常会进行需求讨论+产品设计+技术优化，第二个 sprint 开始进行功能开发+上个sprint">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://chenjunhao.cn/assets/part1.png">
+<meta property="og:image" content="http://chenjunhao.cn/assets/ready-queue.png">
+<meta property="og:image" content="http://chenjunhao.cn/assets/sprint-dev.png">
+<meta property="og:image" content="http://chenjunhao.cn/assets/tech-leader.png">
+<meta property="og:image" content="http://chenjunhao.cn/assets/developer.png">
+<meta property="og:image" content="http://chenjunhao.cn/assets/qa.png">
+<meta property="article:published_time" content="2022-11-28T13:57:03.000Z">
+<meta property="article:modified_time" content="2022-11-29T03:19:54.000Z">
+<meta property="article:tag" content="project management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://chenjunhao.cn/assets/part1.png">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-some-thoughts-on-project-management" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2022</span>
+        
+      </div>
+      <h1 class="article-header">项目管理的一些思考</h1>
+      <div class="article-info">
+        <span>2022.11.28</span>
+        
+        
+          <a href="/tags/project-management/">#project management</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">思考如何进行更好的项目管理</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <h1 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h1><p>俗话说家家有本难念的经，每个公司的情况都不太一样，当你的团队遇到项目管理问题时，通常会怎么做？看了很多关于瀑布流、敏捷开发、迭代式开发模式的文章、讨论，没有一个能套到自己身上。</p>
+<p>目前团队采用的管理模式类似于 scrum，以一个季度为一个迭代，每两周为 1 个 sprint。迭代第一个 sprint 通常会进行需求讨论+产品设计+技术优化，第二个 sprint 开始进行功能开发+上个sprint的质量保证+下个sprint的需求讨论产品设计。</p>
+<p><img src="/assets/part1.png" alt="现状"></p>
+<p>这个流程执行下来遇到的问题有几个：</p>
+<ol>
+<li> 功能优先级高，要等产品设计敲定</li>
+<li>功能复杂度高时容易跨 sprint</li>
+<li>功能开发完没有总结完善过程直接进入了下一个功能开发</li>
+<li>季度为单位的时间周期太长，无法做到真正的时间控制</li>
+</ol>
+<p>每个 sprint 的任意功能延期就会产生蝴蝶效应，迭代末期留给 full testing 的时间会非常少，不得已就整个迭代延期。</p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><p>优化方案是以时间控制为目标，将需求讨论与产品设计挪出 sprint 管理流程。 sprint 作为内部管理的一个小迭代，只控制功能开发+质量保证的时间。假设 sprint 以两周为单位，那么 PM 主要抓这两周内的开发任务队列的进度，风险与功能质量就非常可控了。</p>
+<p>优化后总体上会分为两个队列：</p>
+<ol>
+<li>功能设计 ready 队列</li>
+<li>sprint 开发+质量保证队列。</li>
+</ol>
+<p>功能设计好后会进入 ready 队列，按优先级进入下一个开发 sprint。产品和商务需要在下一个开发sprint之前开会定好优先级，以两周为单位后开会速度、效率也能提高，响应客户的速度、客户的满意度理论上都会提高。</p>
+<p>功能设计队列由产品经理推进，与商务需求讨论制定功能优先级。完成设计的进入 ready 状态。</p>
+<p><img src="/assets/ready-queue.png" alt="ready-queue"></p>
+<p>需求评审由商务与 PM、产品经理、Tech Leader参加（会上直接砍掉不合理的、不会做的）。<br>原型评审由产品经理、Tech Leader 参加（评估设计方案）。<br>设计评审由 PM、产品经理、Tech Leader参加（评估开发时间，超期砍功能、重新评估设计方案、加人力）。</p>
+<p>sprint 开发队列的模式是从 ready 队列按时间排期进入当前 sprint</p>
+<p><img src="/assets/sprint-dev.png" alt="sprint-dev"></p>
+<p>形成循环后就达到了 scrum 理想的样子。</p>
+<p>大版本迭代还可以继续以季度为分割，可以交付给客户的就是 N - 1 个 sprint 所交付的内容，第 N 个 sprint 的交付物不会包含在大版本中，第 N 个 sprint 的时间内 QA 需要做封板测试。</p>
+<p>那么流程改变后研发侧需要做什么</p>
+<h3 id="研发-leader"><a href="#研发-leader" class="headerlink" title="研发 leader"></a>研发 leader</h3><p><img src="/assets/tech-leader.png" alt="tech-leader"></p>
+<h3 id="研发"><a href="#研发" class="headerlink" title="研发"></a>研发</h3><p><img src="/assets/developer.png" alt="developer"></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p><img src="/assets/qa.png" alt="qa"></p>
+<h1 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h1><p>等流程跑通跑顺，就做到了 scrum 敏捷开发，抛开大版本以季度为单位的发版，每个 sprint 的交付物都应该做到可以直接交付客户，那即是理想状态。</p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '20221128',
+        title: '20221128',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

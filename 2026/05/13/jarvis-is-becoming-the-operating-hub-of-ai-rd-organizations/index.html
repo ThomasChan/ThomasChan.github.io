@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>JARVIS 正在变成 AI 研发组织的运行中枢 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="JARVIS 正在变成 AI 研发组织的运行中枢我之前写 JARVIS，重点一直放在“记忆”上。 它知道历史 issue，知道模块边界，知道设计决策，知道哪些需求被否决过，知道类似 bug 以前是怎么修的。这个判断没变。我现在还是这么看：没有结构化组织记忆，AI 顶多是个会写代码的高智商实习生。 但最近一个月，我脑子里有个感觉越来越清楚：只把 JARVIS 叫做“知识库”，已经说不准它现在在干的活">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JARVIS 正在变成 AI 研发组织的运行中枢">
+<meta property="og:url" content="http://chenjunhao.cn/2026/05/13/jarvis-is-becoming-the-operating-hub-of-ai-rd-organizations/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="JARVIS 正在变成 AI 研发组织的运行中枢我之前写 JARVIS，重点一直放在“记忆”上。 它知道历史 issue，知道模块边界，知道设计决策，知道哪些需求被否决过，知道类似 bug 以前是怎么修的。这个判断没变。我现在还是这么看：没有结构化组织记忆，AI 顶多是个会写代码的高智商实习生。 但最近一个月，我脑子里有个感觉越来越清楚：只把 JARVIS 叫做“知识库”，已经说不准它现在在干的活">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-13T13:10:00.000Z">
+<meta property="article:modified_time" content="2026-05-13T09:48:05.000Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Engineering">
+<meta property="article:tag" content="JARVIS">
+<meta property="article:tag" content="Workflow">
+<meta property="article:tag" content="Knowledge Routing">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-jarvis-is-becoming-the-operating-hub-of-ai-rd-organizations" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2026</span>
+        
+      </div>
+      <h1 class="article-header">JARVIS 正在变成 AI 研发组织的运行中枢</h1>
+      <div class="article-info">
+        <span>2026.05.13</span>
+        
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/Engineering/">#Engineering</a>
+        
+          <a href="/tags/JARVIS/">#JARVIS</a>
+        
+          <a href="/tags/Workflow/">#Workflow</a>
+        
+          <a href="/tags/Knowledge-Routing/">#Knowledge Routing</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">这一个月我把 JARVIS 又往前推了一步。现在它会直接管 agent 从哪进来、在哪干活、先读什么、做到什么才算收口。说它只是知识库，已经不准确了。</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <p>我之前写 JARVIS，重点一直放在“记忆”上。</p>
+<p>它知道历史 issue，知道模块边界，知道设计决策，知道哪些需求被否决过，知道类似 bug 以前是怎么修的。这个判断没变。我现在还是这么看：没有结构化组织记忆，AI 顶多是个会写代码的高智商实习生。</p>
+<p>但最近一个月，我脑子里有个感觉越来越清楚：只把 JARVIS 叫做“知识库”，已经说不准它现在在干的活了。</p>
+<p>这不是换方向，只是把前面的想法继续往下做。</p>
+<p>不管是我之前写过的<a href="/2026/03/23/building-jarness-for-software-companies/">《构建软件公司的 JARVIS》</a>和<a href="/2026/03/24/from-ai-writing-code-to-ai-driven-r-and-d-the-gap-is-jarvis/">《从 AI 写代码，到 AI 驱动研发：中间差了一个 JARVIS》</a>，还是三周前我单独提炼出来的 GitHub 仓库 <a target="_blank" rel="noopener" href="https://github.com/hengshi/create-jarvis-skill">hengshi/create-jarvis-skill</a>，主线一直都一样：JARVIS 不是文档堆，不是 repo 生成器，也不是某个 agent 的提示词壳子。它是一层 agent-first 的组织能力层。真正值钱的，也不是一个整理漂亮的 repo，而是一条能跑起来、能回写、能越用越强的业务闭环。</p>
+<p>如果说三周前的 <code>create-jarvis-skill</code> 主要在回答“怎么从 0 搭一套 JARVIS”，那最近一个月我在 <code>hengshi-jarvis</code> 上做的事，主要在回答另一件事：JARVIS 真开始干活以后，agent 该怎么进门，在哪块地上干活，先读什么，做到什么程度才算真的做完。</p>
+<p>也就是从“怎么建”，往“怎么跑”又推了一大截。</p>
+<hr>
+<h2 id="这轮变化先卡在工作面不统一"><a href="#这轮变化先卡在工作面不统一" class="headerlink" title="这轮变化先卡在工作面不统一"></a>这轮变化先卡在工作面不统一</h2><p>这轮变化最早暴露出来的问题，不是知识不够，而是工作面先乱了。</p>
+<p>当时我本机同时存在 <code>~/.openclaw/workspace/henglabs</code>、<code>~/.hermes/workspace/henglabs</code>、<code>~/Work/henglabs</code> 三套工作根目录。Hermes、OpenClaw、Claude Code、Cursor 这些 agent 或 IDE 会并行开多个会话做不同任务，结果就是 workspace 不够用，文件互相覆盖，branch 和 dirty state 互相污染。</p>
+<p>这件事一下就把问题顶到了台面上：</p>
+<blockquote>
+<p>如果 AI 连该在哪个工作区里干活都不确定，那它知道再多历史知识也没用。</p>
+</blockquote>
+<p>我也是从这里开始更明确地意识到，JARVIS 不能只负责知识索引。它还得把执行入口和工作地面也收进来。</p>
+<hr>
+<h2 id="最近一个月最硬的一步：运行时宪法"><a href="#最近一个月最硬的一步：运行时宪法" class="headerlink" title="最近一个月最硬的一步：运行时宪法"></a>最近一个月最硬的一步：运行时宪法</h2><p>过去一个月里，JARVIS 最硬的一组更新，不是又多整理了多少知识，而是把运行时边界立成了宪法。</p>
+<p>从 git log 往回看，这条线很清楚：</p>
+<ul>
+<li>2026-04-28：<code>feat(runtime): formalize canonical ~/.hengshi root</code></li>
+<li>2026-04-29：<code>refactor: switch hengshi runtime constitution to per-task clones</code></li>
+<li>2026-05-09：<code>docs: require workspace root preflight across workflows</code></li>
+<li>2026-05-09：<code>docs: forbid task git mutations on canonical repo anchor</code></li>
+</ul>
+<p>这几条放在一起，意思很直接：</p>
+<ol>
+<li>所有 HENGSHI 相关 agent，先收口到同一个 canonical runtime root：<code>~/.hengshi</code></li>
+<li>真正执行任务时，不再共享一个会互相打架的 checkout，而是切到 per-task clones / task workspace</li>
+<li>任意 workflow 开始前，都要先做 workspace root preflight，先确认 repo、workspace、checkout kind，再继续行动</li>
+<li>canonical repo anchor 只保留只读职责，不能在上面随便 checkout、merge、stash、cherry-pick</li>
+</ol>
+<p>这事听起来很工程，但特别值钱。</p>
+<p>以前 JARVIS 更像告诉 agent“你应该知道什么”。现在它还要先告诉 agent“你该站在哪儿干活”。地面没统一，后面全会打架。</p>
+<p>这也是我现在特别在意的一点：知识库可以存事实，运行中枢得先把工作地面定下来。</p>
+<hr>
+<h2 id="入口先看闭环，再决定第一跳"><a href="#入口先看闭环，再决定第一跳" class="headerlink" title="入口先看闭环，再决定第一跳"></a>入口先看闭环，再决定第一跳</h2><p>如果说 runtime constitution 解决的是“在哪工作”，那后面这一段解决的就是“怎么进门”。</p>
+<p>这一段的变化也很明显：</p>
+<ul>
+<li>2026-04-22：<code>docs(skills): add jarvis repo-routing and closure rules</code></li>
+<li>2026-04-27：<code>refactor: reshape jarvis skills around workflows</code></li>
+<li>2026-04-28：<code>refactor: clarify skill layer boundaries</code></li>
+<li>2026-05-09：<code>docs: refresh repo execution routing</code></li>
+</ul>
+<p>这背后的判断，我现在会说得更直接一点：真实研发任务别急着按 repo 分流，先看它属于哪条闭环。</p>
+<p>用户抛过来的东西，可能是一个 bug、一段报错、一个 issue、一张截图、一个 PRD、一个 MR、一个 release 收尾动作。JARVIS 先要判断的，不是哪一个 repo 是 source-of-truth，而是：</p>
+<ul>
+<li>当前任务属于哪个企业闭环</li>
+<li>第一跳去哪里能最快拿到 first proof</li>
+<li>什么时候需要升级到第二跳、第二仓库、第二数据面</li>
+<li>什么证据出来以后，才算这个闭环真的完成</li>
+</ul>
+<p>这已经不是“我这有一套资料，你来搜”的思路了。</p>
+<p>这更像任务分诊系统。先分清这是哪类活，再决定第一步去哪。</p>
+<p>JARVIS 以前更像资料入口，现在越来越像统一入口。</p>
+<hr>
+<h2 id="知识开始直接决定执行顺序"><a href="#知识开始直接决定执行顺序" class="headerlink" title="知识开始直接决定执行顺序"></a>知识开始直接决定执行顺序</h2><p>再往下走一步，就是我觉得最近这轮最关键的变化：知识不只是拿来查，已经开始直接决定执行顺序了。</p>
+<p>这一组更新包括：</p>
+<ul>
+<li>2026-04-27：<code>jarvis: backfill validated facet routing into module entries</code></li>
+<li>2026-05-07：<code>docs: add official-website source route</code></li>
+<li>2026-05-09：<code>feat(sources): add everest-cli source route</code></li>
+<li>2026-05-12：<code>jarvis(skill): add modules routing step to entry skill</code></li>
+</ul>
+<p>以前一说“知识库”，大家很容易脑补成一个静态画面：AI 遇到问题，先搜一搜，再读几段文档，然后开干。</p>
+<p>真到研发现场不是这么走的。</p>
+<p>真正要先搞清楚的是：</p>
+<ul>
+<li>这个任务一上来该先读 <code>modules/&lt;module&gt;/overview.md</code>，还是先看 <code>sources/&lt;source&gt;/README.md</code></li>
+<li>现在该先看模块已知问题，还是先看跨模块交互</li>
+<li>这是一个 repo 内问题，还是已经跨到 official website / everest-cli / docs / ui-test 这些别的数据面</li>
+<li>哪些知识是补充参考，哪些知识是不读就别开始改代码</li>
+</ul>
+<p>像 <code>add modules routing step to entry skill</code> 这种更新，意思其实很直白：先读这份，再动手。</p>
+<p>到这一步，知识已经不只是材料了。它开始管顺序，管前置条件，管这一步该不该开工。</p>
+<p>这也是为什么我现在不太愿意把 JARVIS 只叫知识库。叫小了。</p>
+<hr>
+<h2 id="“完成”现在也有统一判断标准了"><a href="#“完成”现在也有统一判断标准了" class="headerlink" title="“完成”现在也有统一判断标准了"></a>“完成”现在也有统一判断标准了</h2><p>AI 系统还有个很常见的问题：它特别会宣布自己完成了。</p>
+<p>代码改了，测试跑了，扔一段总结，看上去像 done 了。但真实研发里的 done，从来不是一句话。</p>
+<p>最近这轮 JARVIS 更新里，我越来越在意这件事。</p>
+<p>从 repo-routing、closure rules，到 completion standard、minimal closure card、writeback judgment，背后其实都在收紧同一个定义：</p>
+<blockquote>
+<p>完成，不是“我产出了东西”，而是“证据已经够了，这个闭环可以收口了”。</p>
+</blockquote>
+<p>这意味着 JARVIS 要回答的，不只是：</p>
+<ul>
+<li>改了哪些文件</li>
+<li>跑了哪些命令</li>
+<li>测试是不是绿了</li>
+</ul>
+<p>它还得继续往下追：</p>
+<ul>
+<li>现在这个任务到底属于哪个闭环</li>
+<li>这次判断基于哪些证据</li>
+<li>有没有升级到第二跳 / 第二仓库 / 第二 source</li>
+<li>最后要不要做 durable writeback</li>
+<li>这次变化有没有改到组织长期知识</li>
+</ul>
+<p>到这一步，JARVIS 已经在管任务到底算不算做完了。</p>
+<p>这和普通意义上的知识系统，已经不是一回事。</p>
+<hr>
+<h2 id="所以我现在会把-JARVIS-叫成运行中枢"><a href="#所以我现在会把-JARVIS-叫成运行中枢" class="headerlink" title="所以我现在会把 JARVIS 叫成运行中枢"></a>所以我现在会把 JARVIS 叫成运行中枢</h2><p>如果把最近一个月这些变化放在一起看，我现在更愿意把 JARVIS 重新讲一遍。</p>
+<p>但这个“重新讲”，不是从零改口，是把旧抽象继续往前推。</p>
+<p>三周前，在 <code>create-jarvis-skill</code> 里，我已经把 JARVIS 讲成了一个 agent-first 的组织能力层：它要帮助 agent 找到正确上下文、进入正确 repo 或系统、完成真实工作，并把可持续复用的学习写回去。那时我更关心的是建造方法：第一条闭环怎么选，sources / repos / workflows 怎么盘，哪些东西能 scaffold，哪些东西必须靠真实 writeback 长出来。</p>
+<p>而最近一个月，我在 <code>hengshi-jarvis</code> 里真正往前推的，是把这套抽象压成跨 agent 的运行规则。说白了，就是以前我更多在定义 JARVIS 应该长什么样，现在我开始定义 agent 进了 JARVIS 之后必须怎么工作。</p>
+<p>所以今天再让我下一个更准的定义，我会这么说：JARVIS 已经在管统一入口、知识索引、执行前置、闭环判断和 writeback。</p>
+<p>它现在至少在管五件事：</p>
+<ol>
+<li>这个任务从哪里进入系统</li>
+<li>这个任务应该在哪个 workspace / runtime 里执行</li>
+<li>这个任务开始前必须先读哪些知识</li>
+<li>这个任务做到什么程度才算完成</li>
+<li>这次结果需不需要回写进组织长期记忆</li>
+</ol>
+<p>这五件事一旦都往系统里收，JARVIS 干的就已经不只是存知识了。它已经在接管研发现场的一部分秩序。</p>
+<p>这就是我现在会把它叫成运行中枢的原因。</p>
+<hr>
+<h2 id="这件事为什么重要"><a href="#这件事为什么重要" class="headerlink" title="这件事为什么重要"></a>这件事为什么重要</h2><p>我现在越来越不信，给企业套一个更强的 agent 壳子，这事就能成。</p>
+<p>因为企业研发真正复杂的地方，不在模型会不会写代码，而在下面这些东西：</p>
+<ul>
+<li>组织知识分散</li>
+<li>工作入口混乱</li>
+<li>workspace 不统一</li>
+<li>source-of-truth 不唯一</li>
+<li>repo 和 workflow 的边界不清楚</li>
+<li>完成标准靠口头默契</li>
+<li>经验很难稳定回写</li>
+</ul>
+<p>这些东西没被系统化，AI 每一轮都只能临场发挥。偶尔会很惊艳，但很难长期靠谱。</p>
+<p>最近这轮 JARVIS 更新最让我确定的一点就是：AI 研发系统的上限，不看你给 agent 塞了多少知识，而看你有没有把知识、工作区、路由、闭环和回写连成一个系统。</p>
+<p>而 JARVIS 现在就是在往这个方向收。</p>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>所以今天如果再让我定义一次 JARVIS，我不会只把它叫做知识库。</p>
+<p>知识库还是它的起点，但已经不够概括它现在干的活了。</p>
+<p>最近一个月最重要的变化很实在：入口在收，runtime 在收，preflight 成了前置，第一跳和升级条件在收紧，完成标准和 writeback 也有了统一规则。</p>
+<p>JARVIS 已经在往 AI 研发组织的运行中枢走了。</p>
+<p>这事才刚开始。</p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2026051301',
+        title: '2026051301',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

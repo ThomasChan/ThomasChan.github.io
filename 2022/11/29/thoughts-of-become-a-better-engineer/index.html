@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>如何写好一个交互组件 | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="几个月前刷微博，看到老赵的一条，感同身受。 老赵也给出了评分标准，满分10分：  基本实现无误（4分） 显示 loading 字样（1分） 合理错误捕捉（1分） 知道在切换选择后取消未完成的请求（2分） 做 debounce 或 trottle（1分） 处理好各种情况之间的时序问题（1分）  基本实现无误比较笼统，具体还有几点要考虑  初始值 选中状态  小白或者初级工程师基本上能写出来下拉、发请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何写好一个交互组件">
+<meta property="og:url" content="http://chenjunhao.cn/2022/11/29/thoughts-of-become-a-better-engineer/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="几个月前刷微博，看到老赵的一条，感同身受。 老赵也给出了评分标准，满分10分：  基本实现无误（4分） 显示 loading 字样（1分） 合理错误捕捉（1分） 知道在切换选择后取消未完成的请求（2分） 做 debounce 或 trottle（1分） 处理好各种情况之间的时序问题（1分）  基本实现无误比较笼统，具体还有几点要考虑  初始值 选中状态  小白或者初级工程师基本上能写出来下拉、发请">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
+<meta property="article:published_time" content="2022-11-29T04:41:15.000Z">
+<meta property="article:modified_time" content="2026-05-15T09:12:27.303Z">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="reactjs">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://chenjunhao.cn/assets/M1cPDldO7.png">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-thoughts-of-become-a-better-engineer" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2022</span>
+        
+      </div>
+      <h1 class="article-header">如何写好一个交互组件</h1>
+      <div class="article-info">
+        <span>2022.11.29</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+          <a href="/tags/reactjs/">#reactjs</a>
+        
+          <a href="/tags/html/">#html</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">什么是工程师思维</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <p><img src="/assets/M1cPDldO7.png" alt="M1cPDldO7"><br>几个月前刷微博，看到<a target="_blank" rel="noopener" href="https://weibo.com/u/1560442584">老赵</a>的一条，感同身受。</p>
+<p>老赵也给出了评分标准，满分10分：</p>
+<ol>
+<li>基本实现无误（4分）</li>
+<li>显示 loading 字样（1分）</li>
+<li>合理错误捕捉（1分）</li>
+<li>知道在切换选择后取消未完成的请求（2分）</li>
+<li>做 debounce 或 trottle（1分）</li>
+<li>处理好各种情况之间的时序问题（1分）</li>
+</ol>
+<p>基本实现无误比较笼统，具体还有几点要考虑</p>
+<ol>
+<li>初始值</li>
+<li>选中状态</li>
+</ol>
+<p>小白或者初级工程师基本上能写出来下拉、发请求、展示请求结果，会忽略 选中状态、loading、取消请求等。</p>
+<p>中级工程师大多也会遗漏取消请求、debounce、时序问题。</p>
+<p>评分标准其实就对应了一次完整交互动作的 n 个状态，实现一个好的交互组件，我们需要仔细想一下交互过程中的状态，才能完整的处理每个过程。</p>
+<p>以题目来说，这个组件是</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Component.tsx</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Component</span>: <span class="title class_">React</span>.<span class="property">FC</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [userInfo, setUserInfo] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="string">&#x27;无数据&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">select</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;new Array(10).fill(1).map((, index) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        return <span class="tag">&lt;<span class="name">option</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> // <span class="attr">很多人也容易忘记设置</span> <span class="attr">key</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">value</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">index</span>&#125;`&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">          &#123;index&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;userInfo&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>接下来我们往组件上添加状态</p>
+<p>加初始值</p>
+<p>我们需要定义好当前的选中值，才能依此来发请求、标记选中状态、取消其它发出的请求。</p>
+<p>注意 html option tag 的 value 只能是字符串。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Component.tsx</span><br><span class="line">const Component: React.FC = () =&gt; &#123;</span><br><span class="line">  const [userInfo, setUserInfo] = React.useState(&#x27;无数据&#x27;);</span><br><span class="line"><span class="addition">+ const [value, setValue] = React.useState&lt;string&gt;();</span></span><br><span class="line"><span class="addition">+ const onChange = event =&gt; &#123;</span></span><br><span class="line"><span class="addition">+   setValue(event.target.value);</span></span><br><span class="line"><span class="addition">+ &#125;;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">  return &lt;&gt;</span><br><span class="line"><span class="deletion">-   &lt;select&gt;</span></span><br><span class="line"><span class="addition">+   &lt;select onChange=&#123;onChange&#125;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>加 disabled、loading 状态、选中状态</p>
+<p>disabled 状态就是 loading=true 的情况。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Component.tsx</span><br><span class="line">const Component: React.FC = () =&gt; &#123;</span><br><span class="line"><span class="addition">+ const [loading, setLoading] = React.useState(false);</span></span><br><span class="line">  const [userInfo, setUserInfo] = React.useState(&#x27;无数据&#x27;);</span><br><span class="line">  const [value, setValue] = React.useState&lt;string&gt;();</span><br><span class="line">  const onChange = event =&gt; &#123;</span><br><span class="line">    setValue(event.target.value);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  return &lt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>选中状态就是当前值等于 option value，当前值是string，index是number，判断相等要做类型转换。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">        return &lt;option</span><br><span class="line">          key=&#123;index&#125; // 很多人也容易忘记设置 key</span><br><span class="line"><span class="addition">+         selected=&#123;+value === index&#125;</span></span><br><span class="line">          value=&#123;`$&#123;index&#125;`&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是发请求了，要注意 loading、abort 状态</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// Component.tsx</span><br><span class="line">const Component: React.FC = () =&gt; &#123;</span><br><span class="line">  const [loading, setLoading] = React.useState(false);</span><br><span class="line">  const [userInfo, setUserInfo] = React.useState(&#x27;无数据&#x27;);</span><br><span class="line">  const [value, setValue] = React.useState&lt;string&gt;();</span><br><span class="line">  const onChange = event =&gt; &#123;</span><br><span class="line">    setValue(event.target.value);</span><br><span class="line">  &#125;;</span><br><span class="line"><span class="addition">+ const doFetch = (userId: string) =&gt; &#123;</span></span><br><span class="line"><span class="addition">+   const abort = new AbortController();</span></span><br><span class="line"><span class="addition">+   setLoading(true);</span></span><br><span class="line"><span class="addition">+   // 传递 abort 信号</span></span><br><span class="line"><span class="addition">+   fetch(`url?userId=$&#123;userId&#125;`, &#123; signal: abort.signal &#125;)</span></span><br><span class="line"><span class="addition">+     .then(res =&gt; &#123;</span></span><br><span class="line"><span class="addition">+       setUserInfo(res.data);</span></span><br><span class="line"><span class="addition">+     &#125;)</span></span><br><span class="line"><span class="addition">+     .catch(err =&gt; &#123;</span></span><br><span class="line"><span class="addition">+       setUserInfo(err.message);</span></span><br><span class="line"><span class="addition">+     &#125;)</span></span><br><span class="line"><span class="addition">+     .finally(() =&gt; &#123;</span></span><br><span class="line"><span class="addition">+       setLoading(false);</span></span><br><span class="line"><span class="addition">+     &#125;);</span></span><br><span class="line"><span class="addition">+   // 最后将 abort 控制器返回出去，以便取消请求</span></span><br><span class="line"><span class="addition">+   return abort;</span></span><br><span class="line"><span class="addition">+ &#125;;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+ // 使用 useEffect 监听 value 变化发送请求</span></span><br><span class="line"><span class="addition">+ // 同时取消上一次正在发送的请求</span></span><br><span class="line"><span class="addition">+ React.useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="addition">+   const abort = value &amp;&amp; doFetch(value);</span></span><br><span class="line"><span class="addition">+   return () =&gt; &#123;</span></span><br><span class="line"><span class="addition">+     // 若请求很迅速，abort 不会做任何事</span></span><br><span class="line"><span class="addition">+     if (typeof abort === &#x27;function&#x27;) abort();</span></span><br><span class="line"><span class="addition">+   &#125;;</span></span><br><span class="line"><span class="addition">+ &#125;, [value]);</span></span><br><span class="line"></span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;select onChange=&#123;onChange&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>再给展示内容加上 loading 信息</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    &lt;/select&gt;</span><br><span class="line"><span class="deletion">-   &#123;userInfo&#125;</span></span><br><span class="line"><span class="addition">+   &#123;loading ? &#x27;正在加载...&#x27; : userInfo&#125;</span></span><br><span class="line">  &lt;/&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>至此这个定制组件就很完整了，其中忽略了 userInfo 的类型，当它是 string，若实际情况是 object 的话，也要做相应处理。</p>
+<p>想要进一步抽象为通用组件，还需要将</p>
+<ol>
+<li>option 列表</li>
+<li>fetch url 甚至是 doFetch function</li>
+</ol>
+<p>等作为 props 传递给组件，还要考虑 option 的内容溢出、title 等。</p>
+<p>完整代码</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Component.tsx</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Component</span>: <span class="title class_">React</span>.<span class="property">FC</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [userInfo, setUserInfo] = <span class="title class_">React</span>.<span class="title function_">useState</span>(<span class="string">&#x27;无数据&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> [value, setValue] = <span class="title class_">React</span>.<span class="property">useState</span>&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onChange</span> = event =&gt; &#123;</span><br><span class="line">    <span class="title function_">setValue</span>(event.<span class="property">target</span>.<span class="property">value</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">doFetch</span> = (<span class="params"><span class="attr">userId</span>: <span class="built_in">string</span></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> abort = <span class="keyword">new</span> <span class="title class_">AbortController</span>();</span><br><span class="line">    <span class="title function_">setLoading</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">// 传递 abort 信号</span></span><br><span class="line">    <span class="title function_">fetch</span>(<span class="string">`url?userId=<span class="subst">$&#123;userId&#125;</span>`</span>, &#123; <span class="attr">signal</span>: abort.<span class="property">signal</span> &#125;)</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setUserInfo</span>(res.<span class="property">data</span>);</span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setUserInfo</span>(err.<span class="property">message</span>);</span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setLoading</span>(<span class="literal">false</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    <span class="comment">// 最后将 abort 控制器返回出去，以便取消请求</span></span><br><span class="line">    <span class="keyword">return</span> abort;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 useEffect 监听 value 变化发送请求</span></span><br><span class="line">  <span class="comment">// 同时取消上一次正在发送的请求</span></span><br><span class="line">  <span class="title class_">React</span>.<span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> abort = value &amp;&amp; <span class="title function_">doFetch</span>(value);</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 若请求很迅速，abort 不会做任何事</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> abort === <span class="string">&#x27;function&#x27;</span>) <span class="title function_">abort</span>();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [value]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">select</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;new Array(10).fill(1).map((, index) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        return <span class="tag">&lt;<span class="name">option</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> // <span class="attr">很多人也容易忘记设置</span> <span class="attr">key</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">selected</span>=<span class="string">&#123;+value</span> === <span class="string">index&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">value</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">index</span>&#125;`&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">          &#123;index&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;loading ? &#x27;正在加载...&#x27; : userInfo&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>希望本文能帮助你写出更完整的交互组件。</p>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '20221129',
+        title: '20221129',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

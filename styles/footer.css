@@ -1,0 +1,16 @@
+.main-footer {
+  grid-column: 2;
+  margin-top: 4px;
+  padding-top: 22px;
+  border-top: 1px solid color-border;
+  color: color-muted;
+  font-size: 0.82rem;
+}
+.main-footer a {
+  color: color-link;
+}
+@media mq-tablet {
+  .main-footer {
+    grid-column: auto;
+  }
+}

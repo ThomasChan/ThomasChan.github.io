@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>Null vs Undefined | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="本文翻译自 https:&#x2F;&#x2F;codeburst.io&#x2F;javascript-null-vs-undefined-20f955215a2 , 作者 Brandon Morelli，翻译：Thomas Chan  刚接触 js 的话，可能会认为 null 与 undefined 很相似，其实不然，本文将列述 null 与 undefined 之间的不同点与相同点。 null 是什么？null 有两个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Null vs Undefined">
+<meta property="og:url" content="http://chenjunhao.cn/2018/01/22/javascript-null-vs-undefined/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="本文翻译自 https:&#x2F;&#x2F;codeburst.io&#x2F;javascript-null-vs-undefined-20f955215a2 , 作者 Brandon Morelli，翻译：Thomas Chan  刚接触 js 的话，可能会认为 null 与 undefined 很相似，其实不然，本文将列述 null 与 undefined 之间的不同点与相同点。 null 是什么？null 有两个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-01-22T04:21:56.000Z">
+<meta property="article:modified_time" content="2025-07-28T03:55:26.000Z">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-javascript-null-vs-undefined" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2018</span>
+        
+      </div>
+      <h1 class="article-header">Null vs Undefined</h1>
+      <div class="article-info">
+        <span>2018.01.22</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">Null 与 undefined 的相同点与不同点</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <blockquote>
+<p>本文翻译自 <a target="_blank" rel="noopener" href="https://codeburst.io/javascript-null-vs-undefined-20f955215a2">https://codeburst.io/javascript-null-vs-undefined-20f955215a2</a> , 作者 <a target="_blank" rel="noopener" href="https://codeburst.io/@bmorelli25">Brandon Morelli</a>，翻译：<a href="http://chenjunhao.cn/">Thomas Chan</a></p>
+</blockquote>
+<p>刚接触 js 的话，可能会认为 <code>null</code> 与 <code>undefined</code> 很相似，其实不然，本文将列述 <code>null</code> 与 <code>undefined</code> 之间的不同点与相同点。</p>
+<h1 id="null-是什么？"><a href="#null-是什么？" class="headerlink" title="null 是什么？"></a>null 是什么？</h1><p><code>null</code> 有两个你必须知道的特征：</p>
+<ul>
+<li><code>null</code> 是空或者不存在的值</li>
+<li><code>null</code> 一定是被赋值的<br>像这样，我们给变量 <code>a</code> 赋值 <code>null</code>:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="undefined-是什么？"><a href="#undefined-是什么？" class="headerlink" title="undefined 是什么？"></a>undefined 是什么？</h1><p><code>undefined</code> 通常是一个变量已经被声明，但是没有赋值，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>也可以给变量直接赋值为 <code>undefined</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>还有一种情况是从一个 <code>object</code> 里读取一个不存在的属性就返回 <code>undefined</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(d.<span class="property">fake</span>);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="null-与-undefined-的相同点"><a href="#null-与-undefined-的相同点" class="headerlink" title="null 与 undefined 的相同点"></a>null 与 undefined 的相同点</h1><p>在 JavaScript 里只有 <strong>6 个否定值</strong>：</p>
+<ul>
+<li>false</li>
+<li>0(zero)</li>
+<li>“”(empty string)</li>
+<li>null</li>
+<li>undefined</li>
+<li>NaN(Not A Number)</li>
+</ul>
+<p><code>null</code> 和 <code>undefined</code> 是其中两个。其他所有的值都是真值。</p>
+<blockquote>
+<p>如果你还不太熟悉 js 里的真/假值，可以看下我之前的文章： <a target="_blank" rel="noopener" href="https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a">== vs ===</a></p>
+</blockquote>
+<p>另外 JavaScript 里有 6 个原始值：</p>
+<ul>
+<li>Boolean</li>
+<li>Null</li>
+<li>Undefined</li>
+<li>Number</li>
+<li>String</li>
+<li>Symbol</li>
+</ul>
+<p><code>null</code> 和 <code>undefined</code> 亦是其中两个。其他所有的值都是对象(objects, functions, arrays等等)。</p>
+<p>有趣的是，用 <code>typeof</code> 测试 <code>null</code>，会返回 <code>object</code>(译者注：这可是个大坑):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> a);</span><br><span class="line"><span class="comment">// object</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> b);</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>这个特征是 JavaScript 诞生时就有的，基本上被当做最早的 JavaScript 实现的一个错误。</p>
+<blockquote>
+<p>如果你还太熟悉 js 里的数据类型，可以看下我之前的文章: <a target="_blank" rel="noopener" href="https://codeburst.io/javascript-data-types-explained-347555cd2d4d">JavaScript 数据类型解析</a></p>
+</blockquote>
+<h1 id="null-undefined"><a href="#null-undefined" class="headerlink" title="null !== undefined"></a>null !== undefined</h1><p>综上所述， <code>null</code> 与 <code>undefined</code> 是不同的，不过有一些共同点，所以 <code>null</code> 是严格不等于 <code>undefined</code> 的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> !== <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<p>但是，用不严格比较符的时候 <code>null</code> 是等于 <code>undefined</code> 的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 里，双等号判断相等时会进行隐式类型转换，所以是不严格的。</p>
+<h1 id="实际运用中的不同"><a href="#实际运用中的不同" class="headerlink" title="实际运用中的不同"></a>实际运用中的不同</h1><p>上述所说都很好理解，那么 <code>null</code> 与 <code>undefined</code> 之间到底有啥具体不同？</p>
+<p>我们来看下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">logHi</span> = (<span class="params">str = <span class="string">&#x27;hi&#x27;</span></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们创建了一个函数叫 <code>logHi</code>，有一个参数，且设置默认值为 <code>hi</code>，调用是这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>();</span><br><span class="line"><span class="comment">// hi</span></span><br></pre></td></tr></table></figure>
+<p>我们也可以传个参数覆盖默认值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>(<span class="string">&#x27;bye&#x27;</span>);</span><br><span class="line"><span class="comment">// bye</span></span><br></pre></td></tr></table></figure>
+<p>但是！<code>undefined</code> 是不会覆盖默认值的，而 <code>null</code> 则会。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">logHi</span>(<span class="literal">undefined</span>);</span><br><span class="line"><span class="comment">// hi</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">logHi</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><code>null</code> 是被赋值的，表示啥都没有</li>
+<li><code>undefined</code> 通常是一个变量已经被声明，但是没有赋值</li>
+<li><code>null</code> 和 <code>undefined</code> 都是否定值</li>
+<li><code>null</code> 和 <code>undefined</code> 都是原始值，不过奇葩的是 <code>typeof null = object</code></li>
+<li><code>null !== undefined</code> 但是 <code>null == undefined</code></li>
+</ul>
+<blockquote>
+<p>译者注：按我的经验，实际项目中，函数对参数进行处理时，按业务逻辑区分，基本都是需要对参数判断 NaN, null 与 undefined 的。若你的参数是 object，就更需要判断，尤其是后端返回给你的数据</p>
+</blockquote>
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2018012201',
+        title: '2018012201',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>

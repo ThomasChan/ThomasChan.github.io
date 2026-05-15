@@ -1,0 +1,116 @@
+#ds-waiting {
+  margin: auto !important;
+  margin-top: 50px !important;
+}
+.article-footer .jiathis_style_32x32 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  height: auto;
+  opacity: 0.62;
+  -webkit-filter: grayscale(60%);
+  -moz-filter: grayscale(60%);
+  -ms-filter: grayscale(60%);
+  -o-filter: grayscale(60%);
+  filter: grayscale(60%);
+  transition-duration: 0.4s;
+  transition-property: filter, -webkit-filter, -moz-filter, -ms-filter, -o-filter, opacity;
+}
+.article-footer .jiathis_style_32x32 a {
+  display: inline-flex;
+  transform: scale(0.82);
+  transform-origin: left center;
+}
+.article-footer .jiathis_style_32x32:hover {
+  opacity: 0.84;
+  -webkit-filter: grayscale(20%);
+  -moz-filter: grayscale(20%);
+  -ms-filter: grayscale(20%);
+  -o-filter: grayscale(20%);
+  filter: grayscale(20%);
+}
+.jiathis_style > div {
+  border: none !important;
+}
+.site-main .jiathis_style_32x32 .jtico {
+  display: inline-block !important;
+}
+.jiathis_style .ckepopBottom {
+  padding: 5px;
+}
+#comments .gt-container {
+  color: color-default;
+  font-family: font-sans;
+}
+#comments .gt-meta {
+  border-color: color-border !important;
+}
+#comments .gt-header-textarea,
+#comments .gt-comment-content,
+#comments .gt-popup {
+  background: rgba(255,255,255,0.48) !important;
+  border-color: color-border !important;
+  color: color-default !important;
+  box-shadow: none !important;
+}
+#comments .gt-btn {
+  border-color: color-border !important;
+  background: rgba(255,255,255,0.44) !important;
+  border-radius: 4px !important;
+  color: color-default !important;
+  box-shadow: none !important;
+}
+#comments .gt-btn-preview,
+#comments .gt-btn-login {
+  background: rgba(255,255,255,0.38) !important;
+  color: color-default !important;
+}
+#comments .gt-comments-null,
+#comments .gt-time,
+#comments .gt-action {
+  color: rgba(101,90,79,0.78) !important;
+}
+#comments .gt-link,
+#comments .gt-user-name,
+#comments .gt-comment-username {
+  color: color-link !important;
+}
+#comments .gt-svg svg {
+  fill: color-link !important;
+}
+#comments .gt-comment-admin .gt-comment-content {
+  border-color: color-border-strong !important;
+  box-shadow: inset 2px 0 0 rgba(165,143,114,0.24);
+}
+#comments .gt-header-textarea::placeholder {
+  color: color-muted !important;
+}
+#comments .gt-comment-body,
+#comments .gt-comment-text,
+#comments .gt-header-preview {
+  color: color-default !important;
+}
+#comments .gt-comment-content {
+  border-radius: 6px;
+}
+#comments .gt-avatar img,
+#comments .gt-comment-avatar img {
+  border-radius: 999px;
+}
+#comments .gt-header-controls,
+#comments .gt-comments-null,
+#comments .gt-comment-preview,
+#comments .gt-comment-content,
+#comments .gt-header-textarea {
+  font-family: font-sans;
+}
+#comments .gt-counts,
+#comments .gt-action,
+#comments .gt-time,
+#comments .gt-btn,
+#comments .gt-svg,
+#comments .gt-user-name,
+#comments .gt-comment-username {
+  font-family: font-ui;
+}

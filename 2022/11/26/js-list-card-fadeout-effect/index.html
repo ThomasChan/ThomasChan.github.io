@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>Javascript list cards fadeOut effect | Memories</title>
+<meta name="description" content="Memories">
+<meta name="theme-color" content="#ede6dc">
+<meta name="color-scheme" content="light">
+
+<meta name="description" content="#demo {     position: relative;     width: 200px;     height: 400px;     overflow: overlay;     border: 1px solid #dadada;     border-radius: 2px;     box-shadow: 0 4px 6px -1px rgb(0 0 0 &#x2F; 0.1), 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript list cards fadeOut effect">
+<meta property="og:url" content="http://chenjunhao.cn/2022/11/26/js-list-card-fadeout-effect/index.html">
+<meta property="og:site_name" content="Memories">
+<meta property="og:description" content="#demo {     position: relative;     width: 200px;     height: 400px;     overflow: overlay;     border: 1px solid #dadada;     border-radius: 2px;     box-shadow: 0 4px 6px -1px rgb(0 0 0 &#x2F; 0.1), 0">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-26T09:24:34.000Z">
+<meta property="article:modified_time" content="2022-11-26T10:23:06.000Z">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="reactjs">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="animation">
+<meta name="twitter:card" content="summary">
+
+
+
+
+  <link rel="icon" href="/assets/favicon.jpeg">
+
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?3c7748f8aa5ad8039215a1783a5c0ae5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421ef4a6106d44209bde6e1788533962"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="theme-wabi-sabi monochrome page-post">
+  <div class="site-shell">
+    
+
+<header class="side-rail">
+  <div class="side-rail__brand">
+    
+    <a class="side-rail__title" href="/">Memories</a>
+    
+  </div>
+
+  <nav class="side-rail__nav" aria-label="Primary">
+    
+      <a class="side-rail__nav-link" href="/">
+        <span>Home</span>
+        <em>01</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/resume">
+        <span>About</span>
+        <em>02</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="https://github.com/thomaschan" target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;>
+        <span>Github</span>
+        <em>03</em>
+      </a>
+    
+      <a class="side-rail__nav-link" href="/something">
+        <span>Something</span>
+        <em>04</em>
+      </a>
+    
+  </nav>
+
+  <div class="side-rail__notes">
+    <section class="rail-note rail-note--latest">
+      <span class="rail-note__label">最新</span>
+      
+        <a class="rail-note__title" href="/2026/05/14/ai-r-and-d-memory-has-at-least-three-layers/">AI 研发里的 memory，至少有三层</a>
+        <p class="rail-note__meta">
+          <span>2026.05.14</span>
+          
+        </p>
+      
+    </section>
+
+    <section class="rail-note rail-note--stats">
+      <div class="rail-stat">
+        <span class="rail-stat__label">归档</span>
+        <strong>22</strong>
+      </div>
+      <div class="rail-stat">
+        <span class="rail-stat__label">分类</span>
+        <strong>0</strong>
+      </div>
+    </section>
+
+    
+  </div>
+</header>
+
+    <main class="site-main">
+      
+
+<article id="post-js-list-card-fadeout-effect" class="article article-type-post article-fragment">
+  
+    <header class="article-fragment__hero">
+      <div class="article-fragment__eyebrow-row">
+        <span class="article-fragment__eyebrow">2022</span>
+        
+      </div>
+      <h1 class="article-header">Javascript list cards fadeOut effect</h1>
+      <div class="article-info">
+        <span>2022.11.26</span>
+        
+        
+          <a href="/tags/javascript/">#javascript</a>
+        
+          <a href="/tags/reactjs/">#reactjs</a>
+        
+          <a href="/tags/html/">#html</a>
+        
+          <a href="/tags/animation/">#animation</a>
+        
+      </div>
+      
+        <p class="article-fragment__summary">js实现卡片列表上滑渐隐动效</p>
+      
+    </header>
+  
+
+  
+
+
+  <section class="article-fragment__body">
+    <div class="article-entry">
+      <style>
+  #demo {
+    position: relative;
+    width: 200px;
+    height: 400px;
+    overflow: overlay;
+    border: 1px solid #dadada;
+    border-radius: 2px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    padding: 0px 15px;
+  }
+  #demo li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 15px auto;
+    height: 100px;
+    border: 1px solid #dadada;
+    border-radius: 2px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    will-change: transform;
+    background-color: white;
+  }
+  .fadeOutScalingTop {
+    position: relative;
+    position: -webkit-sticky;
+    position: sticky;
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
+  }
+</style>
+<script>
+  function fadeout(el) {
+    const len = el.childElementCount;
+    let fadeOutAnimating = false;
+    const childSize = 100;
+    function fadeoutEffect() {
+      fadeOutAnimating = true;
+      for (let i = 0; i < len; i++) {
+        if (el.scrollTop > el.children[i].offsetTop) {
+          const scrolling = el.scrollTop - el.children[i].offsetTop;
+          const scaling = Math.min(1, Math.max(0, (childSize - scrolling * 0.2) / childSize));
+          const opacity = scaling * 100 < 96 ? scaling ** 8 : 1;
+          if (opacity > 0) {
+            if (!el.children[i].classList.contains('fadeOutScalingTop')) {
+              el.children[i].classList.add('fadeOutScalingTop');
+            }
+            el.children[i].style.opacity = opacity;
+            el.children[i].style.transform = `translate3d(0, ${scrolling}px, 0) scale(${scaling})`;
+          }
+        } else if (el.children[i].classList.contains('fadeOutScalingTop')) {
+          el.children[i].classList.remove('fadeOutScalingTop');
+          el.children[i].style.transform = 'none';
+          el.children[i].style.opacity = 1;
+        }
+      }
+      fadeOutAnimating = false;
+    }
+    function animate() {
+      if (!fadeOutAnimating) {
+        requestAnimationFrame(fadeoutEffect);
+      }
+    }
+    el.addEventListener('scroll', animate);
+  }
+</script>
+
+<p>先看效果</p>
+<ul id="demo">
+  <li>Card 1</li>
+  <li>Card 2</li>
+  <li>Card 3</li>
+  <li>Card 4</li>
+  <li>Card 5</li>
+  <li>Card 6</li>
+  <li>Card 7</li>
+  <li>Card 8</li>
+  <li>Card 9</li>
+  <li>Card 10</li>
+</ul>
+
+<p>那么怎么实现呢，首先是 HTML 结构：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 6<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 7<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 8<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 9<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 10<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只要是个列表就行，随便什么div都可以。</p>
+<p>样式也随意，只需要注意 <code>ul</code> 的 <code>position</code> 不是能初始值，可以给一个 <code>relative</code>，否则会影响计算子元素的 <code>offsetTop</code>。</p>
+<p>定义动画函数，并监听 <code>ul</code> 的滚动事件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fadeout</span>(<span class="params">el</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> len = el.<span class="property">childElementCount</span>;</span><br><span class="line">  <span class="keyword">let</span> fadeOutAnimating = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">fadeoutEffect</span>(<span class="params"></span>) &#123;</span><br><span class="line">    fadeOutAnimating = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// animation logic</span></span><br><span class="line">    fadeOutAnimating = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">animate</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!fadeOutAnimating) &#123;</span><br><span class="line">      <span class="title function_">requestAnimationFrame</span>(fadeoutEffect);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  el.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, animate);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动画逻辑就是当滚动进行时，当子元素超出父元素可视范围时，将滚动距离与子元素的高度做转换，使用 <code>requestAnimationFrame</code> 设置子元素大小及透明度样式，那么随着滚动距离越大，子元素就越小，不透明度越来越低</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fadeoutEffect</span>(<span class="params"></span>) &#123;</span><br><span class="line">  fadeOutAnimating = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (el.<span class="property">scrollTop</span> &gt; el.<span class="property">children</span>[i].<span class="property">offsetTop</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> scrolling = el.<span class="property">scrollTop</span> - el.<span class="property">children</span>[i].<span class="property">offsetTop</span>;</span><br><span class="line">      <span class="keyword">const</span> scaling = <span class="title class_">Math</span>.<span class="title function_">min</span>(<span class="number">1</span>, <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">0</span>, (el.<span class="property">children</span>[i].<span class="property">offsetHeight</span> - scrolling * <span class="number">0.2</span>) / el.<span class="property">children</span>[i].<span class="property">offsetHeight</span>));</span><br><span class="line">      <span class="keyword">if</span> (!el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">contains</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>)) &#123;</span><br><span class="line">        el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">const</span> opacity = scaling * <span class="number">100</span> &lt; <span class="number">96</span> ? scaling ** <span class="number">8</span> : <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span> (opacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">opacity</span> = opacity;</span><br><span class="line">        el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">transform</span> = <span class="string">`translate3d(0, <span class="subst">$&#123;scrolling&#125;</span>px, 0) scale(<span class="subst">$&#123;scaling&#125;</span>)`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">contains</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>)) &#123;</span><br><span class="line">      el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>);</span><br><span class="line">      el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">transform</span> = <span class="string">&#x27;none&#x27;</span>;</span><br><span class="line">      el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">opacity</span> = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  fadeOutAnimating = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动画效果中给子元素添加了 <code>className</code> <code>fadeOutScalingTop</code>, 主要是给子元素设置了 <code>transform-origin</code> 属性：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fadeOutScalingTop</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">position</span>: -webkit-sticky;</span><br><span class="line">  <span class="attribute">position</span>: sticky;</span><br><span class="line">  -webkit-<span class="attribute">transform-origin</span>: center top;</span><br><span class="line">  <span class="attribute">transform-origin</span>: center top;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了性能好一些可以给子元素设置上 <code>will-change: transform</code> 属性。</p>
+<p>现在动效逻辑就完成了，调用即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fadeout</span>(<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;ul&#x27;</span>)[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Copyright ThomasChan.</span><br><span class="line"> * This source code is licensed under the MIT license.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-id">#demo</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">overflow</span>: overlay;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dadada</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">4px</span> <span class="number">6px</span> -<span class="number">1px</span> <span class="built_in">rgb</span>(<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">0.1</span>), <span class="number">0</span> <span class="number">2px</span> <span class="number">4px</span> -<span class="number">2px</span> <span class="built_in">rgb</span>(<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">0.1</span>);</span></span><br><span class="line"><span class="language-css">    <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">15px</span>;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css">  <span class="selector-id">#demo</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">margin</span>: <span class="number">15px</span> auto;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#dadada</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">4px</span> <span class="number">6px</span> -<span class="number">1px</span> <span class="built_in">rgb</span>(<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">0.1</span>), <span class="number">0</span> <span class="number">2px</span> <span class="number">4px</span> -<span class="number">2px</span> <span class="built_in">rgb</span>(<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">0.1</span>);</span></span><br><span class="line"><span class="language-css">    <span class="attribute">will-change</span>: transform;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background-color</span>: white;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css">  <span class="selector-class">.fadeOutScalingTop</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">position</span>: -webkit-sticky;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">position</span>: sticky;</span></span><br><span class="line"><span class="language-css">    -webkit-<span class="attribute">transform-origin</span>: center top;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">transform-origin</span>: center top;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 6<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 7<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 8<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 9<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Card 10<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">fadeout</span>(<span class="params">el</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> len = el.<span class="property">childElementCount</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> fadeOutAnimating = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> childSize = <span class="number">100</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">fadeoutEffect</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      fadeOutAnimating = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (el.<span class="property">scrollTop</span> &gt; el.<span class="property">children</span>[i].<span class="property">offsetTop</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> scrolling = el.<span class="property">scrollTop</span> - el.<span class="property">children</span>[i].<span class="property">offsetTop</span>;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> scaling = <span class="title class_">Math</span>.<span class="title function_">min</span>(<span class="number">1</span>, <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">0</span>, (childSize - scrolling * <span class="number">0.2</span>) / childSize));</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> opacity = scaling * <span class="number">100</span> &lt; <span class="number">96</span> ? scaling ** <span class="number">8</span> : <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (opacity &gt; <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (!el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">contains</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>)) &#123;</span></span><br><span class="line"><span class="language-javascript">              el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">opacity</span> = opacity;</span></span><br><span class="line"><span class="language-javascript">            el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">transform</span> = <span class="string">`translate3d(0, <span class="subst">$&#123;scrolling&#125;</span>px, 0) scale(<span class="subst">$&#123;scaling&#125;</span>)`</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">contains</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>)) &#123;</span></span><br><span class="line"><span class="language-javascript">          el.<span class="property">children</span>[i].<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;fadeOutScalingTop&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">transform</span> = <span class="string">&#x27;none&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">          el.<span class="property">children</span>[i].<span class="property">style</span>.<span class="property">opacity</span> = <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      fadeOutAnimating = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">animate</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (!fadeOutAnimating) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">requestAnimationFrame</span>(fadeoutEffect);</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    el.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, animate);</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">fadeout</span>(<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#demo&#x27;</span>));</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<script>
+  window.onload = function() {
+    fadeout(document.querySelector('#demo'));
+  }
+</script>
+
+
+
+    </div>
+  </section>
+
+  
+    <footer class="article-footer article-fragment__footer">
+      <div class="article-end">
+        
+          <div class="article-end__meta">
+            
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+            
+
+          </div>
+        
+        
+          <div class="article-end__reward">
+            <img title="打开微信扫一扫" class="thankyou" src="/assets/thankyou.jpeg" alt="Reward QR code" />
+          </div>
+        
+        
+          <div class="article-end__comments">
+            
+  <div id="comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    (function initComments() {
+      var gitalk = new Gitalk({
+        clientID: '1e2ae003530b581cd762',
+        clientSecret: 'c144bbbb8c653b2c69c3082910b79abc86edfa4c',
+        repo: 'ThomasChan.github.io',
+        owner: 'thomaschan',
+        admin: ['thomaschan'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        id: '2022112602',
+        title: '2022112602',
+      });
+
+      gitalk.render('comments');
+    })();
+  </script>
+
+
+          </div>
+        
+      </div>
+    </footer>
+  
+</article>
+
+
+    </main>
+    <footer class="main-footer">
+  
+    <p class="main-footer__line">
+      <span class="main-footer__identity">© 2026 Memories</span>
+      <span class="main-footer__credit">安静地发布于 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></span>
+    </p>
+  
+</footer>
+
+  </div>
+  
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+
+  
+<link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<script src="/PhotoSwipe/photoswipe.js"></script>
+
+  
+<script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+
+
+<script src="/scripts/main.js"></script>
+
+
+</body>
+</html>
