@@ -10,10 +10,10 @@
 }
 .pagination__meta {
   margin: 0;
-  color: rgba(101,90,79,0.72);
+  color: #6b6a64;
   font-size: 0.72rem;
   line-height: 1.5;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .pagination-links {
@@ -31,26 +31,26 @@
   min-height: auto;
   padding: 0;
   border: 0;
-  color: rgba(97,81,63,0.74);
+  color: #1b365d;
   background: transparent;
   line-height: 1.5;
   text-decoration: none;
-  text-decoration-color: rgba(97,81,63,0.24);
+  text-decoration-color: #e4ecf5;
   text-underline-offset: 0.14em;
 }
 .pagination .page-number:hover,
 .pagination .extend:hover {
-  color: color-link-hover;
+  color: #2d5a8a;
   text-decoration: underline;
 }
 .pagination .space {
-  color: color-muted;
+  color: #504e49;
 }
 .pagination .current {
-  color: color-default;
-  box-shadow: inset 0 -1px 0 rgba(169,149,121,0.54);
+  color: #141413;
+  box-shadow: inset 0 -1px 0 #1b365d;
 }
-@media mq-mobile {
+@media screen and (max-width: 768px) {
   .pagination {
     padding-top: 12px;
   }

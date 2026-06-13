@@ -1,37 +1,42 @@
 .side-rail {
   position: sticky;
-  top: 24px;
+  top: 28px;
   align-self: start;
   display: grid;
-  gap: 18px;
+  gap: 20px;
 }
 .side-rail__brand,
 .rail-card {
-  padding: 20px 18px;
-  background: rgba(255,255,255,0.5);
-  border: 1px solid rgba(170,142,114,0.28);
-  box-shadow: shadow-soft;
+  padding: 22px 20px;
+  background: #faf9f5;
+  border: 1px solid #e8e6dc;
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(20,20,19,0.05);
+}
+.side-rail__brand {
+  border-left: 3px solid #1b365d;
 }
 .side-rail__eyebrow {
   margin: 0 0 10px;
-  color: rgba(101,90,79,0.82);
+  color: #6b6a64;
   font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .side-rail__title {
   display: inline-block;
-  color: color-default;
-  font-family: font-display;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  color: #1b365d;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-size: 2.32rem;
+  font-weight: 500;
   line-height: 1.08;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 .side-rail__description {
   margin: 10px 0 0;
-  color: rgba(101,90,79,0.9);
+  color: #504e49;
   font-size: 0.96rem;
-  line-height: 1.85;
+  line-height: 1.58;
 }
 .side-rail__nav {
   display: grid;
@@ -47,17 +52,20 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(170,142,114,0.34);
-  color: color-default;
+  padding: 10px 0 9px;
+  border-bottom: 1px solid #e5e3d8;
+  color: #504e49;
   font-size: 0.96rem;
 }
 .side-rail__nav-link.is-current {
-  color: color-link-hover;
+  color: #1b365d;
+}
+.side-rail__nav a:hover {
+  color: #1b365d;
 }
 .side-rail__nav-link em {
-  color: rgba(101,90,79,0.8);
-  font-family: font-ui;
+  color: #6b6a64;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
   font-size: 0.8rem;
   font-style: normal;
 }
@@ -68,35 +76,39 @@
 }
 .rail-note__label,
 .rail-stat__label {
-  color: rgba(101,90,79,0.82);
+  color: #6b6a64;
   font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .rail-note__title {
-  color: color-default;
+  color: #1b365d;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.42;
 }
 .rail-note__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 10px;
   margin: 0;
-  color: rgba(101,90,79,0.86);
+  color: #6b6a64;
   font-size: 0.82rem;
 }
 .rail-note__meta a {
-  color: color-link;
+  color: #1b365d;
 }
 .rail-note--stats {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid #e5e3d8;
+  border-bottom: 1px solid #e5e3d8;
 }
 .rail-stat strong {
-  color: color-default;
-  font-family: font-ui;
-  font-size: 1.1rem;
+  color: #1b365d;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-size: 1.28rem;
+  font-weight: 500;
 }
 .rail-note__tags {
   display: flex;
@@ -108,36 +120,38 @@
   align-items: baseline;
   gap: 6px;
   padding: 6px 8px;
-  border: 1px solid rgba(170,142,114,0.18);
-  background: rgba(250,247,241,0.84);
-  color: rgba(97,81,63,0.9);
+  border: 1px solid #e8e6dc;
+  border-radius: 4px;
+  background: #e4ecf5;
+  color: #1b365d;
   font-size: 0.82rem;
 }
 .rail-note__tags em {
-  color: rgba(101,90,79,0.76);
-  font-family: font-ui;
+  color: #504e49;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
   font-size: 0.74rem;
   font-style: normal;
 }
 .rail-card__label {
   display: block;
   margin-bottom: 8px;
-  color: rgba(101,90,79,0.82);
+  color: #6b6a64;
   font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .rail-card strong {
   display: block;
-  color: color-default;
-  font-family: font-display;
+  color: #141413;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
   font-size: 1.1rem;
+  font-weight: 500;
 }
 .rail-card p {
   margin: 10px 0 0;
-  color: rgba(101,90,79,0.88);
+  color: #504e49;
   font-size: 0.92rem;
-  line-height: 1.8;
+  line-height: 1.58;
 }
 .rail-card__tags {
   display: flex;
@@ -146,28 +160,28 @@
   margin-top: 10px;
 }
 .rail-card__tags a {
-  color: color-link;
+  color: #1b365d;
   font-size: 0.88rem;
 }
 .rail-card--muted {
-  background: rgba(255,255,255,0.38);
+  background: #faf9f5;
 }
-@media mq-tablet {
+@media screen and (max-width: 980px) {
   .side-rail {
     position: static;
   }
 }
-@media mq-mobile {
+@media screen and (max-width: 768px) {
   .side-rail__brand,
   .rail-card {
     padding: 16px;
   }
   .side-rail__title {
-    font-size: clamp(1.45rem, 8vw, 2rem);
+    font-size: 1.76rem;
   }
   .side-rail__description {
     font-size: 0.92rem;
-    line-height: 1.7;
+    line-height: 1.58;
   }
   .rail-note--latest {
     display: none;

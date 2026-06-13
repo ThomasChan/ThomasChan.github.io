@@ -7,27 +7,28 @@
 }
 .quiet-list__empty {
   margin: 0;
-  color: color-muted;
+  color: #504e49;
 }
 .quiet-list__header {
   display: grid;
   gap: 10px;
   max-width: 38rem;
-  padding-bottom: 18px;
+  padding: 0 0 20px 14px;
+  border-left: 3px solid #1b365d;
 }
 .quiet-list__label {
   margin: 0;
-  color: color-muted;
+  color: #6b6a64;
   font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .quiet-list__intro {
   margin: 0;
   max-width: 36rem;
-  color: rgba(101,90,79,0.88);
+  color: #504e49;
   font-size: 0.94rem;
-  line-height: 1.72;
+  line-height: 1.58;
   text-wrap: pretty;
 }
 .quiet-card {
@@ -36,15 +37,16 @@
   gap: 10px;
   max-width: 48rem;
   padding: 22px 24px 24px;
-  background: rgba(255,255,255,0.58);
-  border: 1px solid rgba(170,142,114,0.24);
-  box-shadow: shadow-soft;
+  background: #faf9f5;
+  border: 1px solid #e8e6dc;
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(20,20,19,0.05);
   transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
 }
 .quiet-card:hover {
   transform: none;
-  border-color: rgba(170,142,114,0.3);
-  background: rgba(255,255,255,0.66);
+  border-color: #e4ecf5;
+  background: #faf9f5;
 }
 .quiet-card__cover-link {
   position: absolute;
@@ -70,20 +72,20 @@
   align-items: start;
   gap: 8px 28px;
   max-width: 52rem;
-  padding: 22px 0 24px;
+  padding: 24px 0 26px;
   background: transparent;
   border: 0;
-  border-top: 1px solid rgba(170,142,114,0.18);
+  border-top: 1px solid #e5e3d8;
   box-shadow: none;
   border-radius: 0;
 }
 .quiet-card--entry:last-of-type {
-  border-bottom: 1px solid rgba(170,142,114,0.14);
+  border-bottom: 1px solid #e5e3d8;
 }
 .quiet-card--entry:hover,
 .quiet-card--entry:focus-within {
   background: transparent;
-  border-top-color: rgba(170,142,114,0.3);
+  border-top-color: #1b365d;
 }
 .quiet-card__entry-header {
   grid-column: 1/-1;
@@ -99,14 +101,14 @@
   align-content: start;
   gap: 6px 10px;
   margin: 0;
-  color: rgba(101,90,79,0.72);
+  color: #6b6a64;
   font-size: 0.72rem;
   line-height: 1.5;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .quiet-card__meta-separator {
-  color: rgba(101,90,79,0.45);
+  color: #e8e6dc;
 }
 .quiet-card__meta a {
   color: inherit;
@@ -115,19 +117,20 @@
   grid-column: 2;
   margin: 0;
   max-width: 30ch;
-  font-family: font-display;
-  font-size: clamp(1.14rem, 1.95vw, 1.5rem);
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-size: 1.34rem;
+  font-weight: 500;
   line-height: 1.16;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 .quiet-card__title a {
-  color: color-default;
+  color: #141413;
   text-decoration: none;
 }
 .quiet-card--entry:hover .quiet-card__title a,
 .quiet-card--entry:focus-within .quiet-card__title a {
-  color: color-link-hover;
+  color: #2d5a8a;
   text-decoration: underline;
   text-decoration-thickness: 0.05em;
   text-underline-offset: 0.14em;
@@ -136,9 +139,9 @@
   grid-column: 2;
   margin: 0;
   max-width: 42rem;
-  color: rgba(90,77,65,0.82);
+  color: #504e49;
   font-size: 0.94rem;
-  line-height: 1.72;
+  line-height: 1.58;
   text-wrap: pretty;
 }
 .quiet-card__footer {
@@ -158,32 +161,32 @@
 }
 .quiet-card__tags a,
 .quiet-card__link {
-  color: rgba(97,81,63,0.74);
+  color: #1b365d;
   font-size: 0.8rem;
   line-height: 1.5;
 }
 .quiet-card__tags a {
-  color: rgba(97,81,63,0.82);
+  color: #1b365d;
 }
 .quiet-card__link {
-  color: rgba(97,81,63,0.68);
-  letter-spacing: 0.01em;
+  color: #1b365d;
+  letter-spacing: 0;
   text-decoration: underline;
-  text-decoration-color: rgba(97,81,63,0.26);
+  text-decoration-color: #e4ecf5;
   text-underline-offset: 0.14em;
 }
 .quiet-card__meta a:hover,
 .quiet-card__tags a:hover,
 .quiet-card__link:hover {
-  color: color-link-hover;
+  color: #2d5a8a;
 }
-@media mq-mobile {
+@media screen and (max-width: 768px) {
   .quiet-list {
     gap: 0;
   }
   .quiet-list__header {
     gap: 8px;
-    padding-bottom: 14px;
+    padding-bottom: 16px;
   }
   .quiet-card,
   .quiet-card--offset {
@@ -206,12 +209,12 @@
   }
   .quiet-card__title {
     max-width: 100%;
-    font-size: clamp(1.08rem, 5vw, 1.32rem);
+    font-size: 1.18rem;
   }
   .quiet-card__summary,
   .quiet-list__intro {
     font-size: 0.93rem;
-    line-height: 1.7;
+    line-height: 1.58;
   }
   .quiet-card__footer {
     gap: 8px 12px;

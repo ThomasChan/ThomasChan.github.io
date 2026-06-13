@@ -1,17 +1,18 @@
 .site-shell {
   position: relative;
-  max-width: site-width;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 38px 32px 56px;
+  padding: 48px 32px 64px;
   display: grid;
-  grid-template-columns: sidebar-width minmax(0, 1fr);
-  gap: 34px;
+  grid-template-columns: 256px minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
 }
 .site-main {
   min-width: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 34px;
+  gap: 42px;
   word-wrap: break-word;
 }
 .home-hero,
@@ -19,40 +20,46 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 18px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid color-border;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #e8e6dc;
+}
+.home-hero__copy,
+.collection-hero {
+  border-left: 3px solid #1b365d;
+  padding-left: 18px;
 }
 .home-hero__eyebrow,
 .collection-hero__eyebrow,
 .article-fragment__eyebrow {
   margin: 0 0 10px;
-  color: color-muted;
+  color: #6b6a64;
   font-size: 0.74rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .home-hero__title,
 .collection-hero__title {
   margin: 0;
   max-width: 18ch;
-  font-family: font-display;
-  font-size: clamp(1.26rem, 2.5vw, 1.78rem);
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-size: 1.78rem;
+  font-weight: 500;
   line-height: 1.16;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 .home-hero__intro {
   max-width: 44rem;
   margin: 0;
-  color: color-muted;
+  color: #504e49;
   font-size: 0.98rem;
-  line-height: 1.78;
+  line-height: 1.58;
 }
 .lead-fragment {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
+  gap: 12px;
   max-width: 42rem;
-  padding: 14px 0 0;
+  padding: 18px 0 0;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -65,26 +72,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 12px;
-  color: rgba(101,90,79,0.74);
+  color: #6b6a64;
   font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
 }
 .lead-fragment__title {
   margin: 0;
-  font-family: font-display;
-  font-size: clamp(1.14rem, 2.35vw, 1.52rem);
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-size: 1.52rem;
+  font-weight: 500;
   line-height: 1.18;
-  letter-spacing: -0.028em;
+  letter-spacing: 0;
 }
 .lead-fragment__title a {
-  color: color-default;
+  color: #1b365d;
 }
 .lead-fragment__summary {
   margin: 0;
   max-width: 40rem;
-  color: rgba(90,77,65,0.84);
+  color: #504e49;
   font-size: 0.96rem;
-  line-height: 1.76;
+  line-height: 1.58;
 }
 .lead-fragment__footer {
   display: flex;
@@ -94,33 +102,33 @@
 }
 .lead-fragment__link {
   width: fit-content;
-  color: rgba(97,81,63,0.68);
+  color: #1b365d;
   font-size: 0.84rem;
   text-decoration: underline;
-  text-decoration-color: rgba(97,81,63,0.22);
+  text-decoration-color: #e4ecf5;
   text-underline-offset: 0.14em;
 }
 .home-hero__details,
 .collection-hero__details {
-  color: rgba(101,90,79,0.82);
+  color: #6b6a64;
 }
 .collection-hero--soft {
   padding-bottom: 16px;
 }
-@media mq-tablet {
+@media screen and (max-width: 980px) {
   .site-shell {
-    padding: 30px 24px 48px;
+    padding: 34px 24px 52px;
     grid-template-columns: 1fr;
   }
 }
-@media mq-mobile {
+@media screen and (max-width: 768px) {
   .site-shell {
     padding: 22px 18px 40px;
     gap: 22px;
   }
   .site-main {
     padding-top: 16px;
-    border-top: 1px solid rgba(214,200,183,0.72);
+    border-top: 1px solid #e8e6dc;
   }
   .lead-fragment {
     padding-top: 12px;
@@ -133,11 +141,11 @@
   .home-hero__title,
   .collection-hero__title {
     max-width: 100%;
-    font-size: clamp(1.16rem, 5.8vw, 1.55rem);
+    font-size: 1.42rem;
   }
   .home-hero__intro {
     font-size: 0.95rem;
-    line-height: 1.72;
+    line-height: 1.6;
   }
   .lead-fragment__footer {
     gap: 8px 12px;
@@ -148,7 +156,7 @@
     gap: 8px 14px;
   }
 }
-@media mq-phone {
+@media screen and (max-width: 560px) {
   .site-shell {
     padding: 18px 14px 32px;
   }

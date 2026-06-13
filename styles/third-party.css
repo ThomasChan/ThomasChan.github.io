@@ -40,56 +40,56 @@
   padding: 5px;
 }
 #comments .gt-container {
-  color: color-default;
-  font-family: font-sans;
+  color: #141413;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
 }
 #comments .gt-meta {
-  border-color: color-border !important;
+  border-color: #e8e6dc !important;
 }
 #comments .gt-header-textarea,
 #comments .gt-comment-content,
 #comments .gt-popup {
-  background: rgba(255,255,255,0.48) !important;
-  border-color: color-border !important;
-  color: color-default !important;
+  background: #faf9f5 !important;
+  border-color: #e8e6dc !important;
+  color: #141413 !important;
   box-shadow: none !important;
 }
 #comments .gt-btn {
-  border-color: color-border !important;
-  background: rgba(255,255,255,0.44) !important;
+  border-color: #e8e6dc !important;
+  background: #e8e6dc !important;
   border-radius: 4px !important;
-  color: color-default !important;
+  color: #141413 !important;
   box-shadow: none !important;
 }
 #comments .gt-btn-preview,
 #comments .gt-btn-login {
-  background: rgba(255,255,255,0.38) !important;
-  color: color-default !important;
+  background: #1b365d !important;
+  color: #faf9f5 !important;
 }
 #comments .gt-comments-null,
 #comments .gt-time,
 #comments .gt-action {
-  color: rgba(101,90,79,0.78) !important;
+  color: #6b6a64 !important;
 }
 #comments .gt-link,
 #comments .gt-user-name,
 #comments .gt-comment-username {
-  color: color-link !important;
+  color: #1b365d !important;
 }
 #comments .gt-svg svg {
-  fill: color-link !important;
+  fill: #1b365d !important;
 }
 #comments .gt-comment-admin .gt-comment-content {
-  border-color: color-border-strong !important;
-  box-shadow: inset 2px 0 0 rgba(165,143,114,0.24);
+  border-color: #1b365d !important;
+  box-shadow: inset 2px 0 0 #1b365d;
 }
 #comments .gt-header-textarea::placeholder {
-  color: color-muted !important;
+  color: #504e49 !important;
 }
 #comments .gt-comment-body,
 #comments .gt-comment-text,
 #comments .gt-header-preview {
-  color: color-default !important;
+  color: #141413 !important;
 }
 #comments .gt-comment-content {
   border-radius: 6px;
@@ -103,7 +103,7 @@
 #comments .gt-comment-preview,
 #comments .gt-comment-content,
 #comments .gt-header-textarea {
-  font-family: font-sans;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
 }
 #comments .gt-counts,
 #comments .gt-action,
@@ -112,5 +112,5 @@
 #comments .gt-svg,
 #comments .gt-user-name,
 #comments .gt-comment-username {
-  font-family: font-ui;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
 }

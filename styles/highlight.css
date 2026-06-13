@@ -1,14 +1,14 @@
 figure.highlight {
   position: relative;
   margin: 2rem 0;
-  border: 1px solid color-code-border;
-  border-radius: 10px;
-  background: linear-gradient(180deg, color-code-panel 0%, color-code-surface 100%) !important;
+  border: 1px solid #30302e;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #141318 0%, #1f1f1d 100%) !important;
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  box-shadow: shadow-soft, inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 8px 28px rgba(20,20,19,0.05), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 figure.highlight table {
   border-collapse: collapse;
@@ -44,9 +44,9 @@ figure.highlight td.code {
 figure.highlight .gutter {
   width: 48px;
   min-width: 48px;
-  border-right: 1px solid color-code-border;
-  background: color-code-surface;
-  color: color-code-muted;
+  border-right: 1px solid #30302e;
+  background: #1f1f1d;
+  color: #b0aea5;
   user-select: none;
   position: sticky;
   left: 0;
@@ -61,8 +61,8 @@ figure.highlight .code pre {
   padding: 16px !important;
   border: 0 !important;
   background: transparent !important;
-  color: color-code-ink !important;
-  font-family: font-mono;
+  color: #faf9f5 !important;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
   font-size: 0.88rem;
   line-height: 1.62;
 }
@@ -76,11 +76,11 @@ figure.highlight .code br {
 }
 figure.highlight .code,
 figure.highlight .code pre {
-  color: color-code-ink !important;
+  color: #faf9f5 !important;
 }
 figure.highlight .comment {
-  color: color-code-comment !important;
-  font-style: italic;
+  color: #79756a !important;
+  font-style: normal;
 }
 figure.highlight .keyword,
 figure.highlight .built_in,
@@ -89,18 +89,18 @@ figure.highlight .tag,
 figure.highlight .attr,
 figure.highlight .attr-name,
 figure.highlight .selector-tag {
-  color: color-code-keyword !important;
-  font-weight: 600;
+  color: #84aad6 !important;
+  font-weight: 500;
 }
 figure.highlight .string,
 figure.highlight .attr-value,
 figure.highlight .template-variable {
-  color: color-code-string !important;
+  color: #8cbb91 !important;
 }
 figure.highlight .number,
 figure.highlight .literal,
 figure.highlight .symbol {
-  color: color-code-number !important;
+  color: #cbab86 !important;
 }
 figure.highlight .title,
 figure.highlight .function,
@@ -108,12 +108,12 @@ figure.highlight .function_,
 figure.highlight .class,
 figure.highlight .class-name,
 figure.highlight .class_ {
-  color: color-code-function !important;
-  font-weight: 600;
+  color: #d6c78c !important;
+  font-weight: 500;
 }
 figure.highlight .property,
 figure.highlight .params {
-  color: color-code-property !important;
+  color: #b59ccd !important;
 }
 figure.highlight .gutter pre {
   padding-right: 12px !important;
@@ -126,14 +126,14 @@ figure.highlight.diff .deletion {
   padding: 0 16px;
 }
 figure.highlight.diff .addition {
-  color: color-code-string !important;
-  background: rgba(90,168,120,0.14);
+  color: #8cbb91 !important;
+  background: #183224;
 }
 figure.highlight.diff .deletion {
-  color: color-code-number !important;
-  background: rgba(211,91,91,0.12);
+  color: #cbab86 !important;
+  background: #33211f;
 }
-@media mq-mobile {
+@media screen and (max-width: 768px) {
   figure.highlight {
     margin: 1.4rem 0;
     border-radius: 8px;
