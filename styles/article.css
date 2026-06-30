@@ -198,9 +198,295 @@
   max-width: calc((reading-width + 14rem));
 }
 .article--resume .article-entry {
-  max-width: calc((reading-width + 11rem));
+  max-width: calc((reading-width + 14rem));
   font-size: 1.03rem;
   line-height: 1.72;
+}
+.article--resume .article-entry .resume-hero,
+.article--resume .article-entry .resume-section {
+  color: #141413;
+}
+.article--resume .article-entry .resume-hero p,
+.article--resume .article-entry .resume-section p {
+  margin: 0;
+}
+.article--resume .article-entry .resume-hero h1,
+.article--resume .article-entry .resume-section h2,
+.article--resume .article-entry .resume-section h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font-family: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Charter, Georgia, Palatino, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.resume-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 4.2rem);
+  border: 2px solid #141413;
+  background: linear-gradient(135deg, rgba(238,244,185,0.52), transparent 46%), #faf9f5;
+  box-shadow: 7px 7px 0 #141413;
+}
+.resume-hero::before,
+.resume-hero::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid #141413;
+}
+.resume-hero::before {
+  right: clamp(1rem, 4vw, 3.4rem);
+  top: clamp(1rem, 4vw, 2.4rem);
+  width: clamp(2.8rem, 8vw, 5.2rem);
+  height: clamp(2.8rem, 8vw, 5.2rem);
+  background: #b9a7e8;
+  transform: rotate(12deg);
+}
+.resume-hero::after {
+  right: clamp(4rem, 12vw, 9rem);
+  bottom: clamp(1.2rem, 4vw, 2.8rem);
+  width: clamp(1.8rem, 5vw, 3.2rem);
+  height: clamp(1.8rem, 5vw, 3.2rem);
+  border-radius: 999px;
+  background: #c8da49;
+}
+.resume-kicker {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.72rem;
+  margin-bottom: clamp(1.2rem, 3vw, 2rem);
+  color: #504e49;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.resume-kicker::before {
+  content: '';
+  width: 1.5rem;
+  height: 2px;
+  background: #141413;
+}
+.article--resume .article-entry .resume-hero h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 9em;
+  font-size: clamp(2.3rem, 4vw, 2.95rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.article--resume .article-entry .resume-hero h1 span {
+  display: inline-block;
+  margin-left: 0.08em;
+  padding: 0 0.12em 0.04em;
+  background: #c8da49;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.resume-lead {
+  position: relative;
+  z-index: 1;
+  max-width: 49rem;
+  margin-top: clamp(1.5rem, 3vw, 2.2rem) !important;
+  color: #1a1f33;
+  font-size: clamp(1.05rem, 1.35vw, 1.24rem);
+  line-height: 1.72;
+}
+.resume-note {
+  position: relative;
+  z-index: 1;
+  max-width: 43rem;
+  margin-top: 1.2rem !important;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(26,31,51,0.22);
+  color: #504e49;
+}
+.resume-contact-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.25rem, 1fr));
+  gap: 0.7rem;
+  margin-top: clamp(1.8rem, 4vw, 2.6rem);
+}
+.resume-contact-grid a,
+.resume-contact-grid > span {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid #141413;
+  background: rgba(250,249,245,0.74);
+  color: #141413;
+  text-decoration: none !important;
+}
+.resume-contact-grid a:first-child {
+  grid-column: span 2;
+}
+.resume-contact-grid strong {
+  color: #6b6a64;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.resume-contact-grid span span,
+.resume-contact-grid a span {
+  overflow-wrap: anywhere;
+  color: #1a1f33;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.resume-section {
+  margin-top: clamp(4rem, 8vw, 6.8rem);
+}
+.resume-section-head {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.34fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  align-items: start;
+  margin-bottom: clamp(1.4rem, 3vw, 2.1rem);
+  padding-top: 1rem;
+  border-top: 1px solid #141413;
+}
+.resume-section-head > p {
+  color: #6b6a64;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.article--resume .article-entry .resume-section-head h2 {
+  max-width: 28ch;
+  color: #1a1f33;
+  font-size: clamp(1.45rem, 3.2vw, 2.7rem);
+  line-height: 1.18;
+  text-wrap: balance;
+}
+.resume-three,
+.resume-tiles,
+.resume-capability-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+.resume-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.resume-three article,
+.resume-tiles article,
+.resume-capability-grid > div {
+  border: 1px solid #141413;
+  background: #faf9f5;
+}
+.resume-three article {
+  padding: clamp(1.05rem, 2vw, 1.35rem);
+}
+.resume-three article:nth-child(2) {
+  background: #eef4b9;
+}
+.resume-three article:nth-child(3) {
+  background: #eee8fa;
+}
+.article--resume .article-entry .resume-three h3,
+.article--resume .article-entry .resume-timeline h3,
+.article--resume .article-entry .resume-tiles h3,
+.article--resume .article-entry .resume-capability-grid h3 {
+  color: #1a1f33;
+  font-size: 1.08rem;
+  line-height: 1.34;
+}
+.resume-three p,
+.resume-tiles p,
+.resume-capability-grid p,
+.resume-timeline p,
+.resume-close p {
+  color: #504e49;
+  line-height: 1.72;
+}
+.resume-three p,
+.resume-tiles p,
+.resume-capability-grid p {
+  margin-top: 0.7rem !important;
+}
+.resume-timeline {
+  display: grid;
+  gap: 0;
+}
+.resume-timeline article {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.2rem);
+  padding: clamp(1.2rem, 3vw, 1.8rem) 0;
+  border-top: 1px solid #e8e6dc;
+}
+.resume-timeline article:first-child {
+  border-top-color: #141413;
+}
+.resume-time {
+  color: #6b6a64;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.resume-role {
+  margin-top: 0.28rem !important;
+  color: #1a1f33 !important;
+  font-size: 0.94rem;
+}
+.resume-timeline article div:last-child > p:not(.resume-role) {
+  margin-top: 0.78rem !important;
+}
+.resume-insight {
+  display: inline;
+  background: #eef4b9;
+  color: #1a1f33 !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.08rem 0.28rem;
+}
+.resume-tiles {
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+}
+.resume-tiles article {
+  padding: 1rem;
+}
+.resume-tiles article:nth-child(2n) {
+  background: rgba(238,232,250,0.72);
+}
+.resume-tiles span {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: #6b6a64;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", Consolas, Monaco, "TsangerJinKai02", "Source Han Serif SC", monospace;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+.resume-capability-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.resume-capability-grid > div {
+  padding: 1rem;
+}
+.resume-close {
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  border: 2px solid #141413;
+  background: #141413;
+  color: #faf9f5;
+}
+.article--resume .article-entry .resume-close h2 {
+  max-width: 18ch;
+  color: #faf9f5;
+  font-size: clamp(1.55rem, 3.5vw, 2.8rem);
+  line-height: 1.16;
+  text-wrap: balance;
+}
+.resume-close p {
+  max-width: 49rem;
+  margin-top: 1.2rem !important;
+  color: rgba(250,249,245,0.82);
+  font-size: 1.04rem;
 }
 .article--resume .article-entry h2,
 .article--resume .article-entry h3,
@@ -347,6 +633,46 @@
   .article--resume .article-entry {
     max-width: 100%;
     font-size: 0.98rem;
+  }
+  .resume-hero {
+    padding: 1.35rem;
+    box-shadow: 4px 4px 0 #141413;
+  }
+  .resume-hero::before {
+    width: 2.6rem;
+    height: 2.6rem;
+    opacity: 0.72;
+  }
+  .resume-hero::after {
+    display: none;
+  }
+  .article--resume .article-entry .resume-hero h1 {
+    max-width: 100%;
+    font-size: clamp(2rem, 10vw, 2.55rem);
+  }
+  .resume-lead {
+    font-size: 1rem;
+  }
+  .resume-contact-grid,
+  .resume-three,
+  .resume-tiles,
+  .resume-capability-grid {
+    grid-template-columns: 1fr;
+  }
+  .resume-contact-grid a:first-child {
+    grid-column: auto;
+  }
+  .resume-section {
+    margin-top: 3.2rem;
+  }
+  .resume-section-head,
+  .resume-timeline article {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  .article--resume .article-entry .resume-section-head h2,
+  .article--resume .article-entry .resume-close h2 {
+    max-width: 100%;
   }
   .article--resume .article-entry > h2:first-child {
     max-width: 100%;
